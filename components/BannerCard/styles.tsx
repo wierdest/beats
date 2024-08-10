@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     elevation: 5,
     margin: 10,
-    minHeight: 160,
+    minHeight: 140,
   },
   image: {
     width: '100%',

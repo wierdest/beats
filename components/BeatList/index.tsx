@@ -53,17 +53,27 @@ const beats: Beat[] = [
 interface Sample {
   id: string;
   genre: string;
-  bannerFilename: string;
+  bannerFilename: SampleFilename;
   soundSampleFilename: string;
 }
 
+export type SampleFilename = 'lofi-chill' | 'tropical';
+
 const samples: Sample[] = [
     {
-      id: '4',
-      genre: 'jazz hip hop funk',
-      bannerFilename: 'lofi-chill.png',
+      id: '1',
+      genre: 'jazz-hip hop-funk-lo fi-chill',
+      bannerFilename: 'lofi-chill',
       soundSampleFilename: 'lofi-chill-sample.mp3'
-  },
+    },
+
+    {
+      id: '2',
+      genre: 'jazz-samba-bossa',
+      bannerFilename: 'tropical',
+      soundSampleFilename: 'tropical-sample.mp3'
+    },
+    
 ]
 
 type BeatListItem = Beat | Sample
@@ -116,7 +126,7 @@ export const BeatList = () => {
       <FlatList
       data={combinedData}
       renderItem={renderItem}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(_, index) => index.toString()}
       contentContainerStyle={styles.contentContainer}
       />
     </View>

@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, Image, View, Text} from 'react-native';
 import { styles } from './styles';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { FavoriteButton } from '../FavoriteButton';
+import { SampleFilename } from '../BeatList';
+
 
 interface BannerCardProps {
-	bannerFilename: string;
-	soundSampleFilename: string;
-
+  bannerFilename: SampleFilename;
+  soundSampleFilename: string;
 }
 
-const images = {
-	'lofi-chill.png': require('../../assets/images/samples/lofi-chill.png'),
+const images: Record<SampleFilename, any> = {
+  'lofi-chill': require('../../assets/images/samples/lofi-chill.png'),
+  'tropical': require('../../assets/images/samples/tropical.png'),
 };
 
 export const BannerCard = ({ bannerFilename, soundSampleFilename }: BannerCardProps) => {
@@ -25,11 +25,15 @@ export const BannerCard = ({ bannerFilename, soundSampleFilename }: BannerCardPr
 		}
 		console.log('proceed to the buying option!')
 	}
+
+	const selectImage = (filename: SampleFilename) => {
+		return images[filename];
+	  };
 	
 	return (
 	<TouchableOpacity style={styles.container} onPress={handleBuy}>
 		<Image
-		source={images['lofi-chill.png']}
+		source={selectImage(bannerFilename)}
 		style={styles.image}
 		resizeMode="cover"
 		/>
