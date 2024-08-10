@@ -1,37 +1,38 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import drawer, { Drawer } from 'expo-router/drawer';
+import { useState } from 'react';
+import { FilterDrawerLayout } from '@/components/FilterDrawerLayout';
+import { HeaderRight } from '@/components/HeaderRight';
+import { FilterDrawerProvider } from '@/contexts/FilterDrawerContext';
+import { ModalProvider } from '@/contexts/ModalContext';
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
-
-  return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </ThemeProvider>
-  );
+	return (
+		 <GestureHandlerRootView style={{ flex: 1 }}>
+            <FilterDrawerProvider>
+                <ModalProvider>
+                    <Drawer 
+                        drawerContent={() => <FilterDrawerLayout />}
+                        screenOptions={
+                            {drawerStyle: {
+                                width: 380,
+                                borderRadius: 60
+                            }}
+                        }
+                        >
+                        
+                        <Drawer.Screen
+                            name="index"
+                            options={{
+                                title: 'Beats',
+                                headerRight: () => <HeaderRight />,
+                                swipeEdgeWidth: 0,
+                                
+                            }}
+                        />
+                    </Drawer>
+                </ModalProvider>
+            </FilterDrawerProvider>
+        </GestureHandlerRootView>
+	);
 }
