@@ -8,8 +8,7 @@ import { SliderControl } from '../SliderControl';
 import { SliderCustomButton } from '../SliderCustomButton';
 import { Divider } from '../Divider';
 import { useModal } from '@/contexts/ModalContext';
-import { Audio } from 'expo-av';
-import { Sound } from 'expo-av/build/Audio';
+import { VolumeManager } from 'react-native-volume-manager';
 
 
 export const Player = () => {
@@ -17,7 +16,7 @@ export const Player = () => {
 	const { toggleModal } = useModal();
 
 	const [bpm, setBpm] = useState(190);
-  const [volume, setVolume] = useState(40);
+  	const [volume, setVolume] = useState(40);
 	const [playing, setPlaying] = useState(false)
 	const [isExpanded, setIsExpanded] = useState(false);
 	const heightAnim = useRef(new Animated.Value(0)).current;
@@ -25,6 +24,7 @@ export const Player = () => {
 		setIsExpanded(prev => !prev);
 
 	};
+
 	useEffect(() => {
 		Animated.timing(heightAnim, {
 			toValue: isExpanded ? 140 : 0,
@@ -33,29 +33,26 @@ export const Player = () => {
 		}).start();
 	}, [isExpanded]);
 
-	const soundRef = useRef<Sound | null>(null);
-
-	const adjustVolume = async () => {
-    if (soundRef.current) {
-      await soundRef.current.stopAsync();
-    }
-    const { sound } = await Audio.Sound.createAsync(
-      require('../../assets/sounds/silent.mp3')
-    );
-    soundRef.current = sound;
-    await sound.setVolumeAsync(volume / 100);
-    await sound.playAsync();
-  };
-
+	// Setup volume listener
 	useEffect(() => {
-    adjustVolume();
+		const volumeListener = VolumeManager.addVolumeListener((result) => {
+		  setVolume(Math.round(result.volume * 100)); 
+		});
+		return () => {
+		  volumeListener.remove();
+		};
+	  }, []);
 
-    return () => {
-      if (soundRef.current) {
-        soundRef.current.unloadAsync();
-      }
-    };
-  }, [volume]);
+
+	const adjustVolume = (volumeLevel: number) => {
+		VolumeManager.setVolume(volumeLevel / 100); // Update the volume
+	  };
+	
+	  useEffect(() => {
+		adjustVolume(volume);
+	}, [volume]);
+
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.mainControls}>
@@ -92,6 +89,7 @@ export const Player = () => {
 							maxValue={100}
 							onValueChange={setVolume}
 							customButton={<SliderCustomButton iconName='volume-off' />}
+							volume={true}
 
 						/>
 					</View>

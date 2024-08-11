@@ -1,15 +1,15 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { View, Text, TouchableOpacity, Animated, PanResponder, LayoutChangeEvent } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { View, Text, TouchableOpacity, Animated, PanResponder } from 'react-native';
 import { styles } from './styles';
 import { SliderControlProps } from '../SliderControl';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { VolumeManager } from 'react-native-volume-manager';
 
 export interface SliderButtonProps extends SliderControlProps {
 	containerWidth: number;
 	initialPos: number;
 }
 
-export const SliderButton = ({ value, initialPos, minValue, maxValue, tag, containerWidth, onValueChange }: SliderButtonProps) => {
+export const SliderButton = ({ value, initialPos, minValue, maxValue, tag, containerWidth, onValueChange, volume: rebindToValue }: SliderButtonProps) => {
 	// hardcoded the buttonWidth, I know...
 	const buttonWidth = 32;
 	const pan = useRef(new Animated.Value(initialPos)).current;
@@ -51,6 +51,19 @@ export const SliderButton = ({ value, initialPos, minValue, maxValue, tag, conta
 			},
 		})
 	).current;
+
+	useEffect(() => {
+        if(rebindToValue) {
+            const volumeListener = VolumeManager.addVolumeListener((result) => {
+                const volume = Math.round(result.volume * 100); 
+                const newX = ((volume - minValue) / (maxValue - minValue)) * (containerWidth - buttonWidth);
+				pan.setValue(newX);
+            });
+            return () => {
+            volumeListener.remove();
+            }; 
+        }
+	}, []);
 
 	useEffect(() => {
 
