@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: 'white',
+        backgroundColor: 'rgba(255, 255, 255, 0.9)', // Pra deixar transparente
         borderRadius: 8,
         padding: 20,
         elevation: 5,
