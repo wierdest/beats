@@ -9,7 +9,7 @@ export interface SliderButtonProps extends SliderControlProps {
 	initialPos: number;
 }
 
-export const SliderButton = ({ value, initialPos, minValue, maxValue, tag, containerWidth, onValueChange, volume: rebindToValue }: SliderButtonProps) => {
+export const SliderButton = ({ value, initialPos, minValue, maxValue, tag, containerWidth, onValueChange, volume }: SliderButtonProps) => {
 	// hardcoded the buttonWidth, I know...
 	const buttonWidth = 32;
 	const pan = useRef(new Animated.Value(initialPos)).current;
@@ -53,11 +53,12 @@ export const SliderButton = ({ value, initialPos, minValue, maxValue, tag, conta
 	).current;
 
 	useEffect(() => {
-        if(rebindToValue) {
+        if(volume) {
             const volumeListener = VolumeManager.addVolumeListener((result) => {
                 const volume = Math.round(result.volume * 100); 
                 const newX = ((volume - minValue) / (maxValue - minValue)) * (containerWidth - buttonWidth);
 				pan.setValue(newX);
+				onValueChange(volume)
             });
             return () => {
             volumeListener.remove();

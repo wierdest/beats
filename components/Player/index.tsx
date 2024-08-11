@@ -34,14 +34,14 @@ export const Player = () => {
 	}, [isExpanded]);
 
 	// Setup volume listener
-	useEffect(() => {
-		const volumeListener = VolumeManager.addVolumeListener((result) => {
-		  setVolume(Math.round(result.volume * 100)); 
-		});
-		return () => {
-		  volumeListener.remove();
-		};
-	  }, []);
+	// useEffect(() => {
+	// 	const volumeListener = VolumeManager.addVolumeListener((result) => {
+	// 	  setVolume(Math.round(result.volume * 100)); 
+	// 	});
+	// 	return () => {
+	// 	  volumeListener.remove();
+	// 	};
+	//   }, []);
 
 
 	const adjustVolume = (volumeLevel: number) => {
