@@ -1,11 +1,11 @@
 import { TouchableOpacity, Text, TouchableOpacityProps } from "react-native";
 import { styles } from "./styles";
 
-interface HelpOutOptButtonProps extends TouchableOpacityProps {
+interface BasicButton extends TouchableOpacityProps {
     title: string
 }
 
-export const HelpOutOptButton = ({ title, onPress } : HelpOutOptButtonProps) => {
+export const BasicButton = ({ title, onPress } : BasicButton) => {
     return <TouchableOpacity
 	onPress={onPress}
     style={styles.button}

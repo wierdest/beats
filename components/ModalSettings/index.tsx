@@ -9,6 +9,8 @@ export const ModalSettings = () => {
     
     const [darkMode, setDarkMode] = useState(false);
     const [keepScreenOn, setKeepScreenOn] = useState(false);
+    const [trimEnd, setTrimEnd] = useState(false);
+
 
     const handleDarkModeToggle = () => {
         setDarkMode(previousState => !previousState);
@@ -32,6 +34,12 @@ export const ModalSettings = () => {
                     label="Keep Screen On"
                     value={keepScreenOn}
                     onValueChange={setKeepScreenOn}
+                />
+
+                <SettingsSwitch
+                    label="Trim end"
+                    value={keepScreenOn}
+                    onValueChange={setTrimEnd}
                 />
                 </View>
       </BasicModal>

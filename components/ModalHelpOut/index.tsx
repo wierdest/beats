@@ -1,6 +1,6 @@
 import React from 'react';
 import { BasicModal } from '../BasicModal';
-import { HelpOutOptButton } from '../HelpOutOptButton';
+import { BasicButton } from '../BasicButton';
 import { Linking, Share } from 'react-native';
 
 export const ModalHelpOut = () => {
@@ -34,20 +34,20 @@ export const ModalHelpOut = () => {
         <BasicModal
             modal={'helpout'}
             >
-                <HelpOutOptButton
+                <BasicButton
                     title='BUY'>
-                </HelpOutOptButton>
-                <HelpOutOptButton
+                </BasicButton>
+                <BasicButton
                     title='DONATE'>
-                </HelpOutOptButton>
-                <HelpOutOptButton
+                </BasicButton>
+                <BasicButton
                     onPress={rateApp}
                     title='REVIEW'>
-                </HelpOutOptButton>
-                <HelpOutOptButton
+                </BasicButton>
+                <BasicButton
                     onPress={shareApp}
                     title='SHARE'>
-                </HelpOutOptButton>
+                </BasicButton>
         </BasicModal>
 
     );

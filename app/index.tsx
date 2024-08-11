@@ -37,7 +37,7 @@ export default function Index() {
         <ModalAbout/>
       }
 
-{
+      {
         activeModal === 'timer' &&
         <ModalTimer/>
       }
