@@ -35,18 +35,18 @@ export const ModalHelpOut = () => {
             modal={'helpout'}
             >
                 <HelpOutOptButton
-                    title='Buy beats'>
+                    title='BUY'>
                 </HelpOutOptButton>
                 <HelpOutOptButton
-                    title='Donate'>
+                    title='DONATE'>
                 </HelpOutOptButton>
                 <HelpOutOptButton
                     onPress={rateApp}
-                    title='Make a review'>
+                    title='REVIEW'>
                 </HelpOutOptButton>
                 <HelpOutOptButton
                     onPress={shareApp}
-                    title='Share with friends'>
+                    title='SHARE'>
                 </HelpOutOptButton>
         </BasicModal>
 

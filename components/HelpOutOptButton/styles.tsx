@@ -10,8 +10,8 @@ export const styles = StyleSheet.create({
         width: 200,
     },
     buttonText: {
-        color: '#FFF',
-        fontSize: 17,
+        color: 'black',
+        fontSize: 18,
         fontWeight: 'bold'
     }
 })
