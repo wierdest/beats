@@ -1,21 +1,40 @@
-import React from 'react';
-import { Text } from 'react-native';
+import React, { useState } from 'react';
+import { Text, View } from 'react-native';
 import { styles } from './styles';
 import { BasicModal } from '../BasicModal';
+import { SettingsSwitch } from '../SettingsSwitch';
 
 
 export const ModalSettings = () => {
+    
+    const [darkMode, setDarkMode] = useState(false);
+    const [keepScreenOn, setKeepScreenOn] = useState(false);
+
+    const handleDarkModeToggle = () => {
+        setDarkMode(previousState => !previousState);
+    };
+
+    const handleKeepScreenOnToggle = () => {
+        setKeepScreenOn(previousState => !previousState);
+    };
 
 	return (
 
-        <BasicModal
-            modal={'settings'}
-            >
-                <Text style={styles.modalText}>SETTINGS!</Text
+        <BasicModal modal={'settings'}>
+            <View style={styles.modalContent}>                
+                <SettingsSwitch
+                    label="Dark Mode"
+                    value={darkMode}
+                    onValueChange={setDarkMode}
+                />
                 
-                >
-
-        </BasicModal>
+                <SettingsSwitch
+                    label="Keep Screen On"
+                    value={keepScreenOn}
+                    onValueChange={setKeepScreenOn}
+                />
+                </View>
+      </BasicModal>
 
     );
 };
