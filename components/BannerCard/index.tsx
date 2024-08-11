@@ -3,7 +3,6 @@ import { TouchableOpacity, Image, View, Text} from 'react-native';
 import { styles } from './styles';
 import { SampleFilename } from '../BeatList';
 
-
 interface BannerCardProps {
   bannerFilename: SampleFilename;
   soundSampleFilename: string;

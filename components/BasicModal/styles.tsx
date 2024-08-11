@@ -10,7 +10,6 @@ export const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent black background
     },
     container: {
-        flex: 1,
         flexDirection: 'column',
         backgroundColor: 'rgba(255, 255, 255, 0.9)', // Pra deixar transparente
         borderRadius: 8,
