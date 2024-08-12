@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, Animated } from 'react-native';
-import { styles } from './styles';
+import { createStyles } from './styles';
 import { PlayButton } from '../PlayButton';
 import { PlayerExpandButton } from '../PlayerExpandButton';
 import { ProgressBar } from '../ProgressBar';
@@ -9,9 +9,12 @@ import { SliderCustomButton } from '../SliderCustomButton';
 import { Divider } from '../Divider';
 import { useModal } from '@/contexts/ModalContext';
 import { VolumeManager } from 'react-native-volume-manager';
+import { useTheme } from '@/contexts/ThemeContext';
 
 
 export const Player = () => {
+	const { isDarkMode } = useTheme();
+  	const styles = createStyles(isDarkMode);
 
 	const { toggleModal } = useModal();
 
