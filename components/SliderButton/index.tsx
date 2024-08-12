@@ -16,7 +16,7 @@ export const SliderButton = ({ value, initialPos, minValue, maxValue, tag, conta
 	const initialPosRef = useRef(initialPos);
 
 	// this is a flag to ignore the useEffect in the value for when the slider is updated via checvron buttons
-	const [dragging, setDragging] = useState(true);
+	const [dragging, setDragging] = useState(false);
 
 	// pan responder responsible for handling user interaction
 	const panResponder = useRef(
@@ -34,6 +34,7 @@ export const SliderButton = ({ value, initialPos, minValue, maxValue, tag, conta
 				const percentage = (newX / (containerWidth - buttonWidth)) * 100;
 				const newValue = Math.round((percentage / 100) * (maxValue - minValue) + minValue);
 				pan.setValue(newX);
+				adjustVolume(newValue);
 				onValueChange(newValue);
 
 			},
@@ -52,13 +53,21 @@ export const SliderButton = ({ value, initialPos, minValue, maxValue, tag, conta
 		})
 	).current;
 
+	const adjustVolume = (volumeLevel: number) => {
+		VolumeManager.setVolume(volumeLevel / 100); // Update the volume
+	};
+
+
 	useEffect(() => {
         if(volume) {
             const volumeListener = VolumeManager.addVolumeListener((result) => {
+				setDragging(false)
                 const volume = Math.round(result.volume * 100); 
-                const newX = ((volume - minValue) / (maxValue - minValue)) * (containerWidth - buttonWidth);
-				pan.setValue(newX);
-				onValueChange(volume)
+                // const newX = ((volume - minValue) / (maxValue - minValue)) * (containerWidth - buttonWidth);
+				// pan.setValue(newX);
+				onValueChange(volume);
+                
+				
             });
             return () => {
             volumeListener.remove();

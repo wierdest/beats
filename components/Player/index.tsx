@@ -44,13 +44,13 @@ export const Player = () => {
 	//   }, []);
 
 
-	const adjustVolume = (volumeLevel: number) => {
-		VolumeManager.setVolume(volumeLevel / 100); // Update the volume
-	  };
+	// const adjustVolume = (volumeLevel: number) => {
+	// 	VolumeManager.setVolume(volumeLevel / 100); // Update the volume
+	//   };
 	
-	  useEffect(() => {
-		adjustVolume(volume);
-	}, [volume]);
+	//   useEffect(() => {
+	// 	adjustVolume(volume);
+	// }, [volume]);
 
 
 	return (
