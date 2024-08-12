@@ -3,6 +3,8 @@ import { Text, View } from 'react-native';
 import { styles } from './styles';
 import { BasicModal } from '../BasicModal';
 import { SettingsSwitch } from '../SettingsSwitch';
+import { useTheme } from '@/contexts/ThemeContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export const ModalSettings = () => {
@@ -11,10 +13,18 @@ export const ModalSettings = () => {
     const [keepScreenOn, setKeepScreenOn] = useState(false);
     const [trimEnd, setTrimEnd] = useState(false);
 
+    const { isDarkMode, toggleTheme   } = useTheme();
 
-    const handleDarkModeToggle = () => {
-        setDarkMode(previousState => !previousState);
+    const handleDarkModeToggle = async () => {
+        try {
+            const newDarkMode = !isDarkMode;
+            await AsyncStorage.setItem('isDarkMode', JSON.stringify(newDarkMode));
+            toggleTheme(); 
+        } catch (error) {
+            console.error('Failed to save dark mode setting', error);
+        }
     };
+
 
     const handleKeepScreenOnToggle = () => {
         setKeepScreenOn(previousState => !previousState);
@@ -26,8 +36,8 @@ export const ModalSettings = () => {
             <View style={styles.modalContent}>                
                 <SettingsSwitch
                     label="Dark Mode"
-                    value={darkMode}
-                    onValueChange={setDarkMode}
+                    value={isDarkMode}
+                    onValueChange={handleDarkModeToggle}
                 />
                 
                 <SettingsSwitch

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, View, Text} from 'react-native';
-import { styles } from './styles';
+import { createStyles } from './styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FavoriteButton } from '../FavoriteButton';
+import { useTheme } from '@/contexts/ThemeContext';
 
 interface BeatCardProps {
 	bpm: string;
@@ -14,7 +15,8 @@ interface BeatCardProps {
 }
 
 export const BeatCard = ({ bpm, genre, tempo, title, onPress, playing }: BeatCardProps) => {
-
+	const { isDarkMode } = useTheme();
+	const styles = createStyles(isDarkMode);
 	const [favorite, setFavorite] = useState(false);
 
 	return (

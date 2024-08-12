@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, Animated } from 'react-native';
-import { styles } from './styles';
+import { createStyles } from './styles';
 import { PlayButton } from '../PlayButton';
 import { PlayerExpandButton } from '../PlayerExpandButton';
 import { ProgressBar } from '../ProgressBar';
@@ -10,14 +10,17 @@ import { Divider } from '../Divider';
 import { useModal } from '@/contexts/ModalContext';
 import { Audio } from 'expo-av';
 import { Sound } from 'expo-av/build/Audio';
+import { useTheme } from '@/contexts/ThemeContext';
 
 
 export const Player = () => {
+	const { isDarkMode } = useTheme();
+  	const styles = createStyles(isDarkMode);
 
 	const { toggleModal } = useModal();
 
 	const [bpm, setBpm] = useState(190);
-  const [volume, setVolume] = useState(40);
+  	const [volume, setVolume] = useState(40);
 	const [playing, setPlaying] = useState(false)
 	const [isExpanded, setIsExpanded] = useState(false);
 	const heightAnim = useRef(new Animated.Value(0)).current;

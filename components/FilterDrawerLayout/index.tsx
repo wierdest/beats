@@ -1,5 +1,5 @@
 import { View, TouchableOpacity, Text } from "react-native";
-import { styles } from "./styles";
+import { createStyles } from "./styles";
 import { DrawerHeader } from "../DrawerHeader";
 import { useState } from "react";
 import { FilterTempo } from "../FilterTempo";
@@ -7,8 +7,12 @@ import { Divider } from "../Divider";
 import { FilterGenre } from "../FilterGenre";
 import { FilterMeter } from "../FilterMeter";
 import { FilterFavorite } from "../FilterFavorite";
+import { useTheme } from "@/contexts/ThemeContext";
 
 export const FilterDrawerLayout = ( ) => {
+
+  const { isDarkMode } = useTheme();
+  const styles = createStyles(isDarkMode);
   
   const [filter, setFilter] = useState<string>('all');
 

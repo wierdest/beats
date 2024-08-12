@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { TouchableOpacity, Animated, TouchableOpacityProps } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { styles } from './styles';
+import { useTheme } from '@/contexts/ThemeContext';
 
 interface FavoriteButtonProps {
     animate?: boolean;
@@ -11,6 +12,8 @@ interface FavoriteButtonProps {
 };
 
 export const FavoriteButton = ({ animate, size, selected, onPress }: FavoriteButtonProps) => {
+    const { isDarkMode } = useTheme();
+
     const spinValue = useRef(new Animated.Value(0)).current;
 
     // Trigger animation when `selected` prop changes
@@ -43,7 +46,7 @@ export const FavoriteButton = ({ animate, size, selected, onPress }: FavoriteBut
                 <MaterialCommunityIcons
                     name={selected ? "heart" : "heart-outline"}
                     size={size ?? 24}
-                    color={selected ? "red" : "black"}
+                    color={selected ? "red" : isDarkMode ? 'white' : 'black'}
                 />
             </Animated.View>
 		</TouchableOpacity>
