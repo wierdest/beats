@@ -17,12 +17,6 @@ export default function Index() {
   const { isDarkMode } = useTheme();
   const theme = isDarkMode ? darkTheme : lightTheme;
 
-  useEffect(() => {
-    setTimeout(() => {
-      SplashScreen.hide(); 
-    }, 2000); 
-  }, []);
-
   const { activeModal } = useModal();
 
   return (
