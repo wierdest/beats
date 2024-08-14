@@ -10,7 +10,7 @@ export const createStyles = (isDarkMode: boolean) => {
       flex: 1,
     },
     menu: {
-      backgroundColor: 'white',
+      backgroundColor: isDarkMode ? 'black' : 'white',
       borderRadius: 8,
       padding: 10,
       elevation: 5,

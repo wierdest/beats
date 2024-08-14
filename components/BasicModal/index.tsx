@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { Modal, Pressable, Animated } from 'react-native';
-import { styles } from './styles';
+import { createStyles } from './styles';
 import { ModalIdentifier, useModal } from '@/contexts/ModalContext';
+import { useTheme } from '@/contexts/ThemeContext';
 
 interface BasicModalProps {
     modal: ModalIdentifier;
@@ -9,6 +10,8 @@ interface BasicModalProps {
 }
 
 export const BasicModal = ({modal, children} : BasicModalProps) => {
+    const { isDarkMode } = useTheme();
+	const styles = createStyles(isDarkMode);
 	const { activeModal, toggleModal } = useModal();
     const scaleAnim = useRef(new Animated.Value(0)).current; 
     useEffect(() => {

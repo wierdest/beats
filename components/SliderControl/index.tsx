@@ -15,6 +15,7 @@ export interface SliderControlProps {
 }
 
 export const SliderControl = ({ value, minValue, maxValue, tag, onValueChange, customButton, volume }: SliderControlProps) => {
+	
 	const handleValueChange = (delta: number) => {
 		const newValue = Math.max(minValue, Math.min(maxValue, value + delta));
 		onValueChange(newValue);

@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { Button, Text, TextInput, View } from 'react-native';
-import { styles } from './styles';
+import { createStyles } from './styles';
 import { BasicModal } from '../BasicModal';
 import { BasicButton } from '../BasicButton';
+import { useTheme } from '@/contexts/ThemeContext';
 
 
 export const ModalTimer = () => {
     const [duration, setDuration] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
+
+    const { isDarkMode } = useTheme();
+  	const styles = createStyles(isDarkMode);
   
     const handleDurationChange = (text: string) => {
       setDuration(text);
@@ -35,7 +39,7 @@ export const ModalTimer = () => {
             keyboardType="numeric"
             value={duration}
             onChangeText={handleDurationChange}
-            placeholder="Enter duration in seconds"
+            placeholder="Enter duration in seconds..."
           />
           
           {error && <Text style={styles.errorText}>{error}</Text>}

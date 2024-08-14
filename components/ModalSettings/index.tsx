@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Text, View } from 'react-native';
-import { styles } from './styles';
+import { createStyles } from './styles';
 import { BasicModal } from '../BasicModal';
 import { SettingsSwitch } from '../SettingsSwitch';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -8,12 +8,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export const ModalSettings = () => {
-    
-    const [darkMode, setDarkMode] = useState(false);
+
     const [keepScreenOn, setKeepScreenOn] = useState(false);
     const [trimEnd, setTrimEnd] = useState(false);
 
     const { isDarkMode, toggleTheme   } = useTheme();
+    const styles = createStyles(isDarkMode);
 
     const handleDarkModeToggle = async () => {
         try {

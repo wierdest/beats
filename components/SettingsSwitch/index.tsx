@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Switch, StyleSheet } from 'react-native';
-import { styles } from './styles';
+import { createStyles } from './styles';
+import { useTheme } from '@/contexts/ThemeContext';
 
 interface SettingsSwitchProps {
   label: string;
@@ -9,6 +10,9 @@ interface SettingsSwitchProps {
 }
 
 export const SettingsSwitch = ({ label, value, onValueChange }: SettingsSwitchProps) => {
+    const { isDarkMode, toggleTheme   } = useTheme();
+    const styles = createStyles(isDarkMode);
+
   return (
     <View style={styles.switchContainer}>
       <Text style={styles.switchLabel}>{label}</Text>

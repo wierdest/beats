@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, TouchableOpacityProps } from 'react-native';
-import { styles } from './styles';
+import { createStyles } from './styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useTheme } from '@/contexts/ThemeContext';
 
 type ThreeDotMenuIconName = 'handshake' | 'cog' | 'information-outline'
 
@@ -11,10 +12,12 @@ interface ThreeDotMenuItemProps extends TouchableOpacityProps {
 };
 
 export const ThreeDotMenuItem = ({ label, iconName, ...props }: ThreeDotMenuItemProps) => {
+	const { isDarkMode, toggleTheme   } = useTheme();
+    const styles = createStyles(isDarkMode);
 
 	return (
-		<TouchableOpacity style={styles.menuItem} {...props}>
-			<MaterialCommunityIcons name={iconName} size={18} color="black" />
+		<TouchableOpacity style={styles.menuItem} {...props}> 
+			<MaterialCommunityIcons name={iconName} size={18} color={isDarkMode ? 'white' : 'black' } />
 			<Text style={styles.label}>{label}</Text>
 	  	</TouchableOpacity>
 	);
