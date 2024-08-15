@@ -17,12 +17,13 @@ export interface SliderControlProps {
 export const SliderControl = ({ value, minValue, maxValue, tag, onValueChange, customButton, volume }: SliderControlProps) => {
 	
 	const handleValueChange = (delta: number) => {
+		
 		const newValue = Math.max(minValue, Math.min(maxValue, value + delta));
 		onValueChange(newValue);
 	};
 	return (
 		<View style={styles.container}>
-			<SliderChevronButton direction='left' onPress={() => handleValueChange(-1)} />
+			<SliderChevronButton direction='left' onPress={() => handleValueChange(-7)} />
 			<Slider
 				value={value}
 				minValue={minValue}
@@ -31,7 +32,7 @@ export const SliderControl = ({ value, minValue, maxValue, tag, onValueChange, c
 				tag={tag}
 				volume={volume}
 			/>
-			<SliderChevronButton direction='right' onPress={() => handleValueChange(1)} />
+			<SliderChevronButton direction='right' onPress={() => handleValueChange(7)} />
 				{customButton}
 		</View>
 	);

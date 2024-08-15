@@ -19,7 +19,7 @@ export const Player = () => {
 	const { toggleModal } = useModal();
 
 	const [bpm, setBpm] = useState(190);
-  	const [volume, setVolume] = useState(40);
+  	const [volume, setVolume] = useState(35);
 	const [playing, setPlaying] = useState(false)
 	const [isExpanded, setIsExpanded] = useState(false);
 	const heightAnim = useRef(new Animated.Value(0)).current;
@@ -37,23 +37,31 @@ export const Player = () => {
 	}, [isExpanded]);
 
 	// Setup volume listener
-	// useEffect(() => {
-	// 	const volumeListener = VolumeManager.addVolumeListener((result) => {
-	// 	  setVolume(Math.round(result.volume * 100)); 
-	// 	});
-	// 	return () => {
-	// 	  volumeListener.remove();
-	// 	};
-	//   }, []);
+	useEffect(() => {
+		const fetchVolume = async () => {
+			const { volume } = await VolumeManager.getVolume();
+			setVolume(volume * 100);
+		};
+		fetchVolume();
+
+		const volumeListener = VolumeManager.addVolumeListener((result) => {
+			setVolume(result.volume * 100);
+		});
+		return () => {
+			volumeListener.remove();
+		};
+	}, []);
 
 
-	// const adjustVolume = (volumeLevel: number) => {
-	// 	VolumeManager.setVolume(volumeLevel / 100); // Update the volume
-	//   };
+
+	const adjustVolume = (volumeLevel: number) => {
+		VolumeManager.setVolume(volumeLevel / 100);
+		VolumeManager.showNativeVolumeUI({enabled: true})
+	  };
 	
-	//   useEffect(() => {
-	// 	adjustVolume(volume);
-	// }, [volume]);
+	  useEffect(() => {
+		adjustVolume(volume);
+	}, [volume]);
 
 
 	return (
