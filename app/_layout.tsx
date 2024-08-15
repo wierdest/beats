@@ -1,19 +1,15 @@
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import drawer, { Drawer } from 'expo-router/drawer';
-import { useEffect, useState } from 'react';
+import { Drawer } from 'expo-router/drawer';
+import { useState } from 'react';
 import { FilterDrawerLayout } from '@/components/FilterDrawerLayout';
 import { HeaderRight } from '@/components/HeaderRight';
 import { FilterDrawerProvider } from '@/contexts/FilterDrawerContext';
 import { ModalProvider } from '@/contexts/ModalContext';
 import { ThemeProvider, useTheme } from '@/contexts/ThemeContext';
-import getStyles, { lightTheme, darkTheme } from './styles';
 import { SplashScreenComponent } from '@/components/SplashScreen';
-import { View } from 'react-native';
-import SplashScreen from 'react-native-splash-screen';
 
 const RootLayoutConst = () => {
     const { isDarkMode } = useTheme();
-    const theme = isDarkMode ? darkTheme : lightTheme;
 
     const [isSplashVisible, setSplashVisible] = useState(true);
 

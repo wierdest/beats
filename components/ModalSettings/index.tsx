@@ -48,7 +48,7 @@ export const ModalSettings = () => {
 
                 <SettingsSwitch
                     label="Trim end"
-                    value={keepScreenOn}
+                    value={trimEnd}
                     onValueChange={setTrimEnd}
                 />
                 </View>

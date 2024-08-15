@@ -34,7 +34,6 @@ export const SliderButton = ({ value, initialPos, minValue, maxValue, tag, conta
 				const percentage = (newX / (containerWidth - buttonWidth)) * 100;
 				const newValue = Math.round((percentage / 100) * (maxValue - minValue) + minValue);
 				pan.setValue(newX);
-				adjustVolume(newValue);
 				onValueChange(newValue);
 
 			},
@@ -47,14 +46,14 @@ export const SliderButton = ({ value, initialPos, minValue, maxValue, tag, conta
 					useNativeDriver: true,
 				}).start();
 
-
 				initialPosRef.current = Math.min(initialPosRef.current + gestureState.dx, containerWidth - buttonWidth);
 			},
 		})
 	).current;
 
 	const adjustVolume = (volumeLevel: number) => {
-		VolumeManager.setVolume(volumeLevel / 100); // Update the volume
+		VolumeManager.setVolume(volumeLevel / 100); 
+		VolumeManager.showNativeVolumeUI({enabled: true})
 	};
 
 
@@ -76,7 +75,7 @@ export const SliderButton = ({ value, initialPos, minValue, maxValue, tag, conta
 	}, []);
 
 	useEffect(() => {
-
+		adjustVolume(value);
 		if (!dragging) {
 			const newX = ((value - minValue) / (maxValue - minValue)) * (containerWidth - buttonWidth);
 			initialPosRef.current = newX

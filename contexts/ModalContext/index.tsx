@@ -14,7 +14,7 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
     const [activeModal, setActiveModal] = useState<ModalIdentifier | undefined>();
     
     const toggleModal = (modal : ModalIdentifier | undefined) => {
-        console.log('Active modal is now ', modal)
+        // console.log('Active modal is now ', modal)
         setActiveModal(modal)
     }
 

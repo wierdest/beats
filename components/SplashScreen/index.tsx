@@ -12,7 +12,7 @@ export const SplashScreenComponent = ({ onFinish }: { onFinish: () => void }) =>
     useEffect(() => {
       SplashScreen.preventAutoHideAsync();
 
-      opacity.value = withTiming(0, { duration: 1200 }, () => onFinish());
+      opacity.value = withTiming(0, { duration: 1200 });
   
       translateY.value = withRepeat(
         withSpring(-30, { damping: 1, stiffness: 120 }),
@@ -22,7 +22,9 @@ export const SplashScreenComponent = ({ onFinish }: { onFinish: () => void }) =>
   
       // Hide splash screen after animation
       setTimeout(async () => {
+        onFinish();
         await SplashScreen.hideAsync();
+
       }, 1200);
     }, []);
   

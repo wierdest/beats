@@ -11,7 +11,6 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { View } from "react-native";
 import getStyles, { lightTheme, darkTheme } from './styles';
 import { useEffect } from "react";
-import SplashScreen from 'react-native-splash-screen';
 
 export default function Index() {
   const { isDarkMode } = useTheme();
