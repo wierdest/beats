@@ -14,6 +14,7 @@ export interface Beat {
 	genre: string;
 	signature: string;
 	title: string;
+  path: string;
 }
 
 const beats: Beat[] = [
@@ -26,6 +27,7 @@ const beats: Beat[] = [
         signature: '4/4',
         title: 'Beat 1',
         genre: 'Hip Hop',
+        path: ''
     },
     {
         id: '2',
@@ -36,6 +38,8 @@ const beats: Beat[] = [
         signature: '3/4',
         title: 'Beat 2',
         genre: 'Jazz',
+        path: ''
+
     },
     {
         id: '3',
@@ -46,6 +50,8 @@ const beats: Beat[] = [
         signature: '4/4',
         title: 'Beat 3',
         genre: 'EDM',
+        path: ''
+
     },
 ];
 
@@ -101,6 +107,7 @@ export const BeatList = ({originalBeats}: BeatListProps) => {
 	const handlePress = (id: string) => {
 		setPlayingId(id);
     // todo implementar essa lógica usando expo-av
+
 	};
 
 	const renderItem = ({ item }: { item: BeatListItem }) => {

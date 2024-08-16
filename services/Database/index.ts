@@ -26,7 +26,8 @@ export const createBeatsTable = async () => {
                 signature TEXT NOT NULL,
                 bars INTEGER NOT NULL,
                 genre TEXT NOT NULL,
-                title TEXT NOT NULL
+                title TEXT NOT NULL,
+                path TEXT NOT NULL
             );
         `);
 
@@ -37,8 +38,8 @@ export const createBeatsTable = async () => {
             // todo: ler o diretorio com os mp3 e inserir no db de acordo com o nome do arquivo
             // talvez um service
             await db.runAsync(`
-                INSERT INTO beats (bpm, minBPM, maxBPM, signature, bars, genre, title)
-                VALUES (120, 80, 240, '4/4', 16, 'other', 'metronome');
+                INSERT INTO beats (bpm, minBPM, maxBPM, signature, bars, genre, title, path)
+                VALUES (120, 80, 240, '4/4', 16, 'other', 'metronome', 'metronome_other_120_80_240_44_16.mp3');
             `);
             console.log('inseriu beat de teste!');
         } else {
@@ -66,6 +67,8 @@ export const getBeats = async (): Promise<Beat[]> => {
             bars: row.bars,
             genre: row.genre,
             title: row.title,
+            path: row.path
+
         }));
 
         return beats;
