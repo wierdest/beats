@@ -40,16 +40,16 @@ export const Player = () => {
 	useEffect(() => {
 		const fetchVolume = async () => {
 			const { volume } = await VolumeManager.getVolume();
-			setVolume(volume * 100);
+			setVolume(Math.round(volume * 100));
 		};
 		fetchVolume();
 
-		const volumeListener = VolumeManager.addVolumeListener((result) => {
-			setVolume(result.volume * 100);
-		});
-		return () => {
-			volumeListener.remove();
-		};
+		// const volumeListener = VolumeManager.addVolumeListener((result) => {
+		// 	setVolume(Math.round(result.volume * 100));
+		// });
+		// return () => {
+		// 	volumeListener.remove();
+		// };
 	}, []);
 
 
@@ -62,6 +62,7 @@ export const Player = () => {
 	  useEffect(() => {
 		adjustVolume(volume);
 	}, [volume]);
+	
 
 
 	return (
