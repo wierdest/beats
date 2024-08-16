@@ -5,14 +5,14 @@ import { BeatCard } from '../BeatCard';
 import { FlatList } from 'react-native-gesture-handler';
 import { BannerCard } from '../BannerCard';
 
-interface Beat {
+export interface Beat {
 	id: string;
 	bpm: string;
 	minBPM: number;
 	maxBPM: number;
-	midBPM: number;
+  bars: number;
 	genre: string;
-	tempo: string;
+	signature: string;
 	title: string;
 }
 
@@ -22,8 +22,8 @@ const beats: Beat[] = [
         bpm: '120-140',
         minBPM: 120,
         maxBPM: 140,
-        midBPM: 130,
-        tempo: '4/4',
+        bars: 16,
+        signature: '4/4',
         title: 'Beat 1',
         genre: 'Hip Hop',
     },
@@ -32,8 +32,8 @@ const beats: Beat[] = [
         bpm: '90-110',
         minBPM: 90,
         maxBPM: 110,
-        midBPM: 100,
-        tempo: '3/4',
+        bars: 16,
+        signature: '3/4',
         title: 'Beat 2',
         genre: 'Jazz',
     },
@@ -42,8 +42,8 @@ const beats: Beat[] = [
         bpm: '130-150',
         minBPM: 130,
         maxBPM: 150,
-        midBPM: 140,
-        tempo: '4/4',
+        bars: 16,
+        signature: '4/4',
         title: 'Beat 3',
         genre: 'EDM',
     },
@@ -88,11 +88,19 @@ const isSample = (item: BeatListItem): item is Sample => {
 
 const combinedData = [...beats, ...samples]
 
-export const BeatList = () => {
+// originalBeats são os beats que estão de fábrica no db
+interface BeatListProps {
+  originalBeats: Beat[]
+}
+
+export const BeatList = ({originalBeats}: BeatListProps) => {
 	const [playingId, setPlayingId] = useState<string | null>(null);
+
+  const beatList = [...originalBeats, ...combinedData]
 
 	const handlePress = (id: string) => {
 		setPlayingId(id);
+    // todo implementar essa lógica usando expo-av
 	};
 
 	const renderItem = ({ item }: { item: BeatListItem }) => {
@@ -102,7 +110,7 @@ export const BeatList = () => {
         <BeatCard
           bpm={item.bpm}
           genre={item.genre}
-          tempo={item.tempo}
+          tempo={item.signature}
           title={item.title}
           onPress={() => handlePress(item.id)}
           playing={item.id === playingId}
@@ -119,12 +127,10 @@ export const BeatList = () => {
     }
     return null;
   };
-		
-
   return (
     <View style={styles.container}>
       <FlatList
-      data={combinedData}
+      data={beatList}
       renderItem={renderItem}
       keyExtractor={(_, index) => index.toString()}
       contentContainerStyle={styles.contentContainer}

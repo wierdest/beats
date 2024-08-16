@@ -5,7 +5,7 @@ import { useState } from "react";
 import { FilterTempo } from "../FilterTempo";
 import { Divider } from "../Divider";
 import { FilterGenre } from "../FilterGenre";
-import { FilterMeter } from "../FilterMeter";
+import { FilterSignature } from "../FIlterSignature";
 import { FilterFavorite } from "../FilterFavorite";
 import { useTheme } from "@/contexts/ThemeContext";
 
@@ -32,7 +32,7 @@ export const FilterDrawerLayout = ( ) => {
         <Divider/>
         <FilterGenre/>
         <Divider/>
-        <FilterMeter/>
+        <FilterSignature/>
         <Divider/>
         <FilterFavorite/>
       </View>

@@ -7,6 +7,7 @@ import { FilterDrawerProvider } from '@/contexts/FilterDrawerContext';
 import { ModalProvider } from '@/contexts/ModalContext';
 import { ThemeProvider, useTheme } from '@/contexts/ThemeContext';
 import { SplashScreenComponent } from '@/components/SplashScreen';
+import { DatabaseProvider } from '@/contexts/DatabaseContext';
 
 const RootLayoutConst = () => {
     const { isDarkMode } = useTheme();
@@ -55,9 +56,11 @@ const RootLayoutConst = () => {
 
 const RootLayout = () => {
     return (
-        <ThemeProvider>
-            <RootLayoutConst />
-        </ThemeProvider>
+        <DatabaseProvider>
+             <ThemeProvider>
+                <RootLayoutConst />
+            </ThemeProvider>
+        </DatabaseProvider>
     );
 }
 

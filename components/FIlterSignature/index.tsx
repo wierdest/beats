@@ -7,7 +7,7 @@ import { TextButtonGridList } from '../TextButtonGridList';
 
 const data: string[] = ['ALL', '4/4', '3/4', '2/4', '6/8', '9/8', '12/8', '5/4', '7/8', '3/8'];
 
-export const FilterMeter = () => {
+export const FilterSignature = () => {
     const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set(['ALL']));
 
     const handlePress = (item: string) => {
@@ -41,7 +41,7 @@ export const FilterMeter = () => {
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.label}>METER</Text>
+			<Text style={styles.label}>TIME SIGNATURES</Text>
 			<TextButtonGridList
 				data={data}
 				numberOfCols={5}

@@ -11,6 +11,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { View } from "react-native";
 import getStyles, { lightTheme, darkTheme } from './styles';
 import { useEffect } from "react";
+import { useDatabase } from "@/contexts/DatabaseContext";
 
 export default function Index() {
   const { isDarkMode } = useTheme();
@@ -18,12 +19,21 @@ export default function Index() {
 
   const { activeModal } = useModal();
 
+  const { initialized, beats } = useDatabase();
+
+  useEffect(() => {
+    console.log('DATABASE INITIALIZED? ', initialized)
+    console.log('THERE SHOULD BE 1 BEAT: ', beats.length)
+
+
+  }, [initialized])
+
   return (
     <>
       <View style={{ flex: 1, backgroundColor: theme.backgroundColor }}>
         <FilterButton/>
         <FilterChipList/>
-        <BeatList/>
+        <BeatList originalBeats={beats}/>
         <Player/>
       </View>
 
