@@ -1,12 +1,13 @@
 import { Beat } from '@/components/BeatList';
-import { createBeatsTable, getBeats } from '@/services/Database';
+import { createBeatsTable, getBeatById, getBeats } from '@/services/Database';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import beatsList from '@/beatsList.json';
 
 interface DatabaseContextProps {
   initialized: boolean;
-  beats: Beat[]
+  beats: Beat[];
+  getBeatById: (id: number) => Promise<Beat | null>;
 };
 
 const DatabaseContext = createContext<DatabaseContextProps | undefined>(undefined);
@@ -33,9 +34,13 @@ export const DatabaseProvider = ({ children }: { children: React.ReactNode }) =>
     
   }, [])
 
+  const getBeatById = async (id: number) => {
+    return await getBeatById(id);
+  };
+
   return (
       <DatabaseContext.Provider
-        value={{ initialized, beats }}
+        value={{ initialized, beats, getBeatById }}
       >
         {children}
       </DatabaseContext.Provider>

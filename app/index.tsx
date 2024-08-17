@@ -20,16 +20,29 @@ export default function Index() {
 
   const { activeModal } = useModal();
 
-  const { initialized, beats } = useDatabase();
+  const { initialized, beats, getBeatById } = useDatabase();
   
   const beatPath = "../assets/sounds/beats/"
   const [beatPlaying, setBeatPlaying] = useState<Audio.Sound | undefined>( undefined)
 
+  const handleSelectBeatToPlay = async (id: number) => {
+    // para o playback
+    if(beatPlaying) {
+      await beatPlaying.stopAsync();
+      await beatPlaying.unloadAsync();
+      setBeatPlaying(undefined);
+    }
+
+    // todo carregar a beat a partir do id
+    const beatToPlay = getBeatById(id);
+
+    
+
+  }
+
   useEffect(() => {
     console.log('DATABASE INITIALIZED? ', initialized)
     console.log('THERE SHOULD BE 1 BEAT: ', beats.length)
-
-
   }, [initialized])
 
   return (

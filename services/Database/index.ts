@@ -99,13 +99,14 @@ export const insertBeat = async (beat: {
     bars: number;
     genre: string;
     title: string;
+    path: string;
 }) => {
     try {
         const db = await openDatabase();
         await db.runAsync(`
-            INSERT INTO beats (bpm, minBPM, maxBPM, signature, bars, genre, title)
-            VALUES (?, ?, ?, ?, ?, ?, ?);
-        `, beat.bpm, beat.minBPM, beat.maxBPM, beat.signature, beat.bars, beat.genre, beat.title);
+            INSERT INTO beats (bpm, minBPM, maxBPM, signature, bars, genre, title, path)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+        `, beat.bpm, beat.minBPM, beat.maxBPM, beat.signature, beat.bars, beat.genre, beat.title, beat.path);
         console.log('Beat inserido com sucesso!');
     } catch (e) {
         console.error('Erro ao inserir o beat: ', e);
