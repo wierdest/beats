@@ -6,7 +6,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import { BannerCard } from '../BannerCard';
 
 export interface Beat {
-	id: string;
+	id: number;
 	bpm: string;
 	minBPM: number;
 	maxBPM: number;
@@ -19,7 +19,7 @@ export interface Beat {
 
 const beats: Beat[] = [
     {
-        id: '1',
+        id: 2,
         bpm: '120-140',
         minBPM: 120,
         maxBPM: 140,
@@ -30,7 +30,7 @@ const beats: Beat[] = [
         path: ''
     },
     {
-        id: '2',
+        id: 3,
         bpm: '90-110',
         minBPM: 90,
         maxBPM: 110,
@@ -42,7 +42,7 @@ const beats: Beat[] = [
 
     },
     {
-        id: '3',
+        id: 4,
         bpm: '130-150',
         minBPM: 130,
         maxBPM: 150,
@@ -96,17 +96,19 @@ const combinedData = [...beats, ...samples]
 
 // originalBeats são os beats que estão de fábrica no db
 interface BeatListProps {
-  originalBeats: Beat[]
+  originalBeats: Beat[],
+  onPress: (id: number) => Promise<void>
 }
 
-export const BeatList = ({originalBeats}: BeatListProps) => {
-	const [playingId, setPlayingId] = useState<string | null>(null);
+export const BeatList = ({originalBeats, onPress}: BeatListProps) => {
+	const [playingId, setPlayingId] = useState<number | undefined>(undefined);
 
   const beatList = [...originalBeats, ...combinedData]
 
-	const handlePress = (id: string) => {
-		setPlayingId(id);
-    // todo implementar essa lógica usando expo-av
+	const handlePress = async (id: number) => {
+		
+    await onPress(id);
+    setPlayingId(id);
 
 	};
 

@@ -2,6 +2,11 @@
   {
     "id": 1,
     "title": "metronome_other_120_80_240_44_16",
-    "filePath": "../assets/sounds/beats/metronome_other_120_80_240_44_16.mp3"
+    "filePath": "./assets/sounds/beats/metronome_other_120_80_240_44_16.mp3"
+  },
+  {
+    "id": 2,
+    "title": "motonome_other_120_80_240_44_16",
+    "filePath": "./assets/sounds/beats/motonome_other_120_80_240_44_16.mp3"
   }
 ]

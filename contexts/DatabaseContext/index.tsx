@@ -1,5 +1,5 @@
 import { Beat } from '@/components/BeatList';
-import { createBeatsTable, getBeatById, getBeats } from '@/services/Database';
+import { createBeatsTable, deleteBeatsTable, getBeatById, getBeats } from '@/services/Database';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import beatsList from '@/beatsList.json';
@@ -7,7 +7,7 @@ import beatsList from '@/beatsList.json';
 interface DatabaseContextProps {
   initialized: boolean;
   beats: Beat[];
-  getBeatById: (id: number) => Promise<Beat | null>;
+  findBeatById: (id: number) => Promise<Beat | null>;
 };
 
 const DatabaseContext = createContext<DatabaseContextProps | undefined>(undefined);
@@ -27,20 +27,25 @@ export const DatabaseProvider = ({ children }: { children: React.ReactNode }) =>
     setBeats(beats)
   }
 
+  const clearDb = async () => {
+    await deleteBeatsTable();
+  }
+
   useEffect(() => {
+    
     initDatabase();
     // compara beats beatsList, se tiver mais no beatsList, atualiza a db com o insertBeat
     console.log('Tem ', beatsList.length, 'arquivos de audio na na pasta!');
     
   }, [])
 
-  const getBeatById = async (id: number) => {
+  const findBeatById = async (id: number) => {
     return await getBeatById(id);
   };
 
   return (
       <DatabaseContext.Provider
-        value={{ initialized, beats, getBeatById }}
+        value={{ initialized, beats, findBeatById}}
       >
         {children}
       </DatabaseContext.Provider>

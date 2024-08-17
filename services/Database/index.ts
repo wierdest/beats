@@ -82,7 +82,7 @@ export const getBeats = async (): Promise<Beat[]> => {
 export const getBeatById = async (id: number) => {
     try {
         const db = await openDatabase();
-        const beat = await db.getFirstAsync('SELECT * FROM beats WHERE id = ?;', id);
+        const beat = await db.getFirstAsync<Beat>('SELECT * FROM beats WHERE id = ?;', id);
         return beat;
     } catch (e) {
         console.error('Erro ao buscar o beat: ', e);
