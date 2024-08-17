@@ -42,16 +42,12 @@ export default function Index() {
     } else {
       console.log(beatToPlay)
     }
-    // constroi o path correto
-    const uri = beatsAssetsMap[beatToPlay.title.split("_")[0]];
-    console.log('Loading sound from:', uri);
+    // seleciona o asset a partir do título
+    const asset = beatsAssetsMap[beatToPlay.title.split("_")[0]];
 
     try {
-      // Create a new instance of Sound with Expo-AV
-      const { sound } = await Audio.Sound.createAsync(uri);
-
+      const { sound } = await Audio.Sound.createAsync(asset);
       await sound.playAsync();
-
       setBeatPlaying(sound);
     } catch (error) {
       console.error('Error loading or playing sound:', error);

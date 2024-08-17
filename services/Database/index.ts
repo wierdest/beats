@@ -1,5 +1,8 @@
 import { Beat } from '@/components/BeatList';
 import * as SQLite from 'expo-sqlite';
+import beatsList from '@/beatsList.json';
+import { BeatFilenameService } from '../BeatFilename';
+
 
 // database local simples com sqlite
 // ref: https://docs.expo.dev/versions/latest/sdk/sqlite/#usage
@@ -26,22 +29,20 @@ export const createBeatsTable = async () => {
                 signature TEXT NOT NULL,
                 bars INTEGER NOT NULL,
                 genre TEXT NOT NULL,
-                title TEXT NOT NULL,
-                path TEXT NOT NULL
+                title TEXT NOT NULL
             );
         `);
 
-        const existingRows = await db.getAllAsync('SELECT * FROM beats;');
+        const existingRows = await db.getAllAsync<Beat>('SELECT * FROM beats;');
 
-        if(existingRows.length === 0) {
-            // insere uma beat como teste
-            // todo: ler o diretorio com os mp3 e inserir no db de acordo com o nome do arquivo
-            // talvez um service
-            await db.runAsync(`
-                INSERT INTO beats (bpm, minBPM, maxBPM, signature, bars, genre, title, path)
-                VALUES (120, 80, 240, '4/4', 16, 'other', 'metronome', 'metronome_other_120_80_240_44_16.mp3');
-            `);
-            console.log('inseriu beat de teste!');
+        if(existingRows.length < beatsList.length) {
+            // db está desatualizado com a lista de arquivos
+            const existingIds = existingRows.map(row => row.id)
+            const beatsParaAdcionarAoDB = beatsList.filter(beat => !existingIds.includes(beat.id)).map(b => b.title)
+            console.log('title para ser processado e inserido no db ', beatsParaAdcionarAoDB)
+
+            beatsParaAdcionarAoDB.forEach(beatTitle => insertBeat(BeatFilenameService.extractInfo(beatTitle)))
+
         } else {
             console.log('beats table contém ', existingRows.length, 'beats.')
         }
@@ -99,14 +100,13 @@ export const insertBeat = async (beat: {
     bars: number;
     genre: string;
     title: string;
-    path: string;
 }) => {
     try {
         const db = await openDatabase();
         await db.runAsync(`
-            INSERT INTO beats (bpm, minBPM, maxBPM, signature, bars, genre, title, path)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?);
-        `, beat.bpm, beat.minBPM, beat.maxBPM, beat.signature, beat.bars, beat.genre, beat.title, beat.path);
+            INSERT INTO beats (bpm, minBPM, maxBPM, signature, bars, genre, title)
+            VALUES (?, ?, ?, ?, ?, ?, ?);
+        `, beat.bpm, beat.minBPM, beat.maxBPM, beat.signature, beat.bars, beat.genre, beat.title);
         console.log('Beat inserido com sucesso!');
     } catch (e) {
         console.log(beat.bpm, beat.minBPM, beat.maxBPM, beat.signature, beat.bars, beat.genre, beat.title)

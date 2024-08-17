@@ -1,7 +1,7 @@
 import { Beat } from '@/components/BeatList';
-import { createBeatsTable, deleteBeatsTable, getBeatById, getBeats } from '@/services/Database';
+import { createBeatsTable, deleteBeatsTable, fileExistsInDatabase, getBeatById, getBeats } from '@/services/Database';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { Mp3Service } from '@/services/Mp3Service';
+import { BeatFilenameService } from '@/services/BeatFilename';
 
 import beatsList from '@/beatsList.json';
 
@@ -31,29 +31,17 @@ export const DatabaseProvider = ({ children }: { children: React.ReactNode }) =>
   const clearDb = async () => {
     await deleteBeatsTable();
   }
+  const findBeatById = async (id: number) => {
+    return await getBeatById(id);
+  }
+
 
   useEffect(() => {
-    const fetchAndProcessFiles = async () => {
-      await initDatabase();
-
-      const filesInFolder = await getBeats(); 
-
-      const beatsIds = beatsList.map(beat => beat.id);
-
-      const newFiles = filesInFolder.filter(file => {
-        const fileId = Number(file.id);
-        return !beatsIds.includes(fileId);
-      });
-
-      if (newFiles.length > 0) {
-        await Mp3Service.processMp3Files(); 
-      }
-
-      console.log('Tem ', filesInFolder.length, 'arquivos de audio na pasta!');
-    };
-
-    fetchAndProcessFiles();
-  }, [beatsList]);
+    // clearDb();
+    initDatabase();
+    console.log('Tem ', beatsList.length, 'arquivos de audio na pasta!');
+ 
+  }, []);
   
   return (
       <DatabaseContext.Provider
