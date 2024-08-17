@@ -109,6 +109,7 @@ export const insertBeat = async (beat: {
         `, beat.bpm, beat.minBPM, beat.maxBPM, beat.signature, beat.bars, beat.genre, beat.title, beat.path);
         console.log('Beat inserido com sucesso!');
     } catch (e) {
+        console.log(beat.bpm, beat.minBPM, beat.maxBPM, beat.signature, beat.bars, beat.genre, beat.title)
         console.error('Erro ao inserir o beat: ', e);
     }
 }
@@ -157,6 +158,23 @@ export const deleteBeatsTable = async () => {
         console.log('Tabela de beats deletada com sucesso!');
     } catch (e) {
         console.error('Erro ao deletar a tabela de beats: ', e);
+    }
+}
+
+// Verifica se um arquivo com o ID fornecido já existe no banco de dados
+export const fileExistsInDatabase = async (id: number): Promise<boolean> => {
+    try {
+        const db = await openDatabase();
+        const result = await db.getFirstAsync<{ count: number }>('SELECT COUNT(*) AS count FROM beats WHERE id = ?;', id);
+
+        if (result === null) {
+            return false;  
+        }
+
+        return result.count > 0;
+    } catch (e) {
+        console.error('Erro ao verificar a existência do arquivo: ', e);
+        return false;
     }
 }
 
