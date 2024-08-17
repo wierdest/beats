@@ -1,6 +1,7 @@
 import { Beat } from '@/components/BeatList';
 import { createBeatsTable, getBeats } from '@/services/Database';
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { Mp3Service } from '@/services/Mp3Service';
 
 import beatsList from '@/beatsList.json';
 
@@ -27,12 +28,28 @@ export const DatabaseProvider = ({ children }: { children: React.ReactNode }) =>
   }
 
   useEffect(() => {
-    initDatabase();
-    // compara beats beatsList, se tiver mais no beatsList, atualiza a db com o insertBeat
-    console.log('Tem ', beatsList.length, 'arquivos de audio na na pasta!');
-    
-  }, [])
+    const fetchAndProcessFiles = async () => {
+      await initDatabase();
 
+      const filesInFolder = await getBeats(); 
+
+      const beatsIds = beatsList.map(beat => beat.id);
+
+      const newFiles = filesInFolder.filter(file => {
+        const fileId = Number(file.id);
+        return !beatsIds.includes(fileId);
+      });
+
+      if (newFiles.length > 0) {
+        await Mp3Service.processMp3Files(); 
+      }
+
+      console.log('Tem ', filesInFolder.length, 'arquivos de audio na pasta!');
+    };
+
+    fetchAndProcessFiles();
+  }, [beatsList]);
+  
   return (
       <DatabaseContext.Provider
         value={{ initialized, beats }}

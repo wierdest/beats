@@ -1,7 +1,17 @@
 [
   {
     "id": 1,
-    "title": "metronome_other_120_80_240_44_16",
-    "filePath": "../assets/sounds/beats/metronome_other_120_80_240_44_16.mp3"
+    "title": "120_80_240_43_16_other_motonome",
+    "filePath": "../assets/sounds/beats/120_80_240_43_16_other_motonome.mp3"
+  },
+  {
+    "id": 2,
+    "title": "120_80_240_44_16_other_metronome",
+    "filePath": "../assets/sounds/beats/120_80_240_44_16_other_metronome.mp3"
+  },
+  {
+    "id": 3,
+    "title": "120_80_240_44_16_other_onibusnome",
+    "filePath": "../assets/sounds/beats/120_80_240_44_16_other_onibusnome.mp3"
   }
 ]
