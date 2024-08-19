@@ -28,14 +28,7 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router",
-      [
-        "expo-asset",
-        {
-          "assets": ["../assets/sounds/beats/"]
-        }
-      ]
-     
+      "expo-router"
     ],
     "experiments": {
       "typedRoutes": true

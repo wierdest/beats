@@ -20,7 +20,7 @@ export const Player = () => {
 
 	const [volume, setVolume] = useState(35);
 
-	const { beat, play, stop, changeBpm, reloadedBeat} = useBeat();
+	const { beat,  play, stop, changeBpm, reloadedBeat} = useBeat();
 
 	const [isExpanded, setIsExpanded] = useState(false);
 
@@ -77,7 +77,8 @@ export const Player = () => {
 					<Text style={styles.beatName}>{beat.title}</Text>
 					<PlayerExpandButton isExpanded={isExpanded} onPress={handleExpandPress} />
 				</View>
-				<ProgressBar progress={0.5} />
+				
+				<ProgressBar />
 
 			</View>
 
