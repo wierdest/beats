@@ -11,20 +11,18 @@ export const ProgressBar = () => {
     if (playing) {
       Animated.loop(
         Animated.timing(animatedWidth, {
-          toValue: 1, // Animate to 1 (100%)
-          duration: durationMillis, // Duration of the animation
-          useNativeDriver: false, // Width animation does not support native driver
+          toValue: 1, 
+          duration: durationMillis, 
+          useNativeDriver: false, 
         }),
         {
-          resetBeforeIteration: true, // Reset to 0 before starting the next iteration
+          resetBeforeIteration: true,
         }
       ).start();
     } else {
-      // Reset the progress bar to 0
+  
       animatedWidth.setValue(0);
     }
-
-    // Clean up animation when not playing
     return () => animatedWidth.stopAnimation();
   }, [playing, durationMillis]);
 
