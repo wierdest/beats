@@ -1,5 +1,5 @@
 import beatsList from '@/beatsList.json';
-import { fileExistsInDatabase, insertBeat } from '../Database';
+import { existsInDatabase, insertBeat } from '../Database';
 
 export class BeatFilenameService {
 

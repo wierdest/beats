@@ -10,17 +10,23 @@ import { Divider } from '../Divider';
 import { useModal } from '@/contexts/ModalContext';
 import { VolumeManager } from 'react-native-volume-manager';
 import { useTheme } from '@/contexts/ThemeContext';
+import { Beat } from '../BeatList';
 
+interface PlayerProps {
+	beat: Beat;
+	audioPlaying: boolean;
+	onPlay: () => void;
+	onStop: () => void;
+	onBpmChange: (newBpm: number) => Promise<void>
+}
 
-export const Player = () => {
+export const Player = ({beat, onBpmChange, onPlay, onStop} : PlayerProps) => {
 	const { isDarkMode } = useTheme();
-  	const styles = createStyles(isDarkMode);
+  const styles = createStyles(isDarkMode);
 
 	const { toggleModal } = useModal();
-
-	const [bpm, setBpm] = useState(190);
-  	const [volume, setVolume] = useState(35);
-	const [playing, setPlaying] = useState(false)
+	const [bpm, setBpm] = useState(beat.bpm);
+  const [volume, setVolume] = useState(35);
 	const [isExpanded, setIsExpanded] = useState(false);
 	const heightAnim = useRef(new Animated.Value(0)).current;
 	const handleExpandPress = () => {
@@ -52,8 +58,6 @@ export const Player = () => {
 		// };
 	}, []);
 
-
-
 	const adjustVolume = (volumeLevel: number) => {
 		VolumeManager.setVolume(volumeLevel / 100);
 		VolumeManager.showNativeVolumeUI({enabled: true})
@@ -62,15 +66,19 @@ export const Player = () => {
 	  useEffect(() => {
 		adjustVolume(volume);
 	}, [volume]);
+
+	const handleBpmSlider = async (newBpm: number) => {
+		setBpm(newBpm)
+		onBpmChange(newBpm)
+
+	}
 	
-
-
 	return (
 		<View style={styles.container}>
 			<View style={styles.mainControls}>
 				<View style={styles.topRow}>
-					<PlayButton />
-					<Text style={styles.beatName}>Beat Name</Text>
+					<PlayButton onPlay={onPlay} onStop={onStop}/>
+					<Text style={styles.beatName}>{beat.title}</Text>
 					<PlayerExpandButton isExpanded={isExpanded} onPress={handleExpandPress} />
 				</View>
 				<ProgressBar progress={0.5} />
@@ -82,15 +90,13 @@ export const Player = () => {
 					<View style={styles.innerAuxControls}>
 						<SliderControl
 							tag={'bpm'}
-							value={bpm}
-							minValue={180}
-							maxValue={220}
-							onValueChange={setBpm}
-							customButton={
-
-								<SliderCustomButton iconName='clock' onPress={() => toggleModal('timer')} />
-
-							}
+							value={beat.bpm}
+							minValue={beat.minBPM}
+							maxValue={beat.maxBPM}
+							defaultValue={beat.midBPM!}
+							onValueChange={onBpmChange}
+							customButton={<SliderCustomButton iconName='clock' onPress={() => toggleModal('timer')} />}
+							volume={false}
 
 						/>
 						<Divider />

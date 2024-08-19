@@ -25,6 +25,7 @@ export const createBeatsTable = async () => {
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 bpm INTEGER NOT NULL,
                 minBPM INTEGER NOT NULL,
+                midBPM INTEGER NOT NULL,
                 maxBPM INTEGER NOT NULL,
                 signature TEXT NOT NULL,
                 bars INTEGER NOT NULL,
@@ -63,13 +64,13 @@ export const getBeats = async (): Promise<Beat[]> => {
             id: row.id,
             bpm: row.bpm,
             minBPM: row.minBPM,
+            midBPM: row.midBPM,
             maxBPM: row.maxBPM,
             signature: row.signature,
             bars: row.bars,
             genre: row.genre,
             title: row.title,
             path: row.path
-
         }));
 
         return beats;
@@ -86,7 +87,7 @@ export const getBeatById = async (id: number) => {
         const beat = await db.getFirstAsync<Beat>('SELECT * FROM beats WHERE id = ?;', id);
         return beat;
     } catch (e) {
-        console.error('Erro ao buscar o beat: ', e);
+        console.log('Erro ao buscar o beat: ', e);
         return null;
     }
 }
@@ -103,27 +104,20 @@ export const insertBeat = async (beat: {
 }) => {
     try {
         const db = await openDatabase();
+        // no momento que insere a tabela tem o midBPM set no valor do bpm que é o default do arquivo.
         await db.runAsync(`
-            INSERT INTO beats (bpm, minBPM, maxBPM, signature, bars, genre, title)
-            VALUES (?, ?, ?, ?, ?, ?, ?);
-        `, beat.bpm, beat.minBPM, beat.maxBPM, beat.signature, beat.bars, beat.genre, beat.title);
+            INSERT INTO beats (bpm, minBPM, midBPM, maxBPM, signature, bars, genre, title)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+        `, beat.bpm, beat.minBPM, beat.bpm, beat.maxBPM, beat.signature, beat.bars, beat.genre, beat.title);
         console.log('Beat inserido com sucesso!');
     } catch (e) {
         console.log(beat.bpm, beat.minBPM, beat.maxBPM, beat.signature, beat.bars, beat.genre, beat.title)
-        console.error('Erro ao inserir o beat: ', e);
+        console.log('Erro ao inserir o beat: ', e);
     }
 }
 
 // update 
-export const updateBeat = async (id: number, beat: {
-    bpm: number;
-    minBPM: number;
-    maxBPM: number;
-    signature: string;
-    bars: number;
-    genre: string;
-    title: string;
-}) => {
+export const updateBeat = async (id: number, beat: Beat) => {
     try {
         const db = await openDatabase();
         await db.runAsync(`
@@ -133,7 +127,7 @@ export const updateBeat = async (id: number, beat: {
         `, beat.bpm, beat.minBPM, beat.maxBPM, beat.signature, beat.bars, beat.genre, beat.title, id);
         console.log('Beat atualizado com sucesso!');
     } catch (e) {
-        console.error('Erro ao atualizar o beat: ', e);
+        console.log('Erro ao atualizar o beat: ', e);
     }
 }
 
@@ -162,7 +156,7 @@ export const deleteBeatsTable = async () => {
 }
 
 // Verifica se um arquivo com o ID fornecido já existe no banco de dados
-export const fileExistsInDatabase = async (id: number): Promise<boolean> => {
+export const existsInDatabase = async (id: number): Promise<boolean> => {
     try {
         const db = await openDatabase();
         const result = await db.getFirstAsync<{ count: number }>('SELECT COUNT(*) AS count FROM beats WHERE id = ?;', id);
@@ -173,7 +167,7 @@ export const fileExistsInDatabase = async (id: number): Promise<boolean> => {
 
         return result.count > 0;
     } catch (e) {
-        console.error('Erro ao verificar a existência do arquivo: ', e);
+        console.log('Erro ao verificar a existência do arquivo: ', e);
         return false;
     }
 }

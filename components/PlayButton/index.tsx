@@ -1,16 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TouchableOpacity, View, StyleSheet, Animated } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { styles } from './styles';
+import { useBeat } from '@/contexts/BeatContext';
 
-export const PlayButton = () => {
-	const [isPlaying, setIsPlaying] = useState(false);
+interface PlayButtonProps {
+    onPlay: () => void;
+	onStop: () => void;
+}
+
+export const PlayButton = ({onPlay, onStop} : PlayButtonProps) => {
+
+    const {playing} = useBeat();
+	const [isPlaying, setIsPlaying] = useState(playing);
     const [spinValue] = useState(new Animated.Value(0));
 	const spin = spinValue.interpolate({
         inputRange: [0, 1],
         outputRange: ['0deg', '360deg'],
     });
-	const togglePlay = () => {
+	
+    const togglePlay = () => {
+        
+        if(isPlaying) {
+            onStop()
+        }  else {
+            onPlay()
+        }
         setIsPlaying(prev => !prev);
 
         Animated.timing(spinValue, {
@@ -25,6 +40,10 @@ export const PlayButton = () => {
         });
     };
 
+    useEffect(() => {
+        console.log('hey', playing)
+        setIsPlaying(playing)
+    }, [playing])
     return (
         <TouchableOpacity style={styles.button} onPress={togglePlay}>
             <Animated.View style={{ transform: [{ rotate: spin }] }}>

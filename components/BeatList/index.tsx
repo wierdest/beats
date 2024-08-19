@@ -7,51 +7,15 @@ import { BannerCard } from '../BannerCard';
 
 export interface Beat {
 	id: number;
-	bpm: string;
+	bpm: number;
 	minBPM: number;
+  midBPM?: number;
 	maxBPM: number;
   bars: number;
 	genre: string;
 	signature: string;
 	title: string;
 }
-
-const beats: Beat[] = [
-    {
-        id: 2,
-        bpm: '120-140',
-        minBPM: 120,
-        maxBPM: 140,
-        bars: 16,
-        signature: '4/4',
-        title: 'Beat 1',
-        genre: 'Hip Hop',
-        
-    },
-    {
-        id: 3,
-        bpm: '90-110',
-        minBPM: 90,
-        maxBPM: 110,
-        bars: 16,
-        signature: '3/4',
-        title: 'Beat 2',
-        genre: 'Jazz',
-       
-
-    },
-    {
-        id: 4,
-        bpm: '130-150',
-        minBPM: 130,
-        maxBPM: 150,
-        bars: 16,
-        signature: '4/4',
-        title: 'Beat 3',
-        genre: 'EDM',
-    },
-];
-
 
 interface Sample {
   id: string;
@@ -89,7 +53,6 @@ const isSample = (item: BeatListItem): item is Sample => {
   return (item as Sample).bannerFilename !== undefined;
 };
 
-const combinedData = [...beats, ...samples]
 
 // originalBeats são os beats que estão de fábrica no db
 interface BeatListProps {
@@ -100,7 +63,7 @@ interface BeatListProps {
 export const BeatList = ({originalBeats, onPress}: BeatListProps) => {
 	const [playingId, setPlayingId] = useState<number | undefined>(undefined);
 
-  const beatList = [...originalBeats, ...combinedData]
+  const beatList = [...originalBeats, ...samples]
 
 	const handlePress = async (id: number) => {
 		
@@ -114,7 +77,7 @@ export const BeatList = ({originalBeats, onPress}: BeatListProps) => {
      
       return (
         <BeatCard
-          bpm={item.bpm}
+          bpm={item.bpm.toString()}
           genre={item.genre}
           tempo={item.signature}
           title={item.title}

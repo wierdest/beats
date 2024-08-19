@@ -4,26 +4,32 @@ import { styles } from './styles';
 import { SliderButton } from '../SliderButton';
 import { SliderControlProps } from '../SliderControl';
 
-export const Slider = ({ value, minValue, maxValue, tag, onValueChange, volume }: SliderControlProps) => {
+export const Slider = ({ value, minValue, maxValue, defaultValue, tag, onValueChange, volume }: SliderControlProps) => {
     const [containerWidth, setContainerWidth] = useState<number>(0);
-    const initialPos = useRef<number>(0);
     const [loaded, setLoaded] = useState(false);
+    const calculateInitialPos = (value: number) => {
+        return ((value - minValue) / (maxValue - minValue)) * (containerWidth - 32);
 
-    useEffect(() => {
-        if (containerWidth > 0) {
-            initialPos.current = ((value - minValue) / (maxValue - minValue)) * (containerWidth - 32);
-            setLoaded(true)
-        }
-    },[containerWidth])
+    }
+    const initialPos = useRef<number>(0);
 
     const handleLayout = (event: LayoutChangeEvent) => {
         setContainerWidth(event.nativeEvent.layout.width);
     };
 
+     useEffect(() => {
+       
+        if (containerWidth > 0) {
+            initialPos.current = calculateInitialPos(volume ? value : defaultValue!);
+            setLoaded(true)
+        }
+    },[containerWidth, defaultValue])
+
     return (
         <View style={styles.slider} onLayout={handleLayout}>
             {loaded &&  (
-                <SliderButton
+                <>
+                 <SliderButton
                     value={value}
                     initialPos={initialPos.current}
                     minValue={minValue}
@@ -32,12 +38,14 @@ export const Slider = ({ value, minValue, maxValue, tag, onValueChange, volume }
                     tag={tag}
                     containerWidth={containerWidth}
                     volume={volume}
-                />
+                    />
+                    <View style={[styles.notch, { transform: [{ translateX: initialPos.current }] }]}/>
+
+         
+                </>
+               
             )}
-            <View style={[styles.notch, { transform: [{ translateX: initialPos.current }] }]}>
-
-            </View>
-
+        
         </View>
     );
 };

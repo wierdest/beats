@@ -8,86 +8,53 @@ import { ModalTimer } from "@/components/ModalTimer";
 import { Player } from "@/components/Player";
 import { useModal } from "@/contexts/ModalContext";
 import { useTheme } from "@/contexts/ThemeContext";
-import { View } from "react-native";
+import { useBeat } from "@/contexts/BeatContext"; // Import the BeatContext
+import { ActivityIndicator, View } from "react-native";
 import { lightTheme, darkTheme } from './styles';
-import { useEffect, useState } from "react";
 import { useDatabase } from "@/contexts/DatabaseContext";
-import { Audio } from 'expo-av';
-import beatsAssetsMap from "@/beatsAssets";
 
 export default function Index() {
   const { isDarkMode } = useTheme();
   const theme = isDarkMode ? darkTheme : lightTheme;
-
   const { activeModal } = useModal();
-
-  const { initialized, beats, findBeatById: getBeatById } = useDatabase();
-  
-  const [beatPlaying, setBeatPlaying] = useState<Audio.Sound | undefined>( undefined)
-
-  const handleSelectBeatToPlay = async (id: number) => {
-    console.log('Pressed to play beat ', id)
-    // para o playback
-    if(beatPlaying != undefined) {
-      await beatPlaying.stopAsync();
-      await beatPlaying.unloadAsync();
-      setBeatPlaying(undefined);
-    }
-
-    // todo carregar a beat a partir do id
-    const beatToPlay = await getBeatById(id);
-    if (!beatToPlay) {
-      console.log('Beat não encontrada!!');
-      return;
-    } else {
-      console.log(beatToPlay)
-    }
-    // seleciona o asset a partir do título
-    const asset = beatsAssetsMap[beatToPlay.title.split("_")[0]];
-
-    try {
-      const { sound } = await Audio.Sound.createAsync(asset);
-      await sound.playAsync();
-      setBeatPlaying(sound);
-    } catch (error) {
-      console.error('Error loading or playing sound:', error);
-    }
-  }
-    useEffect(() => {
-    console.log('DATABASE INITIALIZED? ', initialized)
-    console.log('THERE SHOULD BE 1 BEAT: ', beats.length)
-  }, [initialized])
+  const { beats } = useDatabase();
+  const { beat, playing, selectBeat, play, stop, changeBpm } = useBeat();
 
   return (
     <>
       <View style={{ flex: 1, backgroundColor: theme.backgroundColor }}>
-        <FilterButton/>
-        <FilterChipList/>
-        <BeatList originalBeats={beats} onPress={handleSelectBeatToPlay}/>
-        <Player/>
+        <FilterButton />
+        <FilterChipList />
+        <BeatList originalBeats={beats} onPress={selectBeat} />
+        <Player
+          audioPlaying={playing}
+          beat={beat!}
+          onPlay={play}
+          onStop={stop}
+          onBpmChange={changeBpm}
+        />
       </View>
 
       {
         activeModal === 'helpout' &&
-        <ModalHelpOut/>
+        <ModalHelpOut />
       }
 
       {
         activeModal === 'settings' &&
-        <ModalSettings/>
+        <ModalSettings />
       }
 
       {
         activeModal === 'about' &&
-        <ModalAbout/>
+        <ModalAbout />
       }
 
       {
         activeModal === 'timer' &&
-        <ModalTimer/>
+        <ModalTimer />
       }
 
     </>
-   
   );
 }

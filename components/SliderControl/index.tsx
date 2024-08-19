@@ -8,13 +8,14 @@ export interface SliderControlProps {
 	value: number;
 	minValue: number;
 	maxValue: number;
+	defaultValue?: number;
 	tag?: string;
 	onValueChange: (value: number) => void;
 	customButton?: ReactNode;
 	volume?: boolean;
 }
 
-export const SliderControl = ({ value, minValue, maxValue, tag, onValueChange, customButton, volume }: SliderControlProps) => {
+export const SliderControl = ({ value, minValue, maxValue, defaultValue, tag, onValueChange, customButton, volume }: SliderControlProps) => {
 	
 	const handleValueChange = (delta: number) => {
 		
@@ -31,6 +32,7 @@ export const SliderControl = ({ value, minValue, maxValue, tag, onValueChange, c
 				onValueChange={onValueChange}
 				tag={tag}
 				volume={volume}
+				defaultValue={defaultValue}
 			/>
 			<SliderChevronButton direction='right' onPress={() => handleValueChange(7)} />
 				{customButton}

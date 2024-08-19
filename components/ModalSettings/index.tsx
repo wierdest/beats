@@ -5,6 +5,8 @@ import { BasicModal } from '../BasicModal';
 import { SettingsSwitch } from '../SettingsSwitch';
 import { useTheme } from '@/contexts/ThemeContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BasicButton } from '../BasicButton';
+import { useDatabase } from '@/contexts/DatabaseContext';
 
 
 export const ModalSettings = () => {
@@ -24,6 +26,8 @@ export const ModalSettings = () => {
             console.error('Failed to save dark mode setting', error);
         }
     };
+
+    const { clearDb } = useDatabase();
 
 
     const handleKeepScreenOnToggle = () => {
@@ -51,6 +55,10 @@ export const ModalSettings = () => {
                     value={trimEnd}
                     onValueChange={setTrimEnd}
                 />
+
+                <BasicButton
+                    title='Clear DB'
+                    onPress={clearDb} />
                 </View>
       </BasicModal>
 

@@ -77,7 +77,6 @@ export const SliderButton = ({ value, initialPos, minValue, maxValue, tag, conta
 				<View style={styles.tail} />
 			</Animated.View>
 
-
 			<TouchableOpacity >
 				<Text style={styles.value}>{value}</Text>
 				{tag && <Text style={styles.tag}>{tag}</Text>}
