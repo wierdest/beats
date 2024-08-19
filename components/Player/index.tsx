@@ -10,23 +10,17 @@ import { Divider } from '../Divider';
 import { useModal } from '@/contexts/ModalContext';
 import { VolumeManager } from 'react-native-volume-manager';
 import { useTheme } from '@/contexts/ThemeContext';
-import { Beat } from '../BeatList';
+import { useBeat } from '@/contexts/BeatContext';
 
-interface PlayerProps {
-	beat: Beat;
-	audioPlaying: boolean;
-	onPlay: () => void;
-	onStop: () => void;
-	onBpmChange: (newBpm: number) => Promise<void>
-}
-
-export const Player = ({ beat, onBpmChange, onPlay, onStop }: PlayerProps) => {
+export const Player = () => {
 	const { isDarkMode } = useTheme();
 	const styles = createStyles(isDarkMode);
 
 	const { toggleModal } = useModal();
 
 	const [volume, setVolume] = useState(35);
+
+	const { beat, play, stop, changeBpm, reloadedBeat} = useBeat();
 
 	const [isExpanded, setIsExpanded] = useState(false);
 
@@ -44,6 +38,11 @@ export const Player = ({ beat, onBpmChange, onPlay, onStop }: PlayerProps) => {
 			useNativeDriver: false,
 		}).start();
 	}, [isExpanded]);
+
+	useEffect(() => {
+		setIsExpanded(false);
+
+	}, [reloadedBeat]);
 
 	// Setup volume listener
 	useEffect(() => {
@@ -74,7 +73,7 @@ export const Player = ({ beat, onBpmChange, onPlay, onStop }: PlayerProps) => {
 		<View style={styles.container}>
 			<View style={styles.mainControls}>
 				<View style={styles.topRow}>
-					<PlayButton onPlay={onPlay} onStop={onStop} />
+					<PlayButton onPlay={play} onStop={stop} />
 					<Text style={styles.beatName}>{beat.title}</Text>
 					<PlayerExpandButton isExpanded={isExpanded} onPress={handleExpandPress} />
 				</View>
@@ -91,7 +90,7 @@ export const Player = ({ beat, onBpmChange, onPlay, onStop }: PlayerProps) => {
 							minValue={beat.minBPM}
 							maxValue={beat.maxBPM}
 							defaultValue={beat.midBPM!}
-							onValueChange={onBpmChange}
+							onValueChange={changeBpm}
 							customButton={<SliderCustomButton iconName='clock' onPress={() => toggleModal('timer')} />}
 							volume={false}
 

@@ -7,13 +7,14 @@ import beatsAssetsMap from "@/beatsAssets";
 
 
 interface BeatContextProps {
-  beat: Beat | undefined;
+  beat: Beat;
   audio: Audio.Sound | undefined;
   playing: boolean;
   selectBeat: (id: number) => Promise<void>;
   play: () => void;
 	stop: () => void;
-  changeBpm: (newBpm: number) => Promise<void>
+  changeBpm: (newBpm: number) => Promise<void>;
+  reloadedBeat: boolean;
 };
 
 const BeatContext = createContext<BeatContextProps | undefined>(undefined);
@@ -22,7 +23,9 @@ export const BeatProvider = ({ children }: { children: React.ReactNode }) => {
 
   const { initialized, beats } = useDatabase();
 
-  const [beat, setBeat] = useState<Beat | undefined>(undefined);
+  const [beat, setBeat] = useState<Beat>(beats[0]);
+  const [reloadedBeat, setReloadedBeat] = useState<boolean>(false);
+
   const [audio, setAudio] = useState<Audio.Sound | undefined>(undefined);
   const [playing, setPlaying] = useState<boolean>(false);
 
@@ -53,7 +56,7 @@ export const BeatProvider = ({ children }: { children: React.ReactNode }) => {
       console.log('Beat not found in the db beats array!');
       return;
     }
-
+    setReloadedBeat(prev => !prev)
     setBeat(beatToPlay);
 
     // Save the currentBeat ID in AsyncStorage
@@ -69,9 +72,14 @@ export const BeatProvider = ({ children }: { children: React.ReactNode }) => {
 
     // Load the new audio
     const asset = beatsAssetsMap[beatToPlay.title.split("_")[0]]
-    const newAudio = await Audio.Sound.createAsync(asset);
+
+    // Calculate the current rate from the bpm
+    const rate = beatToPlay.bpm / beatToPlay.midBPM!
+
+    const newAudio = await Audio.Sound.createAsync(asset, { isLooping: true, rate: rate});
     setAudio(newAudio.sound);
-    // to do upon loading we should set the rate to the current BPM!
+    console.log('new audio loaded ', newAudio.status)
+    
 
   };
 
@@ -95,6 +103,11 @@ export const BeatProvider = ({ children }: { children: React.ReactNode }) => {
       return;
     }
 
+    if(!audio._loaded) {
+      console.log('Áudio não carregado!')
+      return
+    }
+
     const rate = newBpm / beat.midBPM!;
 
     console.log(newBpm, ' bpm to rate ', rate)
@@ -111,8 +124,8 @@ export const BeatProvider = ({ children }: { children: React.ReactNode }) => {
 
     try {
       await audio.setRateAsync(rate, true);
-      console.log('setttin!')
     } catch (error) {
+      console.log(audio.getStatusAsync())
       console.log('Erro em atualizar rate! ', error)
     }
   }
@@ -136,6 +149,7 @@ export const BeatProvider = ({ children }: { children: React.ReactNode }) => {
         play,
         stop,
         changeBpm,
+        reloadedBeat
       }}
     >
       {children}

@@ -27,11 +27,6 @@ export default function Index() {
         <FilterChipList />
         <BeatList originalBeats={beats} onPress={selectBeat} />
         <Player
-          audioPlaying={playing}
-          beat={beat!}
-          onPlay={play}
-          onStop={stop}
-          onBpmChange={changeBpm}
         />
       </View>
 
