@@ -15,6 +15,7 @@ interface BeatContextProps {
 	stop: () => void;
   changeBpm: (newBpm: number) => Promise<void>;
   reloadedBeat: boolean;
+  durationMillis: number
 };
 
 const BeatContext = createContext<BeatContextProps | undefined>(undefined);
@@ -27,6 +28,8 @@ export const BeatProvider = ({ children }: { children: React.ReactNode }) => {
   const [reloadedBeat, setReloadedBeat] = useState<boolean>(false);
 
   const [audio, setAudio] = useState<Audio.Sound | undefined>(undefined);
+  const [durationMillis, setDurationMillis] = useState<number>(0);
+
   const [playing, setPlaying] = useState<boolean>(false);
 
   const loadCurrentBeat = async () => {
@@ -43,6 +46,9 @@ export const BeatProvider = ({ children }: { children: React.ReactNode }) => {
     loadCurrentBeat();
     
   }, [initialized]);
+
+ 
+  
 
   const selectBeat = async (id: number) => {
     if(beat && beat.id === id) {
@@ -78,7 +84,9 @@ export const BeatProvider = ({ children }: { children: React.ReactNode }) => {
 
     const newAudio = await Audio.Sound.createAsync(asset, { isLooping: true, rate: rate});
     setAudio(newAudio.sound);
-    console.log('new audio loaded ', newAudio.status)
+    const status = await newAudio.sound.getStatusAsync();
+    setDurationMillis((status as any).durationMillis || 0);
+    console.log('new audio loaded ', status)
     
 
   };
@@ -149,7 +157,8 @@ export const BeatProvider = ({ children }: { children: React.ReactNode }) => {
         play,
         stop,
         changeBpm,
-        reloadedBeat
+        reloadedBeat,
+        durationMillis
       }}
     >
       {children}
