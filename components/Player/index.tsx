@@ -20,15 +20,18 @@ interface PlayerProps {
 	onBpmChange: (newBpm: number) => Promise<void>
 }
 
-export const Player = ({beat, onBpmChange, onPlay, onStop} : PlayerProps) => {
+export const Player = ({ beat, onBpmChange, onPlay, onStop }: PlayerProps) => {
 	const { isDarkMode } = useTheme();
-  const styles = createStyles(isDarkMode);
+	const styles = createStyles(isDarkMode);
 
 	const { toggleModal } = useModal();
-	const [bpm, setBpm] = useState(beat.bpm);
-  const [volume, setVolume] = useState(35);
+
+	const [volume, setVolume] = useState(35);
+
 	const [isExpanded, setIsExpanded] = useState(false);
+
 	const heightAnim = useRef(new Animated.Value(0)).current;
+	
 	const handleExpandPress = () => {
 		setIsExpanded(prev => !prev);
 
@@ -60,24 +63,18 @@ export const Player = ({beat, onBpmChange, onPlay, onStop} : PlayerProps) => {
 
 	const adjustVolume = (volumeLevel: number) => {
 		VolumeManager.setVolume(volumeLevel / 100);
-		VolumeManager.showNativeVolumeUI({enabled: true})
-	  };
-	
-	  useEffect(() => {
+		VolumeManager.showNativeVolumeUI({ enabled: true })
+	};
+
+	useEffect(() => {
 		adjustVolume(volume);
 	}, [volume]);
 
-	const handleBpmSlider = async (newBpm: number) => {
-		setBpm(newBpm)
-		onBpmChange(newBpm)
-
-	}
-	
 	return (
 		<View style={styles.container}>
 			<View style={styles.mainControls}>
 				<View style={styles.topRow}>
-					<PlayButton onPlay={onPlay} onStop={onStop}/>
+					<PlayButton onPlay={onPlay} onStop={onStop} />
 					<Text style={styles.beatName}>{beat.title}</Text>
 					<PlayerExpandButton isExpanded={isExpanded} onPress={handleExpandPress} />
 				</View>

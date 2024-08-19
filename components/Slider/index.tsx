@@ -23,7 +23,16 @@ export const Slider = ({ value, minValue, maxValue, defaultValue, tag, onValueCh
             initialPos.current = calculateInitialPos(volume ? value : defaultValue!);
             setLoaded(true)
         }
-    },[containerWidth, defaultValue])
+    },[containerWidth])
+
+    useEffect(() => {
+        if(!volume) {
+            if (containerWidth > 0) {
+                initialPos.current = calculateInitialPos(volume ? value : defaultValue!);
+            }
+        }
+       
+    },[defaultValue])
 
     return (
         <View style={styles.slider} onLayout={handleLayout}>
@@ -40,10 +49,7 @@ export const Slider = ({ value, minValue, maxValue, defaultValue, tag, onValueCh
                     volume={volume}
                     />
                     <View style={[styles.notch, { transform: [{ translateX: initialPos.current }] }]}/>
-
-         
                 </>
-               
             )}
         
         </View>

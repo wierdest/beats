@@ -20,7 +20,6 @@ export const PlayButton = ({onPlay, onStop} : PlayButtonProps) => {
     });
 	
     const togglePlay = () => {
-        
         if(isPlaying) {
             onStop()
         }  else {
@@ -41,9 +40,13 @@ export const PlayButton = ({onPlay, onStop} : PlayButtonProps) => {
     };
 
     useEffect(() => {
-        console.log('hey', playing)
-        setIsPlaying(playing)
+
+        setIsPlaying(playing);
+
     }, [playing])
+
+
+
     return (
         <TouchableOpacity style={styles.button} onPress={togglePlay}>
             <Animated.View style={{ transform: [{ rotate: spin }] }}>

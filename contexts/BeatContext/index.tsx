@@ -1,8 +1,6 @@
 import { Beat } from '@/components/BeatList';
-import { createBeatsTable, deleteBeatsTable, existsInDatabase, getBeatById, getBeats } from '@/services/Database';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { BeatFilenameService } from '@/services/BeatFilename';
 import { Audio } from 'expo-av';
 import { useDatabase } from '../DatabaseContext';
 import beatsAssetsMap from "@/beatsAssets";
@@ -16,7 +14,6 @@ interface BeatContextProps {
   play: () => void;
 	stop: () => void;
   changeBpm: (newBpm: number) => Promise<void>
-
 };
 
 const BeatContext = createContext<BeatContextProps | undefined>(undefined);
@@ -71,9 +68,10 @@ export const BeatProvider = ({ children }: { children: React.ReactNode }) => {
     setPlaying(false)
 
     // Load the new audio
-    const asset = beatsAssetsMap[beatToPlay.title.split("_")[0]];
+    const asset = beatsAssetsMap[beatToPlay.title.split("_")[0]]
     const newAudio = await Audio.Sound.createAsync(asset);
     setAudio(newAudio.sound);
+    // to do upon loading we should set the rate to the current BPM!
 
   };
 
@@ -109,6 +107,8 @@ export const BeatProvider = ({ children }: { children: React.ReactNode }) => {
         bpm: newBpm
       };
     });
+
+
     try {
       await audio.setRateAsync(rate, true);
       console.log('setttin!')
