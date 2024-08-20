@@ -7,8 +7,12 @@ import { TextButtonGridList } from '../TextButtonGridList';
 
 const data: string[] = ['ALL', '4/4', '3/4', '2/4', '6/8', '9/8', '12/8', '5/4', '7/8', '3/8'];
 
-export const FilterSignature = () => {
-    const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set(['ALL']));
+type FilterSignatureProps = {
+    onChange: (signature: string) => void;
+  };
+
+export const FilterSignature: React.FC<FilterSignatureProps> = ({ onChange }) => {
+    const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set(["ALL"]));
 
     const handlePress = (item: string) => {
         setSelectedItems(prevSelectedItems => {
@@ -17,19 +21,18 @@ export const FilterSignature = () => {
                 if (updatedItems.has('ALL') && updatedItems.size > 1) {
                     return updatedItems;
                 } else {
-                    updatedItems.clear(); 
-                    updatedItems.add('ALL');    
+                    updatedItems.clear();
+                    updatedItems.add('ALL');
                 }
             } else {
-
                 if (updatedItems.has('ALL')) {
                     updatedItems.clear();
                 }
 
                 if (updatedItems.has(item)) {
                     updatedItems.delete(item);
-                    if(updatedItems.size === 0) {
-                        updatedItems.add('ALL')
+                    if (updatedItems.size === 0) {
+                        updatedItems.add('ALL');
                     }
                 } else {
                     updatedItems.add(item);
@@ -38,6 +41,16 @@ export const FilterSignature = () => {
             return updatedItems;
         });
     };
+
+    useEffect(() => {
+        // Filtrar valores vazios ou nulos, se necessário
+        const filteredItems = Array.from(selectedItems).filter(item => item.trim() !== '');
+
+        // Unir os itens com vírgulas
+        const signature = filteredItems.join(',');
+        onChange(signature);
+    }, [selectedItems]);
+
 
 	return (
 		<View style={styles.container}>

@@ -9,28 +9,29 @@ import { FavoriteButton } from '../FavoriteButton';
 
 type FavoriteFilter = 'all' | 'fav'
 
-export const FilterFavorite = () => {
+export type FilterFavoriteProps = {
+	isFavorite: boolean;
+	onChange: (favorite: boolean) => void;
+};
 
-	const [selected, setSelected] = useState<FavoriteFilter>('all')
+export const FilterFavorite: React.FC<FilterFavoriteProps> = ({ isFavorite, onChange }) => {
+	const handlePress = () => {
+		onChange(!isFavorite);
+	};
 
-	const selectFilter = (type: FavoriteFilter) => {
-		setSelected(type)
-	}
-	
 	return (
 		<View style={styles.container}>
-			<TextButton 
-				label={'ALL'}  
-				selected={selected === 'all'} 
-				onPress={() => { selectFilter('all')}}
-				/>
-			<FavoriteButton 
-				animate 
-				selected={selected === 'fav'}
-				size={36} 
-				onPress={() => { selected === 'fav' ? selectFilter('all') : selectFilter('fav')}}
-				/>
-
+			<TextButton
+				label="ALL"
+				selected={!isFavorite}
+				onPress={() => onChange(false)}
+			/>
+			<FavoriteButton
+				animate
+				selected={isFavorite}
+				size={36}
+				onPress={handlePress}
+			/>
 		</View>
-	)
+	);
 };

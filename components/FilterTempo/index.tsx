@@ -5,32 +5,43 @@ import { RangeSlider } from '../RangeSlider';
 import { Divider } from '../Divider';
 ;
 
-export const FilterTempo = () => {
-	const [min, setMin] = useState(50)
-	const [max, setMax] = useState(280)
+export type FilterTempoProps = {
+	selectedTempo: string;
+	onChange: (tempo: string) => void;
+  };
 
+  export const FilterTempo: React.FC<FilterTempoProps> = ({ selectedTempo, onChange }) => {
+	const [min, setMin] = useState<number>(50);
+	const [max, setMax] = useState<number>(280);
+  
+	useEffect(() => {
+	  const [minTempo, maxTempo] = selectedTempo.split('-').map(Number);
+	  if (!isNaN(minTempo) && !isNaN(maxTempo)) {
+		setMin(minTempo);
+		setMax(maxTempo);
+	  }
+	}, [selectedTempo]);
+  
+	useEffect(() => {
+	  onChange(`${min}-${max}`);
+	}, [min, max]);
+  
 	return (
-		<View style={styles.container}>
-			<Text style={styles.label}>TEMPO</Text>
-			<View style={styles.textContainer}>
-				<Text style={styles.label}>{min}</Text>
-				<Text >-</Text>
-				<Text style={styles.label}>{max}</Text>
-			</View>
-
-			<View >
-				<RangeSlider
-					minValue={min}
-					maxValue={max}
-					onValueChangeMin={setMin}
-					onValueChangeMax={setMax}
-				/>
-
-			</View>
-
-
-
-
+	  <View style={styles.container}>
+		<Text style={styles.label}>TEMPO</Text>
+		<View style={styles.textContainer}>
+		  <Text style={styles.label}>{min}</Text>
+		  <Text>-</Text>
+		  <Text style={styles.label}>{max}</Text>
 		</View>
-	)
-};
+		<View>
+		  <RangeSlider
+			minValue={min}
+			maxValue={max}
+			onValueChangeMin={setMin}
+			onValueChangeMax={setMax}
+		  />
+		</View>
+	  </View>
+	);
+  };

@@ -9,6 +9,7 @@ import { ThemeProvider, useTheme } from '@/contexts/ThemeContext';
 import { SplashScreenComponent } from '@/components/SplashScreen';
 import { DatabaseProvider } from '@/contexts/DatabaseContext';
 import { BeatProvider } from '@/contexts/BeatContext';
+import { FilterProvider } from '@/contexts/FilterContext';
 
 const RootLayoutConst = () => {
     const { isDarkMode } = useTheme();
@@ -58,11 +59,14 @@ const RootLayoutConst = () => {
 const RootLayout = () => {
     return (
         <DatabaseProvider>
-            <BeatProvider>
-                <ThemeProvider>
-                    <RootLayoutConst />
-                </ThemeProvider>
-            </BeatProvider>
+            <FilterProvider>
+                <BeatProvider>
+                    <ThemeProvider>
+                        <RootLayoutConst />
+                    </ThemeProvider>
+            
+                </BeatProvider>
+            </FilterProvider>
         </DatabaseProvider>
     );
 }

@@ -8,37 +8,48 @@ import { FilterGenre } from "../FilterGenre";
 import { FilterSignature } from "../FIlterSignature";
 import { FilterFavorite } from "../FilterFavorite";
 import { useTheme } from "@/contexts/ThemeContext";
+import { FilterState, useFilter } from "@/contexts/FilterContext";
 
-export const FilterDrawerLayout = ( ) => {
-
+export const FilterDrawerLayout = () => {
   const { isDarkMode } = useTheme();
   const styles = createStyles(isDarkMode);
-  
-  const [filter, setFilter] = useState<string>('all');
+  const { filters, setFilters } = useFilter();
 
-	const handleFilterChange = (newFilter: string) => {
-		setFilter(newFilter);
-	};
-
+  const handleFilterChange = (newFilter: Partial<FilterState>) => {
+    setFilters((prevFilters) => {
+      const updatedFilters = {
+        ...prevFilters,
+        ...newFilter
+      };
+      console.log('Updated Filters:', updatedFilters);
+      return updatedFilters;
+    });
+  };
 
   return (
     <View style={styles.container}>
-
-      <DrawerHeader/>
-
+      <DrawerHeader />
       <View style={styles.filtersContainer}>
-        <Divider/>
-        <FilterTempo/>
-        <Divider/>
-        <FilterGenre/>
-        <Divider/>
-        <FilterSignature/>
-        <Divider/>
-        <FilterFavorite/>
+        <Divider />
+        <FilterTempo
+          selectedTempo={filters.tempo}
+          onChange={(tempo) => handleFilterChange({ tempo })}
+        />
+        <Divider />
+        <FilterGenre
+          onChange={(genre) => handleFilterChange({ genre })}
+        />
+        <Divider />
+        <FilterSignature
+          onChange={(signature) => handleFilterChange({ signature })}
+        />
+        <Divider />
+        <FilterFavorite
+          isFavorite={filters.favorite}
+          onChange={(favorite) => handleFilterChange({ favorite })}
+        />
       </View>
-     
     </View>
   );
-
 }
 

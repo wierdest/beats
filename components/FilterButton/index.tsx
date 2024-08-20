@@ -4,12 +4,12 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { styles } from './styles';
 import { useNavigation } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
-import { useFilterDrawer } from '@/contexts/FilterDrawerContext';
+import { useFilter } from '@/contexts/FilterContext';
 
 export const FilterButton = () => {
-	const { toggleDrawer } = useFilterDrawer();
+	const { setFilters } = useFilter();
 	return (
-		<TouchableOpacity style={styles.filterButton} onPress={toggleDrawer}>
+		<TouchableOpacity style={styles.filterButton} onPress={() => setFilters}>
 		  <MaterialCommunityIcons
 				name={"filter-outline"}
 				size={24}
