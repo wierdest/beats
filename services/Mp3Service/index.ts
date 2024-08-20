@@ -22,7 +22,6 @@ export class Mp3Service {
     };
   }
 
-
   public static async processMp3Files() {
     try {      
       for (const file of beatsList) {

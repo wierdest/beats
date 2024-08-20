@@ -37,7 +37,7 @@ export default function Index() {
       <View style={{ flex: 1, backgroundColor: theme.backgroundColor }}>
         <FilterButton/>
         <FilterChipList/>
-        <BeatList originalBeats={beats}/>
+        <BeatList originalBeats={beats} />
         <Player/>
       </View>
 
