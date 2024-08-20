@@ -26,47 +26,8 @@ export interface FilterState {
   favorite: boolean;
 }
 
-const beats: Beat[] = [
-  {
-    id: '1',
-    bpm: '120-140',
-    minBPM: 120,
-    maxBPM: 140,
-    bars: 16,
-    signature: '4/4',
-    title: 'Beat 1',
-    genre: 'HIP HOP',
-    path: ''
-  },
-  {
-    id: '2',
-    bpm: '90-110',
-    minBPM: 90,
-    maxBPM: 110,
-    bars: 16,
-    signature: '3/4',
-    title: 'Beat 2',
-    genre: 'JAZZ',
-    path: ''
-
-  },
-  {
-    id: '3',
-    bpm: '130-150',
-    minBPM: 130,
-    maxBPM: 150,
-    bars: 16,
-    signature: '4/4',
-    title: 'Beat 3',
-    genre: 'EDM',
-    path: ''
-
-  },
-];
-
-
 interface Sample {
-  id: string;
+  id: number;
   genre: string;
   bannerFilename: SampleFilename;
   soundSampleFilename: string;
@@ -76,14 +37,14 @@ export type SampleFilename = 'lofi-chill' | 'tropical';
 
 const samples: Sample[] = [
   {
-    id: '1',
+    id: 1,
     genre: 'jazz-hip hop-funk-lo fi-chill',
     bannerFilename: 'lofi-chill',
     soundSampleFilename: 'lofi-chill-sample.mp3'
   },
 
   {
-    id: '2',
+    id: 2,
     genre: 'jazz-samba-bossa',
     bannerFilename: 'tropical',
     soundSampleFilename: 'tropical-sample.mp3'
@@ -101,30 +62,21 @@ const isSample = (item: BeatListItem): item is Sample => {
   return (item as Sample).bannerFilename !== undefined;
 };
 
-const combinedData = [...beats, ...samples];
-
 interface BeatListProps {
   originalBeats: Beat[],
   onPress: (id: number) => Promise<void>
 }
 
-export const BeatList = ({ originalBeats }: BeatListProps) => {
-  const [playingId, setPlayingId] = useState<string | null>(null);
+export const BeatList = ({ originalBeats, onPress }: BeatListProps) => {
+  const [playingId, setPlayingId] = useState<number | null>(null);
   const { filters } = useFilter();
 
   // INICIO DOS FILTROS
-
-  // Só pq os ids do sample tão colidindo com os do banco 
-  const combinedDataWithUniqueKeys = combinedData.map((item, index) => ({
-    ...item,
-    id: `sample-${item.id}-${index}`
-  }));
-
-  const beatList = [...originalBeats, ...combinedDataWithUniqueKeys].filter(item => {
+  const beatList = [...originalBeats, ...samples].filter(item => {
     // Filtro pelo tempo
     if (filters.tempo && isBeat(item)) {
       const [minBPM, maxBPM] = filters.tempo.split('-').map(Number);
-      const itemBPM = parseFloat(item.bpm);
+      const itemBPM = item.bpm
       if (isNaN(itemBPM) || itemBPM < minBPM || itemBPM > maxBPM) {
         return false;
       }
@@ -190,12 +142,16 @@ export const BeatList = ({ originalBeats }: BeatListProps) => {
     return null;
   };
 
+  const extractKey = (item: BeatListItem) => {
+    return isBeat(item) ? item.id.toString() : `sample_${item.id}`
+  }
+
   return (
     <View style={styles.container}>
       <FlatList
         data={beatList}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id} // Usando o ID único
+        keyExtractor={(item) => extractKey(item)}
         contentContainerStyle={styles.contentContainer}
       />
     </View>
