@@ -13,18 +13,9 @@ import { FilterState, useFilter } from "@/contexts/FilterContext";
 export const FilterDrawerLayout = () => {
   const { isDarkMode } = useTheme();
   const styles = createStyles(isDarkMode);
-  const { filters, setFilters } = useFilter();
+  const { filters, handleFilterChange } = useFilter();
 
-  const handleFilterChange = (newFilter: Partial<FilterState>) => {
-    setFilters((prevFilters) => {
-      const updatedFilters = {
-        ...prevFilters,
-        ...newFilter
-      };
-      console.log('Updated Filters:', updatedFilters);
-      return updatedFilters;
-    });
-  };
+  
 
   return (
     <View style={styles.container}>

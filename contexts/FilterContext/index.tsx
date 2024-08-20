@@ -8,10 +8,10 @@ export type FilterState = {
   favorite: boolean;
 };
 
-// Defina o tipo do contexto
-type FilterContextType = {
+interface FilterContextType {
   filters: FilterState;
   setFilters: React.Dispatch<React.SetStateAction<FilterState>>;
+  handleFilterChange: (newFilter: Partial<FilterState>) => void;
 };
 
 const FilterContext = createContext<FilterContextType | undefined>(undefined);
@@ -24,8 +24,19 @@ export const FilterProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     favorite: false,
   });
 
+  const handleFilterChange = (newFilter: Partial<FilterState>) => {
+    setFilters((prevFilters) => {
+      const updatedFilters = {
+        ...prevFilters,
+        ...newFilter
+      };
+      console.log('Updated Filters:', updatedFilters);
+      return updatedFilters;
+    });
+  };
+
   return (
-    <FilterContext.Provider value={{ filters, setFilters }}>
+    <FilterContext.Provider value={{ filters, setFilters, handleFilterChange }}>
       {children}
     </FilterContext.Provider>
   );

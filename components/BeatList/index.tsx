@@ -5,7 +5,6 @@ import { BeatCard } from '../BeatCard';
 import { FlatList } from 'react-native-gesture-handler';
 import { BannerCard } from '../BannerCard';
 import { useFilter } from '@/contexts/FilterContext';
-import { useDatabase } from '@/contexts/DatabaseContext';
 
 export interface Beat {
 	id: number;
@@ -112,7 +111,7 @@ export const BeatList = ({ originalBeats, onPress }: BeatListProps) => {
     if(filters.favorite === true && isBeat(item)) {
       return item.favorite != 0;
     }
-    
+
     return true;
   });
 
