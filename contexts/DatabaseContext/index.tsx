@@ -1,5 +1,5 @@
 import { Beat } from '@/components/BeatList';
-import { createBeatsTable, deleteBeatsTable, existsInDatabase, getBeatById, getBeats } from '@/services/Database';
+import { createBeatsTable, deleteBeatsTable, existsInDatabase, getBeatById, getBeats, updateBeat } from '@/services/Database';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { BeatFilenameService } from '@/services/BeatFilename';
 
@@ -10,6 +10,8 @@ interface DatabaseContextProps {
   beats: Beat[];
   findBeatById: (id: number) => Promise<Beat | null>;
   clearDb: () => Promise<void>;
+  updateAndReload: (id: number, beat: Beat) => Promise<void>;
+
 
 };
 
@@ -37,6 +39,11 @@ export const DatabaseProvider = ({ children }: { children: React.ReactNode }) =>
     return await getBeatById(id);
   }
 
+  const updateBeatAndReload = async (id: number, beat: Beat) => {
+    await updateBeat(id, beat);
+    await loadBeats();
+  };
+
 
   useEffect(() => {
     // clearDb();
@@ -47,7 +54,7 @@ export const DatabaseProvider = ({ children }: { children: React.ReactNode }) =>
   
   return (
       <DatabaseContext.Provider
-        value={{ initialized, beats, findBeatById, clearDb}}
+        value={{ initialized, beats, findBeatById, clearDb, updateAndReload: updateBeatAndReload}}
       >
         {children}
       </DatabaseContext.Provider>

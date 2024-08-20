@@ -6,6 +6,7 @@ import { useDatabase } from '../DatabaseContext';
 import beatsAssetsMap from "@/beatsAssets";
 
 
+
 interface BeatContextProps {
   beat: Beat;
   audio: Audio.Sound | undefined;
@@ -15,14 +16,15 @@ interface BeatContextProps {
 	stop: () => void;
   changeBpm: (newBpm: number) => Promise<void>;
   reloadedBeat: boolean;
-  durationMillis: number
+  durationMillis: number;
+  favoriteBeat: (id: number) => Promise<void>
 };
 
 const BeatContext = createContext<BeatContextProps | undefined>(undefined);
 
 export const BeatProvider = ({ children }: { children: React.ReactNode }) => {
 
-  const { initialized, beats } = useDatabase();
+  const { initialized, beats, findBeatById, updateAndReload } = useDatabase();
 
   const [beat, setBeat] = useState<Beat>(beats[0]);
   const [reloadedBeat, setReloadedBeat] = useState<boolean>(false);
@@ -58,6 +60,8 @@ export const BeatProvider = ({ children }: { children: React.ReactNode }) => {
 
     const beatToPlay = beats.find((b) => b.id === id);
 
+    console.log(beatToPlay);
+
     if (!beatToPlay) {
       console.log('Beat not found in the db beats array!');
       return;
@@ -86,7 +90,7 @@ export const BeatProvider = ({ children }: { children: React.ReactNode }) => {
     setAudio(newAudio.sound);
     const status = await newAudio.sound.getStatusAsync();
     setDurationMillis((status as any).durationMillis || 0);
-    console.log('new audio loaded ', status)
+    // console.log('new audio loaded ', status)
     
 
   };
@@ -129,7 +133,6 @@ export const BeatProvider = ({ children }: { children: React.ReactNode }) => {
       };
     });
 
-
     try {
       await audio.setRateAsync(rate, true);
     } catch (error) {
@@ -137,6 +140,32 @@ export const BeatProvider = ({ children }: { children: React.ReactNode }) => {
       console.log('Erro em atualizar rate! ', error)
     }
   }
+
+ const favoriteBeat = async (id: number) => {
+  try {
+    const beatToUpdate = await findBeatById(id);
+    if (!beatToUpdate) {
+      console.log('Beat not found in the db beats db!');
+      return;
+    }
+
+    console.log('beat found! ', beatToUpdate.title, beatToUpdate.favorite)
+
+    // Toggle the favorite status
+    const newFavoriteStatus = beatToUpdate.favorite === 0 ? 1 : 0;
+    console.log('new status ', newFavoriteStatus)
+
+    // Update the beat with the new favorite status
+    const updatedBeat = { ...beatToUpdate, favorite: newFavoriteStatus };
+    await updateAndReload(updatedBeat.id, updatedBeat);
+
+    console.log('Beat favorite status updated!');
+  } catch (e) {
+    console.log('Error updating favorite beat: ', e);
+  }
+};
+
+
 
   const stop  = () => {
     if(audio) {
@@ -158,7 +187,8 @@ export const BeatProvider = ({ children }: { children: React.ReactNode }) => {
         stop,
         changeBpm,
         reloadedBeat,
-        durationMillis
+        durationMillis,
+        favoriteBeat
       }}
     >
       {children}

@@ -30,7 +30,8 @@ export const createBeatsTable = async () => {
                 signature TEXT NOT NULL,
                 bars INTEGER NOT NULL,
                 genre TEXT NOT NULL,
-                title TEXT NOT NULL
+                title TEXT NOT NULL,
+                favorite INTEGER NOT NULL
             );
         `);
 
@@ -70,7 +71,7 @@ export const getBeats = async (): Promise<Beat[]> => {
             bars: row.bars,
             genre: row.genre,
             title: row.title,
-            path: row.path
+            favorite: row.favorite
         }));
 
         return beats;
@@ -106,9 +107,9 @@ export const insertBeat = async (beat: {
         const db = await openDatabase();
         // no momento que insere a tabela tem o midBPM set no valor do bpm que é o default do arquivo.
         await db.runAsync(`
-            INSERT INTO beats (bpm, minBPM, midBPM, maxBPM, signature, bars, genre, title)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?);
-        `, beat.bpm, beat.minBPM, beat.bpm, beat.maxBPM, beat.signature, beat.bars, beat.genre, beat.title);
+            INSERT INTO beats (bpm, minBPM, midBPM, maxBPM, signature, bars, genre, title, favorite)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+        `, beat.bpm, beat.minBPM, beat.bpm, beat.maxBPM, beat.signature, beat.bars, beat.genre, beat.title, 0);
         console.log('Beat inserido com sucesso!');
     } catch (e) {
         console.log(beat.bpm, beat.minBPM, beat.maxBPM, beat.signature, beat.bars, beat.genre, beat.title)
@@ -122,9 +123,9 @@ export const updateBeat = async (id: number, beat: Beat) => {
         const db = await openDatabase();
         await db.runAsync(`
             UPDATE beats
-            SET bpm = ?, minBPM = ?, maxBPM = ?, signature = ?, bars = ?, genre = ?, title = ?
+            SET bpm = ?, minBPM = ?, maxBPM = ?, signature = ?, bars = ?, genre = ?, title = ?, favorite = ?
             WHERE id = ?;
-        `, beat.bpm, beat.minBPM, beat.maxBPM, beat.signature, beat.bars, beat.genre, beat.title, id);
+        `, beat.bpm, beat.minBPM, beat.maxBPM, beat.signature, beat.bars, beat.genre, beat.title, beat.favorite, id);
         console.log('Beat atualizado com sucesso!');
     } catch (e) {
         console.log('Erro ao atualizar o beat: ', e);
