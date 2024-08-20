@@ -3,5 +3,50 @@
     "id": 1,
     "title": "2bars_other_120_80_240_44_2",
     "filePath": "./assets/sounds/beats/2bars_other_120_80_240_44_2.mp3"
+  },
+  {
+    "id": 2,
+    "title": "c-style1_hiphop_75_65_105_44_1",
+    "filePath": "./assets/sounds/beats/c-style1_hiphop_75_65_105_44_1.mp3"
+  },
+  {
+    "id": 3,
+    "title": "c-style2_hiphop_75_65_105_44_1",
+    "filePath": "./assets/sounds/beats/c-style2_hiphop_75_65_105_44_1.mp3"
+  },
+  {
+    "id": 4,
+    "title": "dark-phil_hiphop_75_55_155_44_4",
+    "filePath": "./assets/sounds/beats/dark-phil_hiphop_75_55_155_44_4.mp3"
+  },
+  {
+    "id": 5,
+    "title": "ludwig_other_79_65_125_44_1",
+    "filePath": "./assets/sounds/beats/ludwig_other_79_65_125_44_1.mp3"
+  },
+  {
+    "id": 6,
+    "title": "queens_hiphop_79_65_125_44_1",
+    "filePath": "./assets/sounds/beats/queens_hiphop_79_65_125_44_1.mp3"
+  },
+  {
+    "id": 7,
+    "title": "slick-d2_hiphop_75_55_125_44_1",
+    "filePath": "./assets/sounds/beats/slick-d2_hiphop_75_55_125_44_1.mp3"
+  },
+  {
+    "id": 8,
+    "title": "slick-dLong_hiphop_75_55_145_44_2",
+    "filePath": "./assets/sounds/beats/slick-dLong_hiphop_75_55_145_44_2.mp3"
+  },
+  {
+    "id": 9,
+    "title": "slick-d_hiphop_75_55_125_44_1",
+    "filePath": "./assets/sounds/beats/slick-d_hiphop_75_55_125_44_1.mp3"
+  },
+  {
+    "id": 10,
+    "title": "slowburn_hiphop_72_64_144_44_1",
+    "filePath": "./assets/sounds/beats/slowburn_hiphop_72_64_144_44_1.mp3"
   }
 ]
