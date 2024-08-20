@@ -17,7 +17,7 @@ export class BeatFilenameService {
       maxBPM: parseInt(maxBPM, 10),
       signature: this.parseTimeSignature(signature),
       bars: parseInt(bars, 10),
-      genre,
+      genre: this.parseGenre(genre),
       title
     };
   }
@@ -35,6 +35,10 @@ export class BeatFilenameService {
       '38': '3/8'
     };
     return timeSignatures[t] || 'Unknown time signature'; 
+  }
+
+  private static parseGenre(g: string) {
+    return g === 'hiphop' ? 'hip hop' : g;
   }
   
 
