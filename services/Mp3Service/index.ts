@@ -9,7 +9,7 @@ export class Mp3Service {
       throw new Error('Filename does not match the expected format');
     }
 
-    const [bpm, minBPM, maxBPM, signature, bars, genre, title] = parts;
+    const [title, genre, bpm, minBPM, maxBPM, signature, bars] = parts;
 
     return {
       bpm: parseInt(bpm, 10),
@@ -18,7 +18,7 @@ export class Mp3Service {
       signature,
       bars: parseInt(bars, 10),
       genre,
-      title: title, // Remover a extensão .mp3 do título
+      title
     };
   }
 
