@@ -1,34 +1,50 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, View, Text} from 'react-native';
+import { View } from 'react-native';
 import { styles } from './styles';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { FavoriteButton } from '../FavoriteButton';
-import { Beat } from '@/types/types';
-import { BeatCard } from '../BeatCard';
 import { FlatList } from 'react-native-gesture-handler';
 import { FilterChip } from '../FilterChip';
-
-const data: string[] = ['Filter 1', 'Filter 2', 'Filter 3', 'Filter 4', 'Filter 5'];
+import { useFilter } from '@/contexts/FilterContext';
 
 export const FilterChipList = () => {
-	const handleClear = (filter: string) => {
-		
-		console.log(`${filter} cleared`);
+	const { filters, setFilters } = useFilter();
+
+	const handleFilterClick = (filter: string, type: 'genre' | 'signature') => {
+		setFilters(prevFilters => {
+			const currentValues = prevFilters[type].split(',').filter(value => value);
+			const newValues = currentValues.includes(filter)
+				? currentValues.filter(value => value !== filter)
+				: [...currentValues, filter];
+
+			return {
+				...prevFilters,
+				[type]: newValues.join(','),
+			};
+		});
 	};
+
+	const handleChipClear = (item: string) => {
+		const isGenre = filters.genre.split(',').includes(item);
+		handleFilterClick(item, isGenre ? 'genre' : 'signature');
+	};
+
+	const selectedGenres = filters.genre.split(',').filter(g => g);
+	const selectedSignatures = filters.signature.split(',').filter(s => s);
+
+	const selectedFilters = [...selectedGenres, ...selectedSignatures];
 
 	const renderItem = ({ item }: { item: string }) => (
 		<FilterChip
 			label={item}
-			onClear={() => handleClear(item)}
+			onClear={() => handleChipClear(item)}
 		/>
 	);
 
 	return (
 		<View style={styles.container}>
 			<FlatList
-				data={data}
+				data={selectedFilters}
 				renderItem={renderItem}
-				keyExtractor={(item) => item}
+				keyExtractor={(item, index) => `${item}-${index}`}
 				horizontal={true}
 				showsHorizontalScrollIndicator={false}
 			/>

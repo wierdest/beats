@@ -8,13 +8,12 @@ import { TextButton } from '../TextButton';
 import { FavoriteButton } from '../FavoriteButton';
 
 type FavoriteFilter = 'all' | 'fav'
-
-export type FilterFavoriteProps = {
-	isFavorite: boolean;
+interface FilterFavoriteProps  {
+	isFavorite: boolean,
 	onChange: (favorite: boolean) => void;
 };
 
-export const FilterFavorite: React.FC<FilterFavoriteProps> = ({ isFavorite, onChange }) => {
+export const FilterFavorite = ({ isFavorite, onChange }: FilterFavoriteProps )   => {
 	const handlePress = () => {
 		onChange(!isFavorite);
 	};

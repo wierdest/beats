@@ -26,15 +26,19 @@ export const FilterProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 
   const handleFilterChange = (newFilter: Partial<FilterState>) => {
     setFilters((prevFilters) => {
-      const updatedFilters = {
-        ...prevFilters,
-        ...newFilter
-      };
-      console.log('Updated Filters:', updatedFilters);
-      return updatedFilters;
+      const shouldUpdate = Object.keys(newFilter).some(
+        (key) => prevFilters[key as keyof FilterState] !== newFilter[key as keyof FilterState]
+      );
+  
+      if (shouldUpdate) {
+        return {
+          ...prevFilters,
+          ...newFilter
+        };
+      }
+      return prevFilters;
     });
   };
-
   return (
     <FilterContext.Provider value={{ filters, setFilters, handleFilterChange }}>
       {children}

@@ -10,7 +10,7 @@ export type FilterTempoProps = {
 	onChange: (tempo: string) => void;
   };
 
-  export const FilterTempo: React.FC<FilterTempoProps> = ({ selectedTempo, onChange }) => {
+  export const FilterTempo = ({ selectedTempo, onChange } : FilterTempoProps)  => {
 	const [min, setMin] = useState<number>(50);
 	const [max, setMax] = useState<number>(280);
   

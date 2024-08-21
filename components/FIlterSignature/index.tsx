@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import { styles } from './styles';
-import { RangeSlider } from '../RangeSlider';
-import { Divider } from '../Divider';
+
 import { TextButtonGridList } from '../TextButtonGridList';
 
 const data: string[] = ['ALL', '4/4', '3/4', '2/4', '6/8', '9/8', '12/8', '5/4', '7/8', '3/8'];
 
 type FilterSignatureProps = {
+    selectedSignature: string[];
     onChange: (signature: string) => void;
-  };
+};
 
-export const FilterSignature: React.FC<FilterSignatureProps> = ({ onChange }) => {
+export const FilterSignature = ({ selectedSignature, onChange }: FilterSignatureProps) => {
     const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set(["ALL"]));
 
     const handlePress = (item: string) => {
@@ -43,6 +43,14 @@ export const FilterSignature: React.FC<FilterSignatureProps> = ({ onChange }) =>
     };
 
     useEffect(() => {
+        const signaturesSet = new Set(selectedSignature);
+        if (signaturesSet.size === 0) {
+            signaturesSet.add("ALL");
+        }
+        setSelectedItems(signaturesSet);
+    }, [selectedSignature]);
+
+    useEffect(() => {
         // Filtrar valores vazios ou nulos, se necessário
         const filteredItems = Array.from(selectedItems).filter(item => item.trim() !== '');
 
@@ -52,16 +60,16 @@ export const FilterSignature: React.FC<FilterSignatureProps> = ({ onChange }) =>
     }, [selectedItems]);
 
 
-	return (
-		<View style={styles.container}>
-			<Text style={styles.label}>TIME SIGNATURES</Text>
-			<TextButtonGridList
-				data={data}
-				numberOfCols={5}
-				selectedItems={selectedItems}
-				handlePress={handlePress}
-			
-			/>
-		</View>
-	)
+    return (
+        <View style={styles.container}>
+            <Text style={styles.label}>TIME SIGNATURES</Text>
+            <TextButtonGridList
+                data={data}
+                numberOfCols={5}
+                selectedItems={selectedItems}
+                handlePress={handlePress}
+
+            />
+        </View>
+    )
 };
