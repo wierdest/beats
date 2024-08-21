@@ -12,7 +12,7 @@ export const createStyles = (isDarkMode: boolean) => {
       paddingLeft: 12,
     },
     item: {
-      fontSize: 24,
+      fontSize: 18,
       marginVertical: 10,
       color: isDarkMode ? '#fff' : '#000', 
     },

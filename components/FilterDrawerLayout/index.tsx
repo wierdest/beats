@@ -15,8 +15,6 @@ export const FilterDrawerLayout = () => {
   const styles = createStyles(isDarkMode);
   const { filters, handleFilterChange } = useFilter();
 
-  
-
   return (
     <View style={styles.container}>
       <DrawerHeader />
