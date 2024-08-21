@@ -5,11 +5,12 @@ import { TextButtonGridList } from '../TextButtonGridList';
 
 const data: string[] = ['ALL', 'ROCK', 'POP', 'HIP HOP', 'JAZZ', 'BLUES', 'FUNK', 'FOLK', 'EDM', 'Other'];
 
-type FilterGenreProps = {
+interface FilterGenreProps {
+    selectedGenres: string[],
     onChange: (genre: string) => void;
 };
 
-export const FilterGenre: React.FC<FilterGenreProps> = ({ onChange }) => {
+export const FilterGenre = ({ selectedGenres, onChange }: FilterGenreProps )  => {
     const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set(["ALL"]));
 
     const handlePress = (item: string) => {
@@ -41,10 +42,18 @@ export const FilterGenre: React.FC<FilterGenreProps> = ({ onChange }) => {
     };
 
     useEffect(() => {
-    const filteredItems = Array.from(selectedItems).filter(item => item.trim() !== '');
+        const gendersSet = new Set(selectedGenres);
+        if (gendersSet.size === 0) {
+            gendersSet.add("ALL");
+        }
+        setSelectedItems(gendersSet);
+    }, [selectedGenres]);
 
-    // Unir os itens com vírgulas
-    const genre = filteredItems.join(',');
+    useEffect(() => {
+        const filteredItems = Array.from(selectedItems).filter(item => item.trim() !== '');
+
+        // Unir os itens com vírgulas
+        const genre = filteredItems.join(',');
 
         onChange(genre);
     }, [selectedItems]);

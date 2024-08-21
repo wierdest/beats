@@ -1,14 +1,13 @@
-import { View, TouchableOpacity, Text } from "react-native";
+import { View } from "react-native";
 import { createStyles } from "./styles";
 import { DrawerHeader } from "../DrawerHeader";
-import { useState } from "react";
 import { FilterTempo } from "../FilterTempo";
 import { Divider } from "../Divider";
 import { FilterGenre } from "../FilterGenre";
 import { FilterSignature } from "../FIlterSignature";
 import { FilterFavorite } from "../FilterFavorite";
 import { useTheme } from "@/contexts/ThemeContext";
-import { FilterState, useFilter } from "@/contexts/FilterContext";
+import {  useFilter } from "@/contexts/FilterContext";
 
 export const FilterDrawerLayout = () => {
   const { isDarkMode } = useTheme();
@@ -26,10 +25,12 @@ export const FilterDrawerLayout = () => {
         />
         <Divider />
         <FilterGenre
+          selectedGenres={filters.genre.split(',').filter(g => g)}
           onChange={(genre) => handleFilterChange({ genre })}
         />
         <Divider />
         <FilterSignature
+          selectedSignature={filters.signature.split(',').filter(g => g)}
           onChange={(signature) => handleFilterChange({ signature })}
         />
         <Divider />
