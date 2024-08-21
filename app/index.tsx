@@ -12,6 +12,7 @@ import { useBeat } from "@/contexts/BeatContext"; // Import the BeatContext
 import { ActivityIndicator, View } from "react-native";
 import { lightTheme, darkTheme } from './styles';
 import { useDatabase } from "@/contexts/DatabaseContext";
+import { useFilter } from "@/contexts/FilterContext";
 
 export default function Index() {
   const { isDarkMode } = useTheme();
@@ -20,11 +21,20 @@ export default function Index() {
   const { beats } = useDatabase();
   const { beat, playing, selectBeat, play, stop, changeBpm } = useBeat();
 
+  const { checkEmpty } = useFilter()
+
   return (
     <>
       <View style={{ flex: 1, backgroundColor: theme.backgroundColor }}>
-        <FilterButton />
-        <FilterChipList />
+        {
+          checkEmpty() &&
+          <FilterButton />
+        }
+        {
+          !checkEmpty() &&
+          <FilterChipList />
+        }
+        
         <BeatList originalBeats={beats} onPress={selectBeat} />
         <Player
         />

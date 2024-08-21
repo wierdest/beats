@@ -12,14 +12,15 @@ interface FilterContextType {
   filters: FilterState;
   setFilters: React.Dispatch<React.SetStateAction<FilterState>>;
   handleFilterChange: (newFilter: Partial<FilterState>) => void;
+  checkEmpty: () => boolean;
 };
 
 const FilterContext = createContext<FilterContextType | undefined>(undefined);
 
 export const FilterProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [filters, setFilters] = useState<FilterState>({
-    tempo: '',
-    genre: '',
+    tempo: 'ALL',
+    genre: 'ALL',
     signature: '',
     favorite: false,
   });
@@ -39,8 +40,14 @@ export const FilterProvider: React.FC<{ children: ReactNode }> = ({ children }) 
       return prevFilters;
     });
   };
+
+  const checkEmpty = () => {
+    return filters.genre === 'ALL' && filters.signature === 'ALL' && filters.tempo === '50-280' && !filters.favorite;
+  }
+
+
   return (
-    <FilterContext.Provider value={{ filters, setFilters, handleFilterChange }}>
+    <FilterContext.Provider value={{ filters, setFilters, handleFilterChange, checkEmpty }}>
       {children}
     </FilterContext.Provider>
   );
