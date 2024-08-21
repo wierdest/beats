@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     elevation: 2
   },
   label: {
-    fontSize: 24,
+    fontSize: 22,
     color: 'black',
     textAlign: 'left',
   },
