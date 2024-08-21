@@ -19,8 +19,8 @@ const FilterContext = createContext<FilterContextType | undefined>(undefined);
 export const FilterProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [filters, setFilters] = useState<FilterState>({
     tempo: '',
-    genre: '',
-    signature: '',
+    genre: 'ALL',
+    signature: 'ALL',
     favorite: false,
   });
 
@@ -36,6 +36,7 @@ export const FilterProvider: React.FC<{ children: ReactNode }> = ({ children }) 
           ...newFilter
         };
       }
+      console.log("Filtros atualizados:", prevFilters);
       return prevFilters;
     });
   };

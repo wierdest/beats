@@ -12,7 +12,6 @@ interface TextButtonGridListProps {
 	handlePress: (item: string) => void
 }
 
-
 export const TextButtonGridList = ({data, selectedItems, numberOfCols, handlePress} : TextButtonGridListProps) => {
 
 	const renderItem = ({ item }: { item: string }) => (

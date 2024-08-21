@@ -10,7 +10,7 @@ export const FilterChipList = () => {
 
 	const handleFilterClick = (filter: string, type: 'genre' | 'signature') => {
 		setFilters(prevFilters => {
-			const currentValues = prevFilters[type].split(',').filter(value => value);
+			const currentValues = prevFilters[type].split(',').filter(value => value );
 			const newValues = currentValues.includes(filter)
 				? currentValues.filter(value => value !== filter)
 				: [...currentValues, filter];
@@ -27,8 +27,8 @@ export const FilterChipList = () => {
 		handleFilterClick(item, isGenre ? 'genre' : 'signature');
 	};
 
-	const selectedGenres = filters.genre.split(',').filter(g => g);
-	const selectedSignatures = filters.signature.split(',').filter(s => s);
+	const selectedGenres = filters.genre.split(',').filter(g => g && g !== 'ALL');
+	const selectedSignatures = filters.signature.split(',').filter(s => s && s !== 'ALL');
 
 	const selectedFilters = [...selectedGenres, ...selectedSignatures];
 
