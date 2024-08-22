@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Text, View } from 'react-native';
 import { styles } from './styles';
 import { RangeSlider } from '../RangeSlider';
@@ -13,9 +13,11 @@ export type FilterTempoProps = {
   export const FilterTempo = ({ selectedTempo, onChange } : FilterTempoProps)  => {
 	const [min, setMin] = useState<number>(50);
 	const [max, setMax] = useState<number>(280);
+
+	const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+	const [minTempo, maxTempo] = selectedTempo.split('-').map(Number);
   
 	useEffect(() => {
-	  const [minTempo, maxTempo] = selectedTempo.split('-').map(Number);
 	  if (!isNaN(minTempo) && !isNaN(maxTempo)) {
 		setMin(minTempo);
 		setMax(maxTempo);
@@ -23,8 +25,14 @@ export type FilterTempoProps = {
 	}, [selectedTempo]);
   
 	useEffect(() => {
-	  onChange(`${min}-${max}`);
-	}, [min, max]);
+		// usei isso pra demorar um cado pra filtragem rolar e otimizar o código
+		if (timeoutRef.current) {
+		  clearTimeout(timeoutRef.current);
+		}
+		timeoutRef.current = setTimeout(() => {
+		  onChange(`${min}-${max}`);
+		}, 300); 
+	  }, [min, max, onChange]);
   
 	return (
 	  <View style={styles.container}>

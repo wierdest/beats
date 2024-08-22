@@ -17,11 +17,11 @@ interface FilterContextType {
 
 const FilterContext = createContext<FilterContextType | undefined>(undefined);
 
-export const FilterProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const FilterProvider = ({ children }: { children: React.ReactNode }) => {
   const [filters, setFilters] = useState<FilterState>({
     tempo: 'ALL',
     genre: 'ALL',
-    signature: '',
+    signature: 'ALL',
     favorite: false,
   });
 
@@ -37,6 +37,7 @@ export const FilterProvider: React.FC<{ children: ReactNode }> = ({ children }) 
           ...newFilter
         };
       }
+      console.log("Filtros atualizados:", prevFilters);
       return prevFilters;
     });
   };
