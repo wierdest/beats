@@ -39,13 +39,13 @@ export const ThreeDotMenu = () => {
 					onPress={() => setVisible(false)}
 				>
 					<View style={styles.menu}>
-						<ThreeDotMenuItem
+						{/* <ThreeDotMenuItem
 							label={'Help out!'}
 							iconName='handshake'
 							onPress={() => {
 								handleOptionSelect('helpout');
 							}}
-						/>
+						/> */}
 						<ThreeDotMenuItem
 							label={'Settings'}
 							iconName='cog'

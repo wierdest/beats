@@ -1,7 +1,6 @@
 import { Beat } from '@/components/BeatList';
-import { createBeatsTable, deleteBeatsTable, existsInDatabase, getBeatById, getBeats, updateBeat } from '@/services/Database';
+import { createBeatsTable, deleteBeatsTable, getBeatById, getBeats, updateBeat } from '@/services/Database';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { BeatFilenameService } from '@/services/BeatFilename';
 
 import beatsList from '@/beatsList.json';
 
@@ -46,7 +45,6 @@ export const DatabaseProvider = ({ children }: { children: React.ReactNode }) =>
 
 
   useEffect(() => {
-    // clearDb();
     initDatabase();
     console.log('Tem ', beatsList.length, 'arquivos de audio na pasta!');
  

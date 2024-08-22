@@ -37,7 +37,7 @@ export const FilterProvider = ({ children }: { children: React.ReactNode }) => {
           ...newFilter
         };
       }
-      console.log("Filtros atualizados:", prevFilters);
+      // console.log("Filtros atualizados:", prevFilters);
       return prevFilters;
     });
   };

@@ -44,17 +44,17 @@ export const ModalSettings = () => {
                     onValueChange={handleDarkModeToggle}
                 />
                 
-                <SettingsSwitch
+                {/* <SettingsSwitch
                     label="Keep Screen On"
                     value={keepScreenOn}
                     onValueChange={setKeepScreenOn}
-                />
+                /> */}
 
-                <SettingsSwitch
+                {/* <SettingsSwitch
                     label="Trim end"
                     value={trimEnd}
                     onValueChange={setTrimEnd}
-                />
+                /> */}
 
                 <BasicButton
                     title='Clear DB'

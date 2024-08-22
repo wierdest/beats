@@ -32,7 +32,7 @@ interface Sample {
   bannerFilename: SampleFilename;
   soundSampleFilename: string;
 }
-
+// todo: isso tem que ter um samplesList.json e um samplesAssets.ts, da mesma forma que o beatsList.json e o beatsAssets.ts
 export type SampleFilename = 'lofi-chill' | 'tropical';
 
 const samples: Sample[] = [
@@ -117,9 +117,9 @@ export const BeatList = ({ originalBeats, onPress }: BeatListProps) => {
 
   // FINAL DOS FILTROS
 
-	const handlePress = async (id: number) => {
-		
-    await onPress(id);
+	const handlePress = (id: number) => {
+		console.log('pressed to sleect beat ', id)
+    onPress(id);
     setPlayingId(id);
 
 	};
