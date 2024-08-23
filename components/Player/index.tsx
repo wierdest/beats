@@ -46,20 +46,19 @@ export const Player = () => {
 	// Fetch volume & Setup volume listener (not using the listener because it breaks on samsung devices)
 	useEffect(() => {
 		const fetchVolume = async () => {
-			const { volume } = await VolumeManager.getVolume();
-			setVolume(Math.round(volume * 100));
-			setIsVolumeMuted(volume === 0);
-			setOriginalVolume(volume === 0 ? originalVolume : volume);
+
+			try {
+				const { volume } = await VolumeManager.getVolume();
+				setVolume(Math.round(volume * 100));
+				setIsVolumeMuted(volume === 0);
+				setOriginalVolume(volume === 0 ? originalVolume : volume);
+
+			} catch (e) {
+				console.log('Erro em buscar volume do sistema com VolumeManager')
+			}
+		
 		};
 		fetchVolume();
-
-		// const volumeListener = VolumeManager.addVolumeListener((result) => {
-		//     setVolume(Math.round(result.volume * 100));
-		//     setIsVolumeMuted(result.volume === 0);
-		// });
-		// return () => {
-		//     volumeListener.remove();
-		// };
 	}, []);
 
 	const adjustVolume = (volumeLevel: number) => {
