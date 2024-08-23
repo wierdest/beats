@@ -5,7 +5,7 @@ import { FilterDrawerLayout } from '@/components/FilterDrawerLayout';
 import { HeaderRight } from '@/components/HeaderRight';
 import { ModalProvider } from '@/contexts/ModalContext';
 import { ThemeProvider, useTheme } from '@/contexts/ThemeContext';
-import { SplashScreenComponent } from '@/components/SplashScreen';
+// import { SplashScreenComponent } from '@/components/SplashScreen';
 import { DatabaseProvider } from '@/contexts/DatabaseContext';
 import { BeatProvider } from '@/contexts/BeatContext';
 import { FilterProvider } from '@/contexts/FilterContext';
@@ -13,17 +13,17 @@ import { FilterProvider } from '@/contexts/FilterContext';
 const RootLayoutConst = () => {
     const { isDarkMode } = useTheme();
 
-    const [isSplashVisible, setSplashVisible] = useState(true);
+    // const [isSplashVisible, setSplashVisible] = useState(true);
 
-    const handleFinishSplash = () => {
-        setSplashVisible(false);
-    }
+    // const handleFinishSplash = () => {
+    //     setSplashVisible(false);
+    // }
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
-            {isSplashVisible ? (
+            {/* {isSplashVisible ? (
                 <SplashScreenComponent onFinish={handleFinishSplash} />
-            ) : (
+            ) : ( */}
 
                 <ModalProvider>
                     <Drawer
@@ -50,7 +50,7 @@ const RootLayoutConst = () => {
                         />
                     </Drawer>
                 </ModalProvider>
-            )}
+            {/* )} */}
         </GestureHandlerRootView>
     );
 }
