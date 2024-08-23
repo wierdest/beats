@@ -105,7 +105,7 @@ export const Player = () => {
 			<View style={styles.mainControls}>
 				<View style={styles.topRow}>
 					<PlayButton onPlay={play} onStop={stop} />
-					<Text style={styles.beatName}>{beat.title}</Text>
+                    <Text style={styles.beatName}>{beat ? beat.title : 'No beat selected'}</Text>
 					<PlayerExpandButton isExpanded={isExpanded} onPress={handleExpandPress} />
 				</View>
 
