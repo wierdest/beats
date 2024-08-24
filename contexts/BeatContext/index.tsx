@@ -58,7 +58,7 @@ export const BeatProvider = ({ children }: { children: React.ReactNode }) => {
 
   const selectBeat = async (id: number) => {
     if (beat && beat.id === id) {
-      console.log('Tried to select the same beat!')
+      // console.log('Tried to select the same beat!')
       return;
     }
 
@@ -66,7 +66,7 @@ export const BeatProvider = ({ children }: { children: React.ReactNode }) => {
       const beatToPlay = await findBeatById(id);
 
       if (!beatToPlay) {
-        console.log('Beat not found in the db!  Todo: investigate this');
+        // console.log('Beat not found in the db!');
         return;
       }
 
@@ -87,7 +87,7 @@ export const BeatProvider = ({ children }: { children: React.ReactNode }) => {
       // Load the new audio
       const asset = beatsAssetsMap[beatToPlay.title.split("_")[0]]
 
-      try {
+      try {15 
         const { sound, status } = await Audio.Sound.createAsync(asset, {
           isLooping: true,
           rate: beatToPlay.bpm / beatToPlay.midBPM!,
@@ -148,22 +148,22 @@ export const BeatProvider = ({ children }: { children: React.ReactNode }) => {
   const changeBpm = async (newBpm: number) => {
 
     if (beat === undefined) {
-      console.log('Não há beat data carregada para mudar o bpm!')
+      // console.log('Não há beat data carregada para mudar o bpm!')
       return;
     }
     if (audio === undefined) {
-      console.log('Não há audio de beat carregado para mudar o rate!')
+      // console.log('Não há audio de beat carregado para mudar o rate!')
       return;
     }
 
     if (!audio._loaded) {
-      console.log('Áudio não carregado!')
+      // console.log('Áudio não carregado!')
       return
     }
 
     const rate = newBpm / beat.midBPM!;
 
-    console.log(newBpm, ' bpm to rate ', rate)
+    // console.log(newBpm, ' bpm to rate ', rate)
 
     setBeat(prevBeat => {
       if (!prevBeat) return prevBeat;
@@ -177,7 +177,7 @@ export const BeatProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       await audio.setRateAsync(rate, true);
     } catch (error) {
-      console.log(audio.getStatusAsync())
+      // console.log(audio.getStatusAsync())
       console.log('Erro em atualizar rate! ', error)
     }
   }
@@ -186,15 +186,15 @@ export const BeatProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       const beatToUpdate = await findBeatById(id);
       if (!beatToUpdate) {
-        console.log('Beat not found in the db beats db!');
+        // console.log('Beat not found in the db beats db!');
         return;
       }
 
-      console.log('beat found! ', beatToUpdate.title, beatToUpdate.favorite)
+      // console.log('beat found! ', beatToUpdate.title, beatToUpdate.favorite)
 
       // Toggle the favorite status
       const newFavoriteStatus = beatToUpdate.favorite === 0 ? 1 : 0;
-      console.log('new status ', newFavoriteStatus)
+      // console.log('new status ', newFavoriteStatus)
 
       // Update the beat with the new favorite status
       const updatedBeat = { ...beatToUpdate, favorite: newFavoriteStatus };
@@ -215,7 +215,7 @@ export const BeatProvider = ({ children }: { children: React.ReactNode }) => {
       }
       setPlaying(false);
     } else {
-      console.log("Não há beat para parar de tocar, como pode?")
+      // console.log("Não há beat para parar de tocar, como pode?")
     }
   }
 

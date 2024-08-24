@@ -46,7 +46,7 @@ export const DatabaseProvider = ({ children }: { children: React.ReactNode }) =>
 
   useEffect(() => {
     initDatabase();
-    console.log('Tem ', beatsList.length, 'arquivos de audio na pasta!');
+    // console.log('Tem ', beatsList.length, 'arquivos de audio na pasta!');
  
   }, []);
   

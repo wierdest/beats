@@ -118,7 +118,7 @@ export const BeatList = ({ originalBeats, onPress }: BeatListProps) => {
   // FINAL DOS FILTROS
 
 	const handlePress = (id: number) => {
-		console.log('pressed to sleect beat ', id)
+		// console.log('pressed to sleect beat ', id)
     onPress(id);
     setPlayingId(id);
 
