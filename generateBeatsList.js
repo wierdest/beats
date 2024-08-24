@@ -1,23 +1,54 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var fs = require("fs");
-var path = require("path");
-var beatsDirectory = path.join(__dirname, 'assets/sounds/beats');
-var outputFilePath = path.join(__dirname, 'beatsList.json');
-var outputTsPath = path.join(__dirname, 'beatsAssets.ts');
-var generateBeatsList = function () {
-    var files = fs.readdirSync(beatsDirectory).filter(function (file) {
+const fs = require("fs");
+const path = require("path");
+
+// Directory and output file paths
+const beatsDirectory = path.join(__dirname, 'assets/sounds/beats');
+const outputFilePath = path.join(__dirname, 'beatsList.json');
+const outputTsPath = path.join(__dirname, 'beatsAssets.ts');
+
+// Function to convert camelCase to Sentence Case
+const parseTitle = (title) => {
+    const words = title.replace(/([A-Z])/g, ' $1').trim();
+    return words.replace(/\b\w/g, (char) => char.toUpperCase());
+};
+
+// Function to generate the beats list
+const generateBeatsList = () => {
+    const files = fs.readdirSync(beatsDirectory).filter((file) => {
         return file.endsWith('.mp3');
     });
-    var beatsList = files.map(function (file, index) { return ({
-        id: index + 1,
-        title: path.basename(file, path.extname(file)),
-        filePath: "./assets/sounds/beats/".concat(file),
-    }); });
+
+    const beatsList = files.map((file, index) => { 
+        const title = path.basename(file, path.extname(file));
+        return {
+            id: index + 1,
+            title: title,
+            filePath: `./assets/sounds/beats/${file}`,
+        };
+    });
+
+    // Write the JSON file
     fs.writeFileSync(outputFilePath, JSON.stringify(beatsList, null, 2));
     console.log('Beats list generated:', beatsList);
-    var assetsTsContent = "\n    const beatsAssetsMap: Record<string, any> = {\n        ".concat(beatsList.map(function (beat) { return "'".concat(beat.title.split('_')[0], "': require('").concat(beat.filePath, "'),"); }).join('\n        '), "\n    };\n\n    export default beatsAssetsMap;\n    ");
+
+    // Generate the TypeScript content
+    const assetsTsContent = `
+    const beatsAssetsMap: Record<string, any> = {
+        ${beatsList.map((beat) => { 
+            const parsedTitle = parseTitle(beat.title.split('_')[0]); // Apply parseTitle here
+            return `'${parsedTitle}': require('${beat.filePath}'),`; 
+        }).join('\n        ')}
+    };
+
+    export default beatsAssetsMap;
+    `;
+
+    // Write the TypeScript file
     fs.writeFileSync(outputTsPath, assetsTsContent);
     console.log('Beats assets file generated:', outputTsPath);
 };
+
+// Generate the list and TypeScript file
 generateBeatsList();

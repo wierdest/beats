@@ -1,137 +1,122 @@
 [
   {
     "id": 1,
-    "title": "2bars_other_120_80_240_44_2",
-    "filePath": "./assets/sounds/beats/2bars_other_120_80_240_44_2.mp3"
+    "title": "aVeryBasicVerse_rock_100_60_200_44_1",
+    "filePath": "./assets/sounds/beats/aVeryBasicVerse_rock_100_60_200_44_1.mp3"
   },
   {
     "id": 2,
-    "title": "basicVerse_rock_100_60_200_44_1",
-    "filePath": "./assets/sounds/beats/basicVerse_rock_100_60_200_44_1.mp3"
+    "title": "boringPopBeat_rock_100_60_200_44_1",
+    "filePath": "./assets/sounds/beats/boringPopBeat_rock_100_60_200_44_1.mp3"
   },
   {
     "id": 3,
-    "title": "bembe_other_123_87_163_68_2",
-    "filePath": "./assets/sounds/beats/bembe_other_123_87_163_68_2.mp3"
+    "title": "brushyAndFunky_hiphop_118_72_148_44_2",
+    "filePath": "./assets/sounds/beats/brushyAndFunky_hiphop_118_72_148_44_2.mp3"
   },
   {
     "id": 4,
-    "title": "boom_jazz_89_75_123_44_1",
-    "filePath": "./assets/sounds/beats/boom_jazz_89_75_123_44_1.mp3"
+    "title": "charlieBGood_hiphop_100_80_180_44_4",
+    "filePath": "./assets/sounds/beats/charlieBGood_hiphop_100_80_180_44_4.mp3"
   },
   {
     "id": 5,
-    "title": "bossaA_jazz_80_112_68_44_2",
-    "filePath": "./assets/sounds/beats/bossaA_jazz_80_112_68_44_2.mp3"
+    "title": "cheapJazzLounge_jazz_65_60_135_44_1",
+    "filePath": "./assets/sounds/beats/cheapJazzLounge_jazz_65_60_135_44_1.mp3"
   },
   {
     "id": 6,
-    "title": "brushyFunky_hiphop_118_72_148_44_2",
-    "filePath": "./assets/sounds/beats/brushyFunky_hiphop_118_72_148_44_2.mp3"
+    "title": "darkPhillyStyle_hiphop_75_55_155_44_4",
+    "filePath": "./assets/sounds/beats/darkPhillyStyle_hiphop_75_55_155_44_4.mp3"
   },
   {
     "id": 7,
-    "title": "c-style1_hiphop_75_65_105_44_1",
-    "filePath": "./assets/sounds/beats/c-style1_hiphop_75_65_105_44_1.mp3"
+    "title": "electroBeatStiff_edm_135_100_170_44_2",
+    "filePath": "./assets/sounds/beats/electroBeatStiff_edm_135_100_170_44_2.mp3"
   },
   {
     "id": 8,
-    "title": "c-style2_hiphop_75_65_105_44_1",
-    "filePath": "./assets/sounds/beats/c-style2_hiphop_75_65_105_44_1.mp3"
+    "title": "gringoCarnival_other_128_104_148_44_2",
+    "filePath": "./assets/sounds/beats/gringoCarnival_other_128_104_148_44_2.mp3"
   },
   {
     "id": 9,
-    "title": "carnival_other_128_104_148_44_2",
-    "filePath": "./assets/sounds/beats/carnival_other_128_104_148_44_2.mp3"
+    "title": "hatsAndRim_other_79_61_137_44_1",
+    "filePath": "./assets/sounds/beats/hatsAndRim_other_79_61_137_44_1.mp3"
   },
   {
     "id": 10,
-    "title": "charlyb_hiphop_100_80_180_44_4",
-    "filePath": "./assets/sounds/beats/charlyb_hiphop_100_80_180_44_4.mp3"
+    "title": "heavyHatsBadass_rock_72_62_128_44_1",
+    "filePath": "./assets/sounds/beats/heavyHatsBadass_rock_72_62_128_44_1.mp3"
   },
   {
     "id": 11,
-    "title": "dark-phil_hiphop_75_55_155_44_4",
-    "filePath": "./assets/sounds/beats/dark-phil_hiphop_75_55_155_44_4.mp3"
+    "title": "iGotFunkyFeet_hiphop_92_70_112_44_1",
+    "filePath": "./assets/sounds/beats/iGotFunkyFeet_hiphop_92_70_112_44_1.mp3"
   },
   {
     "id": 12,
-    "title": "electro_edm_135_100_170_44_2",
-    "filePath": "./assets/sounds/beats/electro_edm_135_100_170_44_2.mp3"
+    "title": "jazzyBoom_jazz_89_75_123_44_1",
+    "filePath": "./assets/sounds/beats/jazzyBoom_jazz_89_75_123_44_1.mp3"
   },
   {
     "id": 13,
-    "title": "funky_hiphop_92_70_112_44_1",
-    "filePath": "./assets/sounds/beats/funky_hiphop_92_70_112_44_1.mp3"
+    "title": "ludwigSoundsRich_other_79_65_125_44_1",
+    "filePath": "./assets/sounds/beats/ludwigSoundsRich_other_79_65_125_44_1.mp3"
   },
   {
     "id": 14,
-    "title": "groovy_rock_102_88_128_44_1",
-    "filePath": "./assets/sounds/beats/groovy_rock_102_88_128_44_1.mp3"
+    "title": "metronomeTwoBars_other_120_80_240_44_2",
+    "filePath": "./assets/sounds/beats/metronomeTwoBars_other_120_80_240_44_2.mp3"
   },
   {
     "id": 15,
-    "title": "hats&rim_other_79_61_137_44_1",
-    "filePath": "./assets/sounds/beats/hats&rim_other_79_61_137_44_1.mp3"
+    "title": "myFirstBossa_jazz_80_112_68_44_2",
+    "filePath": "./assets/sounds/beats/myFirstBossa_jazz_80_112_68_44_2.mp3"
   },
   {
     "id": 16,
-    "title": "heavyHats_rock_72_62_128_44_1",
-    "filePath": "./assets/sounds/beats/heavyHats_rock_72_62_128_44_1.mp3"
+    "title": "ohMyGod_hiphop_124_86_148_44_1",
+    "filePath": "./assets/sounds/beats/ohMyGod_hiphop_124_86_148_44_1.mp3"
   },
   {
     "id": 17,
-    "title": "house_edm_120_100_180_44_2",
-    "filePath": "./assets/sounds/beats/house_edm_120_100_180_44_2.mp3"
+    "title": "oldFashionedBembe_other_123_87_163_68_2",
+    "filePath": "./assets/sounds/beats/oldFashionedBembe_other_123_87_163_68_2.mp3"
   },
   {
     "id": 18,
-    "title": "jazzLounge_jazz_65_60_135_44_1",
-    "filePath": "./assets/sounds/beats/jazzLounge_jazz_65_60_135_44_1.mp3"
+    "title": "pineappleExpress_hiphop_92_70_124_44_2",
+    "filePath": "./assets/sounds/beats/pineappleExpress_hiphop_92_70_124_44_2.mp3"
   },
   {
     "id": 19,
-    "title": "ludwig_other_79_65_125_44_1",
-    "filePath": "./assets/sounds/beats/ludwig_other_79_65_125_44_1.mp3"
+    "title": "queensStyle_hiphop_79_65_125_44_1",
+    "filePath": "./assets/sounds/beats/queensStyle_hiphop_79_65_125_44_1.mp3"
   },
   {
     "id": 20,
-    "title": "nasty_hiphop_92_70_124_44_2",
-    "filePath": "./assets/sounds/beats/nasty_hiphop_92_70_124_44_2.mp3"
+    "title": "slickDAcoustic_hiphop_75_55_145_44_2",
+    "filePath": "./assets/sounds/beats/slickDAcoustic_hiphop_75_55_145_44_2.mp3"
   },
   {
     "id": 21,
-    "title": "oh_hiphop_124_86_148_44_1",
-    "filePath": "./assets/sounds/beats/oh_hiphop_124_86_148_44_1.mp3"
+    "title": "slowburnNotReally_hiphop_72_64_144_44_1",
+    "filePath": "./assets/sounds/beats/slowburnNotReally_hiphop_72_64_144_44_1.mp3"
   },
   {
     "id": 22,
-    "title": "pop_rock_100_60_200_44_1",
-    "filePath": "./assets/sounds/beats/pop_rock_100_60_200_44_1.mp3"
+    "title": "superNormalStyle_hiphop_75_65_105_44_1",
+    "filePath": "./assets/sounds/beats/superNormalStyle_hiphop_75_65_105_44_1.mp3"
   },
   {
     "id": 23,
-    "title": "queens_hiphop_79_65_125_44_1",
-    "filePath": "./assets/sounds/beats/queens_hiphop_79_65_125_44_1.mp3"
+    "title": "whitePeopleGroovy_rock_102_88_128_44_1",
+    "filePath": "./assets/sounds/beats/whitePeopleGroovy_rock_102_88_128_44_1.mp3"
   },
   {
     "id": 24,
-    "title": "slick-d2_hiphop_75_55_125_44_1",
-    "filePath": "./assets/sounds/beats/slick-d2_hiphop_75_55_125_44_1.mp3"
-  },
-  {
-    "id": 25,
-    "title": "slick-dLong_hiphop_75_55_145_44_2",
-    "filePath": "./assets/sounds/beats/slick-dLong_hiphop_75_55_145_44_2.mp3"
-  },
-  {
-    "id": 26,
-    "title": "slick-d_hiphop_75_55_125_44_1",
-    "filePath": "./assets/sounds/beats/slick-d_hiphop_75_55_125_44_1.mp3"
-  },
-  {
-    "id": 27,
-    "title": "slowburn_hiphop_72_64_144_44_1",
-    "filePath": "./assets/sounds/beats/slowburn_hiphop_72_64_144_44_1.mp3"
+    "title": "yourRegularHouse_edm_120_100_180_44_2",
+    "filePath": "./assets/sounds/beats/yourRegularHouse_edm_120_100_180_44_2.mp3"
   }
 ]

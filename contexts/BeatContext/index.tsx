@@ -42,12 +42,17 @@ export const BeatProvider = ({ children }: { children: React.ReactNode }) => {
   const loopLimitRef = useRef<number | undefined>(undefined);
 
   const loadCurrentBeat = async () => {
-    const currentBeatId = await AsyncStorage.getItem('currentBeat');
-    if (currentBeatId) {
-      await selectBeat(parseInt(currentBeatId, 10));
-    } else {
-      await selectBeat(1);
+    try {
+      const currentBeatId = await AsyncStorage.getItem('currentBeat');
+      if (currentBeatId) {
+        await selectBeat(parseInt(currentBeatId, 10));
+      } else {
+        await selectBeat(1);
+      }
+    } catch (e) {
+
     }
+   
   };
 
   useEffect(() => {
@@ -85,9 +90,10 @@ export const BeatProvider = ({ children }: { children: React.ReactNode }) => {
       setPlaying(false)
 
       // Load the new audio
+      console.log(beatToPlay.title)
       const asset = beatsAssetsMap[beatToPlay.title.split("_")[0]]
 
-      try {15 
+      try {
         const { sound, status } = await Audio.Sound.createAsync(asset, {
           isLooping: true,
           rate: beatToPlay.bpm / beatToPlay.midBPM!,

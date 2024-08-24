@@ -5,13 +5,13 @@
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
-    "generate-beats-list": "tsc generateBeatsList.ts && node generateBeatsList.js",
-    "android": "tsc generateBeatsList.ts && node generateBeatsList.js && expo run:android",
+    "generate-beats-list": "node generateBeatsList.js",
+    "android": "node generateBeatsList.js && expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "expo lint",
-    "prebuild": "tsc generateBeatsList.ts && node generateBeatsList.js"
+    "prebuild": "node generateBeatsList.js"
   },
   "jest": {
     "preset": "jest-expo"

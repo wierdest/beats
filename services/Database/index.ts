@@ -10,7 +10,7 @@ import { BeatFilenameService } from '../BeatFilename';
 // abre o db assincronamente
 const openDatabase = async () => {
     try {
-        const db = await SQLite.openDatabaseAsync('beats.db', { useNewConnection: true});
+        const db = await SQLite.openDatabaseAsync('beats.db');
         // console.log('db aberto com sucesso!')
         return db;
     } catch (e) {
@@ -48,12 +48,12 @@ export const createBeatsTable = async () => {
             // db está desatualizado com a lista de arquivos
             const existingIds = existingRows.map(row => row.id)
             const beatsParaAdcionarAoDB = beatsList.filter(beat => !existingIds.includes(beat.id)).map(b => b.title)
-            // console.log('title para ser processado e inserido no db ', beatsParaAdcionarAoDB)
+            console.log('title para ser processado e inserido no db ', beatsParaAdcionarAoDB)
 
             beatsParaAdcionarAoDB.forEach(beatTitle => insertBeat(BeatFilenameService.extractInfo(beatTitle)))
 
         } else {
-            // console.log('beats table contém ', existingRows.length, 'beats.')
+            console.log('beats table contém ', existingRows.length, 'beats.')
         }
     } catch (e) {
         console.log('Erro ao criar o db! ', e);
@@ -92,7 +92,7 @@ export const getBeats = async (): Promise<Beat[]> => {
 export const getBeatById = async (id: number) => {
     try {
         const db = await openDatabase();
-        // console.log('db opened ', db)
+        console.log('db opened ', db)
         // const result = await db.getAllAsync('SELECT 1;'); // Test with a simple query
         // console.log('Simple query result:', result);
         const beat = db.getFirstSync<Beat |null>('SELECT * FROM beats WHERE id = ?;', id);
@@ -124,7 +124,7 @@ export const insertBeat = async (beat: {
             INSERT INTO beats (bpm, minBPM, midBPM, maxBPM, signature, bars, genre, title, favorite)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
         `, beat.bpm, beat.minBPM, beat.bpm, beat.maxBPM, beat.signature, beat.bars, beat.genre, beat.title, 0);
-        // console.log('Beat inserido com sucesso!');
+        console.log('Beat inserido com sucesso!');
     } catch (e) {
         console.log(beat.bpm, beat.minBPM, beat.maxBPM, beat.signature, beat.bars, beat.genre, beat.title)
         console.log('Erro ao inserir o beat: ', e);

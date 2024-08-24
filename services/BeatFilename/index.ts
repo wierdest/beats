@@ -18,9 +18,16 @@ export class BeatFilenameService {
       signature: this.parseTimeSignature(signature),
       bars: parseInt(bars, 10),
       genre: this.parseGenre(genre),
-      title
+      title: this.parseTitle(title)
     };
   }
+
+  private static parseTitle(title: string) {
+    const words = title.replace(/([A-Z])/g, ' $1').trim();
+
+    return words.replace(/\b\w/g, (char) => char.toUpperCase());
+  }
+  
 
   private static parseTimeSignature(t: string) {
     const timeSignatures: { [key: string]: string } = {
