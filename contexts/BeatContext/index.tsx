@@ -90,7 +90,7 @@ export const BeatProvider = ({ children }: { children: React.ReactNode }) => {
       setPlaying(false)
 
       // Load the new audio
-      console.log(beatToPlay.title)
+      // console.log(beatToPlay.title)
       const asset = beatsAssetsMap[beatToPlay.title.split("_")[0]]
 
       try {

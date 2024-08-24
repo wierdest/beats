@@ -16,7 +16,7 @@
         'Metronome Two Bars': require('./assets/sounds/beats/metronomeTwoBars_other_120_80_240_44_2.mp3'),
         'My First Bossa': require('./assets/sounds/beats/myFirstBossa_jazz_80_112_68_44_2.mp3'),
         'Oh My God': require('./assets/sounds/beats/ohMyGod_hiphop_124_86_148_44_1.mp3'),
-        'Old Fashioned Bembe': require('./assets/sounds/beats/oldFashionedBembe_other_123_87_163_68_2.mp3'),
+        'Old Time Bembe': require('./assets/sounds/beats/oldTimeBembe_other_123_87_163_68_2.mp3'),
         'Pineapple Express': require('./assets/sounds/beats/pineappleExpress_hiphop_92_70_124_44_2.mp3'),
         'Queens Style': require('./assets/sounds/beats/queensStyle_hiphop_79_65_125_44_1.mp3'),
         'Slick D Acoustic': require('./assets/sounds/beats/slickDAcoustic_hiphop_75_55_145_44_2.mp3'),

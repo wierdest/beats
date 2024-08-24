@@ -14,7 +14,7 @@ export const createStyles = (isDarkMode: boolean) => {
             justifyContent: 'space-between',
         },
         beatName: {
-            fontSize: 36,
+            fontSize: 24,
             fontWeight: 'bold',
             color: isDarkMode ? '#f5f5f5' : '#333',
             justifyContent: 'center'
