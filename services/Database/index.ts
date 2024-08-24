@@ -1,113 +1,144 @@
-import { Beat } from '@/components/BeatList';
 import * as SQLite from 'expo-sqlite';
+import { Beat } from '@/components/BeatList';
 import beatsList from '@/beatsList.json';
 import { BeatFilenameService } from '../BeatFilename';
 
+// followed the model @ https://github.com/expo/expo/issues/28176
 
-// database local simples com sqlite
-// ref: https://docs.expo.dev/versions/latest/sdk/sqlite/#usage
+class Sqlite3Connector {
+    private dbName: string;
 
-// abre o db assincronamente
-const openDatabase = async () => {
-    try {
-        const db = await SQLite.openDatabaseAsync('beats.db');
-        // console.log('db aberto com sucesso!')
-        return db;
-    } catch (e) {
-        console.log('Erro em abrir o db ', e);
-        throw e
+    constructor(dbName: string) {
+        this.dbName = dbName;
     }
-   
-}
 
-// cria a tabela de beats
-export const createBeatsTable = async () => {
-    // PRAGMA journal_mode = instrui o compilador (o comando pragma é pra isso) a usar o modo de journaling
-    // como Write Ahead Logging, que oferece melhor perfomance para operações multi thread
-    try {
-        const db = await openDatabase();
-        await db.execAsync(`
-            PRAGMA journal_mode = WAL;
-            CREATE TABLE IF NOT EXISTS beats (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                bpm INTEGER NOT NULL,
-                minBPM INTEGER NOT NULL,
-                midBPM INTEGER NOT NULL,
-                maxBPM INTEGER NOT NULL,
-                signature TEXT NOT NULL,
-                bars INTEGER NOT NULL,
-                genre TEXT NOT NULL,
-                title TEXT NOT NULL,
-                favorite INTEGER NOT NULL
-            );
-        `);
+    async configureConnection() {
+        const databaseConnector = await SQLite.openDatabaseAsync(this.dbName, { useNewConnection: true });
+        databaseConnector
+            ? console.log("Database Connected")
+            : console.log("Database Not Connected");
+        return databaseConnector;
+    }
 
-        const existingRows = await db.getAllAsync<Beat>('SELECT * FROM beats;');
+    // For INSERT, UPDATE, DELETE operations
+    async queryInsertUpdateDelete(sql: string, params: any[] = []) {
+        const databaseConnector = await this.configureConnection();
 
-        if(existingRows.length < beatsList.length) {
-            // db está desatualizado com a lista de arquivos
-            const existingIds = existingRows.map(row => row.id)
-            const beatsParaAdcionarAoDB = beatsList.filter(beat => !existingIds.includes(beat.id)).map(b => b.title)
-            console.log('title para ser processado e inserido no db ', beatsParaAdcionarAoDB)
-
-            beatsParaAdcionarAoDB.forEach(beatTitle => insertBeat(BeatFilenameService.extractInfo(beatTitle)))
-
-        } else {
-            // console.log('beats table contém ', existingRows.length, 'beats.')
+        try {
+            const result = await databaseConnector.runAsync(sql, params);
+            const row = { "Rows Affected": result.changes };
+            return row;
+        } catch (error) {
+            console.error('Error during query:', error);
+            throw error;
+        } finally {
+            await databaseConnector.closeAsync();
         }
-    } catch (e) {
-        console.log('Erro ao criar o db! ', e);
+    }
+
+    // For SELECT (GET) queries
+    async queryGet<T>(sql: string, params: any[] = []): Promise<T[]> {
+        const databaseConnector = await this.configureConnection();
+
+        try {
+            const result = await databaseConnector.getAllAsync<T>(sql, params);
+            return result;
+        } catch (error) {
+            console.error('Error during query:', error);
+            throw error;
+        } finally {
+            await databaseConnector.closeAsync();
+        }
+    }
+
+    async withTransactionAsync(transactionFn: (db: SQLite.SQLiteDatabase) => Promise<void>) {
+        const databaseConnector = await this.configureConnection();
+
+        try {
+            await databaseConnector.withTransactionAsync(async () => {
+                await transactionFn(databaseConnector);
+            });
+        } catch (error) {
+            console.error('Transaction failed:', error);
+            throw error;
+        } finally {
+            await databaseConnector.closeAsync();
+        }
     }
 }
 
-// crud básico
+const dbConnector = new Sqlite3Connector('beats.db');
 
-// getAll
+
+export const createBeatsTable = async () => {
+    try {
+        await dbConnector.withTransactionAsync(async (db) => {
+            await db.execAsync(`
+                PRAGMA journal_mode = WAL;
+                CREATE TABLE IF NOT EXISTS beats (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    bpm INTEGER NOT NULL,
+                    minBPM INTEGER NOT NULL,
+                    midBPM INTEGER NOT NULL,
+                    maxBPM INTEGER NOT NULL,
+                    signature TEXT NOT NULL,
+                    bars INTEGER NOT NULL,
+                    genre TEXT NOT NULL,
+                    title TEXT NOT NULL,
+                    favorite INTEGER NOT NULL
+                );
+            `);
+
+            const existingRows = await db.getAllAsync<Beat>('SELECT * FROM beats;');
+
+            if (existingRows.length < beatsList.length) {
+                const existingIds = existingRows.map(row => row.id);
+                const beatsParaAdcionarAoDB = beatsList.filter(beat => !existingIds.includes(beat.id)).map(b => b.title);
+
+                for (const beatTitle of beatsParaAdcionarAoDB) {
+                    await insertBeat(BeatFilenameService.extractInfo(beatTitle));
+                }
+            } else {
+                console.log('Beats table contains', existingRows.length, 'beats.');
+            }
+        });
+    } catch (e) {
+        console.error('Error creating the database table:', e);
+    }
+};
+
+// Get All Beats
 export const getBeats = async (): Promise<Beat[]> => {
     try {
-        const db = await openDatabase();
-        const result = await db.getAllAsync('SELECT * FROM beats;');
-        // mapeia o resultado
-        const beats: Beat[] = result.map((row: any) => ({
-            id: row.id,
-            bpm: row.bpm,
-            minBPM: row.minBPM,
-            midBPM: row.midBPM,
-            maxBPM: row.maxBPM,
-            signature: row.signature,
-            bars: row.bars,
-            genre: row.genre,
-            title: row.title,
-            favorite: row.favorite
-        }));
+        const sql = 'SELECT * FROM beats;';
+        const result = await dbConnector.queryGet<Beat>(sql);
 
-        return beats;
+        return result;
     } catch (e) {
-        console.error('Erro ao buscar os beats: ', e);
+        console.error('Error fetching beats:', e);
         return [];
     }
-}
+};
 
-// getById
+// Get Beat By ID
 export const getBeatById = async (id: number) => {
     try {
-        const db = await openDatabase();
-        // console.log('db opened ', db)
-        // const result = await db.getAllAsync('SELECT 1;'); // Test with a simple query
-        // console.log('Simple query result:', result);
-        const beat = db.getFirstSync<Beat |null>('SELECT * FROM beats WHERE id = ?;', id);
-        if(beat === null) {
-            console.log("No beat found with id ", id);
-        
+        const sql = 'SELECT * FROM beats WHERE id = ?;';
+        const result = await dbConnector.queryGet<Beat>(sql, [id]);
+
+        if (result.length === 0) {
+            console.log("No beat found with id", id);
+            return null;
         }
-        return beat;
+
+        return result[0];
     } catch (e) {
-        console.log('Erro ao buscar o beat: ', e);
+        console.error('Error fetching beat by id:', e);
         return null;
     }
-}
+};
 
-// insere beat
+// Insert Beat
 export const insertBeat = async (beat: {
     bpm: number;
     minBPM: number;
@@ -118,77 +149,61 @@ export const insertBeat = async (beat: {
     title: string;
 }) => {
     try {
-        const db = await openDatabase();
-        // no momento que insere a tabela tem o midBPM set no valor do bpm que é o default do arquivo.
-        await db.runAsync(`
+        const sql = `
             INSERT INTO beats (bpm, minBPM, midBPM, maxBPM, signature, bars, genre, title, favorite)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
-        `, beat.bpm, beat.minBPM, beat.bpm, beat.maxBPM, beat.signature, beat.bars, beat.genre, beat.title, 0);
-        // console.log('Beat inserido com sucesso!');
+        `;
+        const params = [beat.bpm, beat.minBPM, beat.bpm, beat.maxBPM, beat.signature, beat.bars, beat.genre, beat.title, 0];
+        await dbConnector.queryInsertUpdateDelete(sql, params);
     } catch (e) {
-        console.log(beat.bpm, beat.minBPM, beat.maxBPM, beat.signature, beat.bars, beat.genre, beat.title)
-        console.log('Erro ao inserir o beat: ', e);
+        console.error('Error inserting beat:', e);
     }
-}
+};
 
-// update 
+// Update Beat
 export const updateBeat = async (id: number, beat: Beat) => {
     try {
-        const db = await openDatabase();
-        await db.runAsync(`
+        const sql = `
             UPDATE beats
             SET bpm = ?, minBPM = ?, maxBPM = ?, signature = ?, bars = ?, genre = ?, title = ?, favorite = ?
             WHERE id = ?;
-        `, beat.bpm, beat.minBPM, beat.maxBPM, beat.signature, beat.bars, beat.genre, beat.title, beat.favorite, id);
-        // console.log('Beat atualizado com sucesso!');
+        `;
+        const params = [beat.bpm, beat.minBPM, beat.maxBPM, beat.signature, beat.bars, beat.genre, beat.title, beat.favorite, id];
+        await dbConnector.queryInsertUpdateDelete(sql, params);
     } catch (e) {
-        // console.log('Erro ao atualizar o beat: ', e);
+        console.error('Error updating beat:', e);
     }
-}
+};
 
-// delete by id
+// Delete Beat
 export const deleteBeat = async (id: number) => {
     try {
-        const db = await openDatabase();
-        await db.runAsync(`
-            DELETE FROM beats WHERE id = ?;
-        `, id);
-        // console.log('Beat deletado com sucesso!');
+        const sql = 'DELETE FROM beats WHERE id = ?;';
+        await dbConnector.queryInsertUpdateDelete(sql, [id]);
     } catch (e) {
-        console.error('Erro ao deletar o beat: ', e);
+        console.error('Error deleting beat:', e);
     }
-}
+};
 
-// delete all drop table
+// Delete Beats Table
 export const deleteBeatsTable = async () => {
     try {
-        const db = await openDatabase();
-        await db.execAsync('DROP TABLE IF EXISTS beats;');
-        // console.log('Tabela de beats deletada com sucesso!');
+        const sql = 'DROP TABLE IF EXISTS beats;';
+        await dbConnector.queryInsertUpdateDelete(sql);
     } catch (e) {
-        console.error('Erro ao deletar a tabela de beats: ', e);
+        console.error('Error deleting beats table:', e);
     }
-}
+};
 
-// Verifica se um arquivo com o ID fornecido já existe no banco de dados
+// Check if Beat Exists
 export const existsInDatabase = async (id: number): Promise<boolean> => {
     try {
-        const db = await openDatabase();
-        const result = await db.getFirstAsync<{ count: number }>('SELECT COUNT(*) AS count FROM beats WHERE id = ?;', id);
+        const sql = 'SELECT COUNT(*) AS count FROM beats WHERE id = ?;';
+        const result = await dbConnector.queryGet<{ count: number }>(sql, [id]);
 
-        if (result === null) {
-            return false;  
-        }
-
-        return result.count > 0;
+        return result[0].count > 0;
     } catch (e) {
-        // console.log('Erro ao verificar a existência do arquivo: ', e);
+        console.error('Error checking if beat exists:', e);
         return false;
     }
-}
-
-
-
-
-
-
+};

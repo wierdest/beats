@@ -2,8 +2,6 @@ import { Beat } from '@/components/BeatList';
 import { createBeatsTable, deleteBeatsTable, getBeatById, getBeats, updateBeat } from '@/services/Database';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-import beatsList from '@/beatsList.json';
-
 interface DatabaseContextProps {
   initialized: boolean;
   beats: Beat[];
