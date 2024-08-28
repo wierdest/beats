@@ -14,7 +14,7 @@ export const ModalAbout = () => {
         Linking.openURL('mailto:andrlzpt@protonmail.com');
     };
     const handleEmailPressMiguel = () => {
-        Linking.openURL('mailto:guelferreira@gmail.com');
+        Linking.openURL('mailto:guelferreirar@gmail.com');
     };
 
 	return (
@@ -23,7 +23,7 @@ export const ModalAbout = () => {
             <View style={styles.modalContent}>
                 <Text style={styles.modalText}>Code by</Text>
                 <TouchableOpacity onPress={handleEmailPressMiguel}>
-                    <Text style={styles.emailText}>guelferreira@gmail.com</Text>
+                    <Text style={styles.emailText}>guelferreirar@gmail.com</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleEmailPressAndre}>
                     <Text style={styles.emailText}>andrlzpt@protonmail.com</Text>
