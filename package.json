@@ -44,7 +44,8 @@
     "react-native-volume-manager": "^1.10.0",
     "react-native-web": "~0.19.10",
     "expo-sqlite": "~14.0.6",
-    "expo-asset": "~10.0.10"
+    "expo-asset": "~10.0.10",
+    "expo-keep-awake": "~13.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

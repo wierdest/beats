@@ -7,10 +7,10 @@ import { useTheme } from '@/contexts/ThemeContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BasicButton } from '../BasicButton';
 import { useDatabase } from '@/contexts/DatabaseContext';
+import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake';
 
 
 export const ModalSettings = () => {
-
     const [keepScreenOn, setKeepScreenOn] = useState(false);
     const [trimEnd, setTrimEnd] = useState(false);
 
@@ -29,9 +29,18 @@ export const ModalSettings = () => {
 
     const { clearDb } = useDatabase();
 
-
-    const handleKeepScreenOnToggle = () => {
-        setKeepScreenOn(previousState => !previousState);
+    const handleKeepScreenOnToggle = (newValue: boolean) => {
+        setKeepScreenOn(newValue);
+        if(newValue) {
+            try {
+                activateKeepAwakeAsync();
+            } catch(e) {
+                console.log('Erro trying to activate the screen')
+                setKeepScreenOn(false);
+            }
+        } else {
+            deactivateKeepAwake();
+        }
     };
 
 	return (
@@ -44,11 +53,11 @@ export const ModalSettings = () => {
                     onValueChange={handleDarkModeToggle}
                 />
                 
-                {/* <SettingsSwitch
+                <SettingsSwitch
                     label="Keep Screen On"
                     value={keepScreenOn}
-                    onValueChange={setKeepScreenOn}
-                /> */}
+                    onValueChange={handleKeepScreenOnToggle}
+                />
 
                 {/* <SettingsSwitch
                     label="Trim end"
@@ -56,9 +65,9 @@ export const ModalSettings = () => {
                     onValueChange={setTrimEnd}
                 /> */}
 
-                <BasicButton
+                {/* <BasicButton
                     title='Clear DB'
-                    onPress={clearDb} />
+                    onPress={clearDb} /> */}
                 </View>
       </BasicModal>
 

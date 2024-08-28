@@ -4,7 +4,6 @@ import beatsList from '@/beatsList.json';
 import { BeatFilenameService } from '../BeatFilename';
 
 // followed the model @ https://github.com/expo/expo/issues/28176
-
 class Sqlite3Connector {
     private dbName: string;
 

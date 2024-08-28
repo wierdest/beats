@@ -126,7 +126,7 @@ export const Player = () => {
 							maxValue={beat.maxBPM}
 							defaultValue={beat.midBPM!}
 							onValueChange={changeBpm}
-							customButton={<SliderCustomButton iconName='clock' onPress={handleModalTimerButton} />}
+							customButton={<SliderCustomButton iconName='map-clock' onPress={handleModalTimerButton} />}
 							volume={false}
 						/>
 						<Divider />

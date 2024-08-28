@@ -5,16 +5,18 @@ export const createStyles = (isDarkMode: boolean) => {
         modalContent: {
           padding: 20,
           alignItems: 'center',
+         
         },
         modalText: {
           fontSize: 24,
-          marginBottom: 10,
           color: isDarkMode ? 'white' : 'black',
+          marginBottom: 4
         },
         emailText: {
           fontSize: 16,
           textDecorationLine: 'none',
           color: isDarkMode ? 'white' : 'black',
+          marginBottom: 4
         },
     });
 }
