@@ -19,7 +19,7 @@ export const Player = () => {
 	const { toggleModal } = useModal();
 
 	const [volume, setVolume] = useState(35);
-	const [originalVolume, setOriginalVolume] = useState<number | null>(null);
+	const [originalVolume, setOriginalVolume] = useState(35);
 	const [isVolumeMuted, setIsVolumeMuted] = useState(false);
 
 	const { beat, play, stop, changeBpm, reloadedBeat, loopLimitRef, numberOfLoops } = useBeat();
@@ -46,17 +46,15 @@ export const Player = () => {
 	// Fetch volume & Setup volume listener (not using the listener because it breaks on samsung devices)
 	useEffect(() => {
 		const fetchVolume = async () => {
-
 			try {
 				const { volume } = await VolumeManager.getVolume();
-				setVolume(Math.round(volume * 100));
-				setIsVolumeMuted(volume === 0);
-				setOriginalVolume(volume === 0 ? originalVolume : volume);
-
+				const volumePercent = Math.round(volume * 100);
+				console.log(volumePercent)
+				setVolume(volumePercent);
+				setIsVolumeMuted(volumePercent === 0);
 			} catch (e) {
-				console.log('Erro em buscar volume do sistema com VolumeManager')
+				console.log('Erro em buscar volume do sistema com VolumeManager');
 			}
-		
 		};
 		fetchVolume();
 	}, []);
@@ -67,17 +65,16 @@ export const Player = () => {
 	};
 
 	const handleMuteToggle = () => {
-		if (isVolumeMuted) {
-			if (originalVolume !== null) {
-				adjustVolume(originalVolume);
-				setVolume(originalVolume);
-			}
-			setIsVolumeMuted(false);
-		} else {
+		if (volume > 0) {
 			setOriginalVolume(volume);
-			adjustVolume(0);
-			setVolume(0);
 			setIsVolumeMuted(true);
+			setVolume(0);
+			adjustVolume(0);
+		} else if (volume === 0 && originalVolume !== null) {
+			console.log(originalVolume, isVolumeMuted, volume, "Restaurando volume");
+			setIsVolumeMuted(false);
+			setVolume(originalVolume); 
+			adjustVolume(originalVolume);
 		}
 	};
 
@@ -96,16 +93,16 @@ export const Player = () => {
 	};
 
 	const handleModalTimerButton = () => {
-		stop()
-		toggleModal('timer')
-	}
+		stop();
+		toggleModal('timer');
+	};
 
 	return (
 		<View style={styles.container}>
 			<View style={styles.mainControls}>
 				<View style={styles.topRow}>
 					<PlayButton onPlay={play} onStop={stop} />
-                    <Text style={styles.beatName}>{beat ? beat.title : 'No beat selected'}</Text>
+					<Text style={styles.beatName}>{beat ? beat.title : 'No beat selected'}</Text>
 					<PlayerExpandButton isExpanded={isExpanded} onPress={handleExpandPress} />
 				</View>
 
