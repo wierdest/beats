@@ -1,10 +1,11 @@
+import { darkTheme, lightTheme } from '@/app/colors';
 import { StyleSheet } from 'react-native';
 
 export const createStyles = (isDarkMode: boolean) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: isDarkMode ? '#333' : 'lightgray', 
+      backgroundColor: isDarkMode ? darkTheme.primary : lightTheme.primary, 
       borderTopRightRadius: 60,
       borderBottomRightRadius: 60,
     },

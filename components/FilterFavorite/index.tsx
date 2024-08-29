@@ -6,6 +6,8 @@ import { Divider } from '../Divider';
 import { TextButtonGridList } from '../TextButtonGridList';
 import { TextButton } from '../TextButton';
 import { FavoriteButton } from '../FavoriteButton';
+import { useTheme } from '@/contexts/ThemeContext';
+import { darkTheme, lightTheme } from '@/app/colors';
 
 type FavoriteFilter = 'all' | 'fav'
 interface FilterFavoriteProps  {
@@ -14,6 +16,7 @@ interface FilterFavoriteProps  {
 };
 
 export const FilterFavorite = ({ isFavorite, onChange }: FilterFavoriteProps )   => {
+	const {isDarkMode} = useTheme();
 	const handlePress = () => {
 		onChange(!isFavorite);
 	};
@@ -26,6 +29,7 @@ export const FilterFavorite = ({ isFavorite, onChange }: FilterFavoriteProps )  
 				onPress={() => onChange(false)}
 			/>
 			<FavoriteButton
+				heartBorderColor={isDarkMode ? darkTheme.accent : lightTheme.accent} 
 				animate
 				selected={isFavorite}
 				size={36}

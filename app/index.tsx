@@ -10,9 +10,9 @@ import { useModal } from "@/contexts/ModalContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useBeat } from "@/contexts/BeatContext"; // Import the BeatContext
 import { ActivityIndicator, View } from "react-native";
-import { lightTheme, darkTheme } from './styles';
 import { useDatabase } from "@/contexts/DatabaseContext";
 import { useFilter } from "@/contexts/FilterContext";
+import { darkTheme, lightTheme } from "./colors";
 
 export default function Index() {
   const { isDarkMode } = useTheme();
@@ -25,7 +25,7 @@ export default function Index() {
 
   return (
     <>
-      <View style={{ flex: 1, backgroundColor: theme.backgroundColor }}>
+      <View style={{ flex: 1, backgroundColor: isDarkMode ? darkTheme.primary : lightTheme.primary }}>
         {
           checkEmpty() &&
           <FilterButton />

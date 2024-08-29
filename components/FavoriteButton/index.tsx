@@ -9,9 +9,10 @@ interface FavoriteButtonProps {
     size?: number;
     selected: boolean;
     onPress: () => void;
+    heartBorderColor: string
 };
 
-export const FavoriteButton = ({ animate, size, selected, onPress }: FavoriteButtonProps) => {
+export const FavoriteButton = ({ animate, size, selected, onPress, heartBorderColor }: FavoriteButtonProps) => {
     const { isDarkMode } = useTheme();
 
     const spinValue = useRef(new Animated.Value(0)).current;
@@ -46,7 +47,7 @@ export const FavoriteButton = ({ animate, size, selected, onPress }: FavoriteBut
                 <MaterialCommunityIcons
                     name={selected ? "heart" : "heart-outline"}
                     size={size ?? 24}
-                    color={selected ? "red" : isDarkMode ? 'white' : 'black'}
+                    color={selected ? "red" : heartBorderColor }
                 />
             </Animated.View>
 		</TouchableOpacity>

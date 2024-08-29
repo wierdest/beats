@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Text, View } from 'react-native';
-import { styles } from './styles';
+import { createStyles } from './styles';
 import { RangeSlider } from '../RangeSlider';
 import { Divider } from '../Divider';
+import { useTheme } from '@/contexts/ThemeContext';
 ;
 
 export type FilterTempoProps = {
@@ -16,6 +17,9 @@ export type FilterTempoProps = {
 
 	const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 	const [minTempo, maxTempo] = selectedTempo.split('-').map(Number);
+
+	const { isDarkMode } = useTheme();
+	const styles = createStyles(isDarkMode);
   
 	useEffect(() => {
 	  if (!isNaN(minTempo) && !isNaN(maxTempo)) {

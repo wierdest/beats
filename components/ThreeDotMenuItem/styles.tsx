@@ -1,3 +1,4 @@
+import { darkTheme, lightTheme } from '@/app/colors';
 import { StyleSheet } from 'react-native';
 
 export const createStyles = (isDarkMode: boolean) => {
@@ -11,7 +12,7 @@ export const createStyles = (isDarkMode: boolean) => {
     },
     label: {
       fontSize: 18,
-      color: isDarkMode ? 'white' : 'black',
+      color: isDarkMode ? darkTheme.accent : lightTheme.accent,
       textAlign: 'left',
     },
   });

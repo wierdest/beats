@@ -1,10 +1,11 @@
+import { globalColors } from "@/app/colors";
 import { StyleSheet } from "react-native";
 
 export const createStyles = (isDarkMode: boolean) => { 
     return StyleSheet.create({
         container: {
             padding: 16,
-            backgroundColor: isDarkMode ? '#1e1e1e' : 'lightgray',
+            backgroundColor: globalColors.primary,
             borderTopStartRadius: 30,
             borderTopEndRadius: 30
         },
@@ -16,7 +17,7 @@ export const createStyles = (isDarkMode: boolean) => {
         beatName: {
             fontSize: 24,
             fontWeight: 'bold',
-            color: isDarkMode ? '#f5f5f5' : '#333',
+            color: '#f5f5f5',
             justifyContent: 'center'
         },
         mainControls: {

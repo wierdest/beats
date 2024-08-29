@@ -1,3 +1,4 @@
+import { darkTheme, lightTheme } from "@/app/colors";
 import { Dimensions, StyleSheet } from "react-native";
 
 const { width, height } = Dimensions.get('window');
@@ -12,7 +13,7 @@ export const createStyles = (isDarkMode: boolean) => {
         },
         container: {
             flexDirection: 'column',
-            backgroundColor: isDarkMode ? 'rgba(0, 0, 0, 0.9)' : 'rgba(255, 255, 255, 0.9)', // Pra deixar transparente
+            backgroundColor: isDarkMode ? darkTheme.backgroundModal : lightTheme.backgroundModal, // Pra deixar transparente
             borderRadius: 8,
             padding: 20,
             elevation: 5,
