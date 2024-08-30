@@ -1,4 +1,3 @@
-import { globalColors } from "@/app/colors";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -12,7 +11,6 @@ export const styles = StyleSheet.create({
   },
   progressBarFill: {
     height: '100%',
-    backgroundColor: globalColors.accent,
     borderRadius: 2,
   }
 });

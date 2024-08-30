@@ -18,7 +18,6 @@ export const FilterDrawerLayout = () => {
     <View style={styles.container}>
       <DrawerHeader />
       <View style={styles.filtersContainer}>
-        <Divider />
         <FilterTempo
           selectedTempo={filters.tempo}
           onChange={(tempo) => handleFilterChange({ tempo })}

@@ -1,16 +1,12 @@
-import { globalColors } from '@/app/colors';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: '100%',
-        
-     
     },
     button: {
-        zIndex: 1, // Ensure the text is on top of the slider container
-        backgroundColor: globalColors.accent,
+        zIndex: 1, 
         padding: 4,
         borderRadius: 60,
         minWidth: 40,
@@ -59,6 +55,6 @@ export const styles = StyleSheet.create({
         elevation: 4, 
         borderLeftColor: 'transparent',
         borderRightColor: 'transparent',
-        borderTopColor: 'black', // Matches the bubble background color
+        borderTopColor: 'black',
     }
 });

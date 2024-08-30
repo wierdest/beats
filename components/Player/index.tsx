@@ -25,6 +25,8 @@ export const Player = () => {
 	const { beat, play, stop, changeBpm, reloadedBeat, loopLimitRef, numberOfLoops } = useBeat();
 	const [isExpanded, setIsExpanded] = useState(false);
 
+	const { globalColors } = useTheme()
+
 	const heightAnim = useRef(new Animated.Value(0)).current;
 
 	const handleExpandPress = () => {
@@ -49,7 +51,6 @@ export const Player = () => {
 			try {
 				const { volume } = await VolumeManager.getVolume();
 				const volumePercent = Math.round(volume * 100);
-				console.log(volumePercent)
 				setVolume(volumePercent);
 				setIsVolumeMuted(volumePercent === 0);
 			} catch (e) {
@@ -98,7 +99,7 @@ export const Player = () => {
 	};
 
 	return (
-		<View style={styles.container}>
+		<View style={[styles.container, {backgroundColor: globalColors.primary,}]}>
 			<View style={styles.mainControls}>
 				<View style={styles.topRow}>
 					<PlayButton onPlay={play} onStop={stop} />

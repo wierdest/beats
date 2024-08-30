@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Animated, PanResponder } from 'react-nati
 import { styles } from './styles';
 import { SliderControlProps } from '../SliderControl';
 import { VolumeManager } from 'react-native-volume-manager';
+import { useTheme } from '@/contexts/ThemeContext';
 
 export interface SliderButtonProps extends SliderControlProps {
 	containerWidth: number;
@@ -17,6 +18,8 @@ export const SliderButton = ({ value, initialPos, minValue, maxValue, tag, conta
 
 	// this is a flag to ignore the useEffect in the value for when the slider is updated via checvron buttons
 	const [dragging, setDragging] = useState(false);
+
+	const {globalColors} = useTheme();
 
 	// pan responder responsible for handling user interaction
 	const panResponder = useRef(
@@ -68,7 +71,7 @@ export const SliderButton = ({ value, initialPos, minValue, maxValue, tag, conta
 
 	return (
 		<Animated.View
-			style={[styles.button, { transform: [{ translateX: pan }] }]}
+			style={[styles.button, {backgroundColor: globalColors.accent}, { transform: [{ translateX: pan }] }]}
 			{...panResponder.panHandlers}
 		>
 

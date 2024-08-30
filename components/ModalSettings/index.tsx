@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BasicButton } from '../BasicButton';
 import { useDatabase } from '@/contexts/DatabaseContext';
 import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake';
+import { useModal } from '@/contexts/ModalContext';
 
 
 export const ModalSettings = () => {
@@ -15,12 +16,13 @@ export const ModalSettings = () => {
     const [trimEnd, setTrimEnd] = useState(false);
 
     const { isDarkMode, toggleTheme   } = useTheme();
+    const [isDark, setIsDark] = useState<boolean>(isDarkMode);
     const styles = createStyles(isDarkMode);
+    const { toggleModal } = useModal();
 
     const handleDarkModeToggle = async () => {
         try {
-            const newDarkMode = !isDarkMode;
-            await AsyncStorage.setItem('isDarkMode', JSON.stringify(newDarkMode));
+            setIsDark(!isDark)
             toggleTheme(); 
         } catch (error) {
             console.error('Failed to save dark mode setting', error);
@@ -49,7 +51,7 @@ export const ModalSettings = () => {
             <View style={styles.modalContent}>                
                 <SettingsSwitch
                     label="Dark Mode"
-                    value={isDarkMode}
+                    value={isDark}
                     onValueChange={handleDarkModeToggle}
                 />
                 
@@ -59,6 +61,7 @@ export const ModalSettings = () => {
                     onValueChange={handleKeepScreenOnToggle}
                 />
 
+                <BasicButton title='Edit Color Scheme' onPress={() => toggleModal('color')} />
                 {/* <SettingsSwitch
                     label="Trim end"
                     value={trimEnd}

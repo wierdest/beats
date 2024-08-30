@@ -16,7 +16,7 @@ export const ThreeDotMenu = () => {
 	const { toggleModal } = useModal();
 	
 	const handleOptionSelect = (option: ModalIdentifier) => {
-		console.log('Selected option:', option);
+		// console.log('Selected option:', option);
 		setVisible(false);
 		toggleModal(option)
 

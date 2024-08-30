@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { TouchableOpacity, Animated, PanResponder, LayoutChangeEvent } from 'react-native';
 import { styles } from './styles';
 import { SliderButtonProps } from '../SliderButton';
+import { useTheme } from '@/contexts/ThemeContext';
 
 type RangeSliderToggle = 'min' | 'max'
 
@@ -16,6 +17,8 @@ export const RangeSliderToggle = ({ kind, initialPos, value, minValue, maxValue,
     const initialPosRef = useRef(initialPos);
     const minValueRef = useRef(minValue)
     const maxValueRef = useRef(maxValue)
+
+    const { globalColors } = useTheme();
 
 
     useEffect(() => {
@@ -81,7 +84,7 @@ export const RangeSliderToggle = ({ kind, initialPos, value, minValue, maxValue,
 
 	return (
         <Animated.View
-            style={[styles.button, { transform: [{ translateX: pan }, { scale: buttonScale }] }]}
+            style={[styles.button, {backgroundColor: globalColors.accent,}, { transform: [{ translateX: pan }, { scale: buttonScale }] }]}
             {...panResponder.panHandlers}
         >
         </Animated.View>

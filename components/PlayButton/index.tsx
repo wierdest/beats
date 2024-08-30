@@ -3,6 +3,7 @@ import { TouchableOpacity, View, StyleSheet, Animated } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { styles } from './styles';
 import { useBeat } from '@/contexts/BeatContext';
+import { useTheme } from '@/contexts/ThemeContext';
 
 interface PlayButtonProps {
     onPlay: () => void;
@@ -13,6 +14,8 @@ export const PlayButton = ({onPlay, onStop} : PlayButtonProps) => {
 
     const {playing} = useBeat();
     const [spinValue] = useState(new Animated.Value(0));
+
+    const { globalColors } = useTheme();
 	const spin = spinValue.interpolate({
         inputRange: [0, 1],
         outputRange: ['0deg', '360deg'],
@@ -45,10 +48,8 @@ export const PlayButton = ({onPlay, onStop} : PlayButtonProps) => {
         animate()
     }, [playing])
 
-
-
     return (
-        <TouchableOpacity style={styles.button} onPress={togglePlay}>
+        <TouchableOpacity style={[styles.button, { backgroundColor: globalColors.accent}]} onPress={togglePlay}>
             <Animated.View style={{ transform: [{ rotate: spin }] }}>
                 <MaterialCommunityIcons
                     name={playing ? 'stop' : 'play'}

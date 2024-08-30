@@ -13,6 +13,7 @@ import { ActivityIndicator, View } from "react-native";
 import { useDatabase } from "@/contexts/DatabaseContext";
 import { useFilter } from "@/contexts/FilterContext";
 import { darkTheme, lightTheme } from "./colors";
+import { ModalColor } from "@/components/ModalColor";
 
 export default function Index() {
   const { isDarkMode } = useTheme();
@@ -58,6 +59,11 @@ export default function Index() {
       {
         activeModal === 'timer' &&
         <ModalTimer />
+      }
+
+      {
+        activeModal === 'color' &&
+        <ModalColor />
       }
 
     </>

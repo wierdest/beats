@@ -1,6 +1,6 @@
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Drawer } from 'expo-router/drawer';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { FilterDrawerLayout } from '@/components/FilterDrawerLayout';
 import { HeaderRight } from '@/components/HeaderRight';
 import { ModalProvider } from '@/contexts/ModalContext';
@@ -10,10 +10,10 @@ import { DatabaseProvider } from '@/contexts/DatabaseContext';
 import { BeatProvider } from '@/contexts/BeatContext';
 import { FilterProvider } from '@/contexts/FilterContext';
 import { View } from 'react-native';
-import { globalColors } from './colors';
+import { SettingsProvider } from '@/contexts/SettingsContext';
 
 const RootLayoutConst = () => {
-    const { isDarkMode } = useTheme();
+    const { isDarkMode, globalColors} = useTheme();
 
     // const [isSplashVisible, setSplashVisible] = useState(true);
 
@@ -34,11 +34,10 @@ const RootLayoutConst = () => {
                         drawerStyle: {
                             width: 380,
                             borderRadius: 60,
-                            backgroundColor: isDarkMode ? 'black' : 'white'
+                           
                         },
                         headerStyle: {
-                            backgroundColor: isDarkMode ? '#1e1e1e' : 'transparent',
-                            height: 80, // Ajuste a altura conforme necessário
+                            height: 80,
                         },
                         headerTintColor: 'white',
                         headerBackground: () => (
@@ -70,9 +69,10 @@ const RootLayout = () => {
             <FilterProvider>
                 <BeatProvider>
                     <ThemeProvider>
-                        <RootLayoutConst />
+                        <SettingsProvider>
+                            <RootLayoutConst />
+                        </SettingsProvider>
                     </ThemeProvider>
-
                 </BeatProvider>
             </FilterProvider>
         </DatabaseProvider>

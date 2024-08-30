@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-export type ModalIdentifier = 'helpout' | 'settings' | 'about' | 'timer'
+export type ModalIdentifier = 'helpout' | 'settings' | 'about' | 'timer' | 'color'
 
 interface ModalContextProps {
     activeModal: ModalIdentifier | undefined;

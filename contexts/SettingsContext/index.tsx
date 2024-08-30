@@ -8,10 +8,10 @@ interface SettingsContextProps {
 
 const SettingsContext = createContext<SettingsContextProps | undefined>(undefined);
 
-export const ThemeProvider = ({ children } :  { children: React.ReactNode }) => {
+export const SettingsProvider = ({ children } :  { children: React.ReactNode }) => {
 
   const [isScreenOn, setIsScreenOn] = useState<boolean>(false);
-  
+
   const loadScreenOn = async () => {
     try {
       const savedScreenOn = await AsyncStorage.getItem('screenOn');
@@ -29,7 +29,7 @@ export const ThemeProvider = ({ children } :  { children: React.ReactNode }) => 
 
   const toggleScreenOn = async () => {
     try {
-      const newValue = isScreenOn ? 'true' : 'false';
+      const newValue = !isScreenOn ? 'true' : 'false';
       await AsyncStorage.setItem('screenOn', newValue);
       setIsScreenOn(!isScreenOn);
     } catch (error) {

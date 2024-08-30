@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, TouchableOpacityProps } from 'react-native';
+import React from 'react';
+import { Text, TouchableOpacity, TouchableOpacityProps } from 'react-native';
 import { styles } from './styles';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { globalColors } from '@/app/colors';
+import { useTheme } from '@/contexts/ThemeContext';
 
 interface TextButtonProps extends TouchableOpacityProps {
 	label: string;
 	selected: boolean;
-
-	
 };
 
 export const TextButton = ({ label, selected, ...props }: TextButtonProps) => {
+
+	const {globalColors} = useTheme();
 
 	return (
 		<TouchableOpacity style={[styles.textButton, { backgroundColor: selected ? globalColors.accent : 'lightgray'}]} {...props}>

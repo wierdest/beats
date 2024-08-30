@@ -1,4 +1,3 @@
-import { globalColors } from "@/app/colors";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -9,11 +8,9 @@ export const styles = StyleSheet.create({
   },
   topPart: {
     flex: 1,
-    backgroundColor: globalColors.secondary,
   },
   bottomPart: {
     flex: 2,
-    backgroundColor: globalColors.primary, 
     justifyContent: 'center', 
     paddingLeft: 32,
   },

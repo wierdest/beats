@@ -1,11 +1,9 @@
-import { globalColors } from "@/app/colors";
 import { StyleSheet } from "react-native";
 
 export const createStyles = (isDarkMode: boolean) => { 
     return StyleSheet.create({
         container: {
             padding: 16,
-            backgroundColor: globalColors.primary,
             borderTopStartRadius: 30,
             borderTopEndRadius: 30
         },

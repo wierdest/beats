@@ -1,17 +1,20 @@
 import { TouchableOpacity, Text, TouchableOpacityProps } from "react-native";
 import { styles } from "./styles";
 
-interface BasicButton extends TouchableOpacityProps {
-    title: string
+interface BasicButtonProps extends TouchableOpacityProps {
+    title: string,
+    colorPreview?: string,
 }
-
-export const BasicButton = ({ title, onPress } : BasicButton) => {
-    return <TouchableOpacity
-	onPress={onPress}
-    style={styles.button}
-  >
-    <Text style={styles.buttonText}>
-      { title }
-    </Text>
-  </TouchableOpacity>
-}
+export const BasicButton = ({ title, colorPreview, onPress, ...props }: BasicButtonProps) => {
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      style={[styles.button, colorPreview && colorPreview != undefined? { backgroundColor: colorPreview , borderColor: 'black', borderWidth: 2} : undefined]}
+      {...props}
+    >
+      <Text style={styles.buttonText}>
+        {title}
+      </Text>
+    </TouchableOpacity>
+  );
+};
