@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, TouchableOpacityProps } from 'react-nativ
 import { createStyles } from './styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTheme } from '@/contexts/ThemeContext';
+import { darkTheme, lightTheme } from '@/app/colors';
 
 type ThreeDotMenuIconName = 'handshake' | 'cog' | 'information-outline'
 
@@ -17,7 +18,7 @@ export const ThreeDotMenuItem = ({ label, iconName, ...props }: ThreeDotMenuItem
 
 	return (
 		<TouchableOpacity style={styles.menuItem} {...props}> 
-			<MaterialCommunityIcons name={iconName} size={18} color={isDarkMode ? 'white' : 'black' } />
+			<MaterialCommunityIcons name={iconName} size={18} color={isDarkMode ? darkTheme.accent : lightTheme.accent } />
 			<Text style={styles.label}>{label}</Text>
 	  	</TouchableOpacity>
 	);

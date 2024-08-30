@@ -65,9 +65,9 @@ export const ModalSettings = () => {
                     onValueChange={setTrimEnd}
                 /> */}
 
-                {/* <BasicButton
+                 {/* <BasicButton
                     title='Clear DB'
-                    onPress={clearDb} /> */}
+                    onPress={clearDb} />  */}
                 </View>
       </BasicModal>
 

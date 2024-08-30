@@ -6,9 +6,12 @@ export const DrawerHeader = () => {
 	const router = useRouter();
 	return (
 
-		<TouchableOpacity onPress={() => { router.navigate('/')}}>
+		<TouchableOpacity onPress={() => { router.navigate('/') }}>
 			<View style={styles.header}>
-				<Text style={styles.title}>Beats</Text>
+				<View style={styles.topPart} />
+				<View style={styles.bottomPart}>
+					<Text style={styles.title}>Beats</Text>
+				</View>
 			</View>
 		</TouchableOpacity>
 

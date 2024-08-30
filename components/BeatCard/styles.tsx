@@ -1,3 +1,4 @@
+import { darkTheme, lightTheme } from "@/app/colors";
 import { StyleSheet } from "react-native";
 
 export const createStyles = (isDarkMode: boolean) => { 
@@ -5,7 +6,7 @@ export const createStyles = (isDarkMode: boolean) => {
     container: {
       flex: 1,
       flexDirection: 'column',
-      backgroundColor: isDarkMode ? '#333' : 'white',
+      backgroundColor: isDarkMode ? darkTheme.secondary : lightTheme.secondary,
       borderRadius: 8,
       padding: 10,
       elevation: 5,
@@ -19,18 +20,18 @@ export const createStyles = (isDarkMode: boolean) => {
     },
     bpmText: {
       fontSize: 12,
-      color: isDarkMode ? '#bbb' : 'gray',
+      color: isDarkMode ? darkTheme.accent : lightTheme.accent,
     },
     genreText: {
       fontSize: 12,
-      fontWeight: 'bold',
       textTransform: 'uppercase',
+      color: isDarkMode ? darkTheme.accent : lightTheme.accent,
       flex: 1,
       textAlign: 'center', 
     },
     tempoText: {
       fontSize: 12,
-      color: isDarkMode ? '#bbb' : 'gray',
+      color: isDarkMode ? darkTheme.accent : lightTheme.accent,
     },
     favoriteButton: {
       padding: 5,

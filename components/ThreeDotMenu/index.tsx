@@ -27,7 +27,7 @@ export const ThreeDotMenu = () => {
 	return (
 		<View style={styles.container}>
 			<TouchableOpacity onPress={toggleMenu}>
-				<MaterialCommunityIcons name="dots-vertical" size={24} color={isDarkMode ? 'white' : 'black'} />
+				<MaterialCommunityIcons name="dots-vertical" size={24} color='white' />
 			</TouchableOpacity>
 			<Modal
 				transparent={true}

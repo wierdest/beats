@@ -5,6 +5,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FavoriteButton } from '../FavoriteButton';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useBeat } from '@/contexts/BeatContext';
+import { darkTheme, globalColors, lightTheme } from '@/app/colors';
+
 
 interface BeatCardProps {
 	bpm: string;
@@ -35,9 +37,10 @@ export const BeatCard = ({ bpm, genre, tempo, title, onPress, playing, isFavorit
 				<Text style={styles.bpmText}>{bpm}</Text>
 				<Text style={styles.genreText}>{genre}</Text>
 				<Text style={styles.tempoText}>{tempo}</Text>
-				<FavoriteButton animate selected={favorite} onPress={handleFavorite}/>
+				<FavoriteButton heartBorderColor={isDarkMode ? darkTheme.accent : lightTheme.accent} animate selected={favorite} onPress={handleFavorite}/>
 			</View>
-			<Text style={[styles.title, { color: playing ? 'red' : 'black' }]}>{title}</Text>
+			<Text style={[styles.title, { color: playing ? globalColors.accent : 
+				isDarkMode ? darkTheme.accent: lightTheme.accent  }]}>{title}</Text>
 		</TouchableOpacity>
 	  );
 };

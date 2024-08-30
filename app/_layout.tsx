@@ -9,6 +9,8 @@ import { ThemeProvider, useTheme } from '@/contexts/ThemeContext';
 import { DatabaseProvider } from '@/contexts/DatabaseContext';
 import { BeatProvider } from '@/contexts/BeatContext';
 import { FilterProvider } from '@/contexts/FilterContext';
+import { View } from 'react-native';
+import { globalColors } from './colors';
 
 const RootLayoutConst = () => {
     const { isDarkMode } = useTheme();
@@ -25,31 +27,38 @@ const RootLayoutConst = () => {
                 <SplashScreenComponent onFinish={handleFinishSplash} />
             ) : ( */}
 
-                <ModalProvider>
-                    <Drawer
-                        drawerContent={() => <FilterDrawerLayout />}
-                        screenOptions={{
-                            drawerStyle: {
-                                width: 380,
-                                borderRadius: 60,
-                                backgroundColor: isDarkMode ? 'black' : 'white'
-                            },
-                            headerStyle: {
-                                backgroundColor: isDarkMode ? '#1e1e1e' : 'white',
-                            },
-                            headerTintColor: isDarkMode ? 'white' : 'black'
+            <ModalProvider>
+                <Drawer
+                    drawerContent={() => <FilterDrawerLayout />}
+                    screenOptions={{
+                        drawerStyle: {
+                            width: 380,
+                            borderRadius: 60,
+                            backgroundColor: isDarkMode ? 'black' : 'white'
+                        },
+                        headerStyle: {
+                            backgroundColor: isDarkMode ? '#1e1e1e' : 'transparent',
+                            height: 80, // Ajuste a altura conforme necessário
+                        },
+                        headerTintColor: 'white',
+                        headerBackground: () => (
+                            <View style={{ flex: 1, backgroundColor: isDarkMode ? '#1e1e1e' : 'transparent' }}>
+                                <View style={{ flex: 0.3, backgroundColor: globalColors.secondary }} />
+                                <View style={{ flex: 0.7, backgroundColor: globalColors.primary }} />
+                            </View>
+                        ),
+                    }}
+                >
+                    <Drawer.Screen
+                        name="index"
+                        options={{
+                            title: 'Beats',
+                            headerRight: () => <HeaderRight />,
+                            swipeEdgeWidth: 0,
                         }}
-                    >
-                        <Drawer.Screen
-                            name="index"
-                            options={{
-                                title: 'Beats',
-                                headerRight: () => <HeaderRight />,
-                                swipeEdgeWidth: 0,
-                            }}
-                        />
-                    </Drawer>
-                </ModalProvider>
+                    />
+                </Drawer>
+            </ModalProvider>
             {/* )} */}
         </GestureHandlerRootView>
     );

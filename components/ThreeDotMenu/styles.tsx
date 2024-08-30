@@ -1,3 +1,4 @@
+import { darkTheme, lightTheme } from "@/app/colors";
 import { StyleSheet } from "react-native";
 
 export const createStyles = (isDarkMode: boolean) => {
@@ -10,7 +11,7 @@ export const createStyles = (isDarkMode: boolean) => {
       flex: 1,
     },
     menu: {
-      backgroundColor: isDarkMode ? 'black' : 'white',
+      backgroundColor: isDarkMode ? darkTheme.backgroundModal : lightTheme.backgroundModal,
       borderRadius: 8,
       padding: 10,
       elevation: 5,

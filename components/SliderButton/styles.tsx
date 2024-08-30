@@ -1,3 +1,4 @@
+import { globalColors } from '@/app/colors';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -9,7 +10,7 @@ export const styles = StyleSheet.create({
     },
     button: {
         zIndex: 1, // Ensure the text is on top of the slider container
-        backgroundColor: 'red',
+        backgroundColor: globalColors.accent,
         padding: 4,
         borderRadius: 60,
         minWidth: 40,

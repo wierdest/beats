@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Switch, StyleSheet } from 'react-native';
 import { createStyles } from './styles';
 import { useTheme } from '@/contexts/ThemeContext';
+import { globalColors } from '@/app/colors';
 
 interface SettingsSwitchProps {
   label: string;
@@ -20,7 +21,7 @@ export const SettingsSwitch = ({ label, value, onValueChange }: SettingsSwitchPr
         value={value}
         onValueChange={onValueChange}
         trackColor={{ false: 'gray', true: '#ddd' }}
-        thumbColor={value ? 'red' : '#f4f3f4'}
+        thumbColor={value ? globalColors.accent : '#f4f3f4'}
       />
     </View>
   );

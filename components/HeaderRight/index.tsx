@@ -4,6 +4,7 @@ import { styles } from './styles';
 import { ThreeDotMenu } from '../ThreeDotMenu';
 import { FavoriteButton } from '../FavoriteButton';
 import { useFilter } from '@/contexts/FilterContext';
+import { lightTheme } from '@/app/colors';
 
 
 export const HeaderRight = () => {
@@ -20,7 +21,7 @@ export const HeaderRight = () => {
 	return (
 		<View style={styles.container}>
 			
-			<FavoriteButton selected={favorite} onPress={handleFavorite}/>
+			<FavoriteButton heartBorderColor='white' selected={favorite} onPress={handleFavorite}/>
 
 			<ThreeDotMenu />
 			

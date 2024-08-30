@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
-import { styles } from './styles';
+import { createStyles } from './styles';
 
 import { TextButtonGridList } from '../TextButtonGridList';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const data: string[] = ['ALL', '4/4', '3/4', '2/4', '6/8', '9/8', '12/8', '5/4', '7/8', '3/8'];
 
@@ -13,6 +14,9 @@ type FilterSignatureProps = {
 
 export const FilterSignature = ({ selectedSignature, onChange }: FilterSignatureProps) => {
     const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set(["ALL"]));
+
+    const { isDarkMode } = useTheme();
+	const styles = createStyles(isDarkMode);
 
     const handlePress = (item: string) => {
         setSelectedItems(prevSelectedItems => {
