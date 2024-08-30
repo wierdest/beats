@@ -6,8 +6,8 @@ import { FlatList } from 'react-native-gesture-handler';
 import { BannerCard } from '../BannerCard';
 import { useFilter } from '@/contexts/FilterContext';
 import { Loadingindicator } from '../LoadingIndicator';
-import { globalColors } from '@/app/colors';
 import { useBeat } from '@/contexts/BeatContext';
+import { useTheme } from '@/contexts/ThemeContext';
 
 export interface Beat {
 	id: number;
@@ -75,6 +75,8 @@ export const BeatList = ({ originalBeats, onPress }: BeatListProps) => {
   const { filters } = useFilter();
   const [isLoading, setIsLoading] = useState(true);
   const { beat, play, stop, changeBpm, reloadedBeat, loopLimitRef, numberOfLoops } = useBeat();
+
+  const {globalColors} = useTheme();
   
 
 
