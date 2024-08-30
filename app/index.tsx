@@ -16,7 +16,6 @@ import { darkTheme, lightTheme } from "./colors";
 
 export default function Index() {
   const { isDarkMode } = useTheme();
-  const theme = isDarkMode ? darkTheme : lightTheme;
   const { activeModal } = useModal();
   const { beats } = useDatabase();
   const { beat, playing, selectBeat, play, stop, changeBpm } = useBeat();

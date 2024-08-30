@@ -38,13 +38,13 @@ const RootLayoutConst = () => {
                         },
                         headerStyle: {
                             backgroundColor: isDarkMode ? '#1e1e1e' : 'transparent',
-                            height: 80, // Ajuste a altura conforme necessário
+                            height: 100, // Ajuste a altura conforme necessário
                         },
                         headerTintColor: 'white',
                         headerBackground: () => (
                             <View style={{ flex: 1, backgroundColor: isDarkMode ? '#1e1e1e' : 'transparent' }}>
-                                <View style={{ flex: 0.3, backgroundColor: globalColors.secondary }} />
-                                <View style={{ flex: 0.7, backgroundColor: globalColors.primary }} />
+                                <View style={{ flex: 0.30, backgroundColor: globalColors.secondary }} />
+                                <View style={{ flex: 0.70, backgroundColor: globalColors.primary }} />
                             </View>
                         ),
                     }}

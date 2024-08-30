@@ -3,12 +3,12 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   header: {
-    height: 80, 
+    height: 100, 
     borderTopRightRadius: 60,
     overflow: 'hidden', 
   },
   topPart: {
-    flex: 1,
+    flex: 0.9,
     backgroundColor: globalColors.secondary,
   },
   bottomPart: {
