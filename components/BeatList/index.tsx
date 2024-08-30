@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
-import { View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, View } from 'react-native';
 import { styles } from './styles';
 import { BeatCard } from '../BeatCard';
 import { FlatList } from 'react-native-gesture-handler';
 import { BannerCard } from '../BannerCard';
 import { useFilter } from '@/contexts/FilterContext';
+import { Loadingindicator } from '../LoadingIndicator';
+import { globalColors } from '@/app/colors';
+import { useBeat } from '@/contexts/BeatContext';
 
 export interface Beat {
 	id: number;
@@ -70,6 +73,10 @@ interface BeatListProps {
 export const BeatList = ({ originalBeats, onPress }: BeatListProps) => {
   const [playingId, setPlayingId] = useState<number | null>(null);
   const { filters } = useFilter();
+  const [isLoading, setIsLoading] = useState(true);
+  const { beat, play, stop, changeBpm, reloadedBeat, loopLimitRef, numberOfLoops } = useBeat();
+  
+
 
   // INICIO DOS FILTROS
   const beatList = [...originalBeats, ...samples].filter(item => {
@@ -117,6 +124,17 @@ export const BeatList = ({ originalBeats, onPress }: BeatListProps) => {
 
   // FINAL DOS FILTROS
 
+  const loadData = async () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000); 
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
 	const handlePress = (id: number) => {
 		// console.log('pressed to sleect beat ', id)
     onPress(id);
@@ -155,12 +173,16 @@ export const BeatList = ({ originalBeats, onPress }: BeatListProps) => {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={beatList}
-        renderItem={renderItem}
-        keyExtractor={(item) => extractKey(item)}
-        contentContainerStyle={styles.contentContainer}
-      />
+      {!beat || isLoading ? (
+        <Loadingindicator size="large" color={globalColors.accent} />
+      ) : (
+        <FlatList
+          data={beatList}
+          renderItem={renderItem}
+          keyExtractor={(item) => extractKey(item)}
+          contentContainerStyle={styles.contentContainer}
+        />
+      )}
     </View>
   );
 };
