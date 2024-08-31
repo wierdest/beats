@@ -1,5 +1,5 @@
 import { Beat } from '@/components/BeatList';
-import { createBeatsTable, deleteBeatsTable, getBeatById, getBeats, updateBeat } from '@/services/Database';
+import { createBeatsTable, deleteBeatsTable, getBeatById, getBeats, populateBeatsTable, updateBeat } from '@/services/Database';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 interface DatabaseContextProps {
@@ -8,7 +8,6 @@ interface DatabaseContextProps {
   findBeatById: (id: number) => Promise<Beat | null>;
   clearDb: () => Promise<void>;
   updateAndReload: (id: number, beat: Beat) => Promise<void>;
-
 
 };
 
@@ -19,9 +18,22 @@ export const DatabaseProvider = ({ children }: { children: React.ReactNode }) =>
   const [beats, setBeats] = useState<Beat[]>([])
 
   const initDatabase = async () => {
-    await createBeatsTable();
-    await loadBeats();
-    setInitialized(true);
+    try {
+      await createBeatsTable();
+      await populateBeatsTable();
+      
+    } catch (e) {
+      console.log('Erro ao criar a tabela de beats!')
+    }
+    try {
+      await loadBeats();
+      console.log('Beats carregadas com sucesso!')
+      setInitialized(true);
+      return;
+    } catch (e) {
+      console.log('Erro ao carregar beats!')
+    }
+    setInitialized(false);
   };
 
   const loadBeats = async () => {
@@ -30,6 +42,7 @@ export const DatabaseProvider = ({ children }: { children: React.ReactNode }) =>
   }
 
   const clearDb = async () => {
+    setInitialized(!initialized);
     await deleteBeatsTable();
   }
   const findBeatById = async (id: number) => {
@@ -44,9 +57,8 @@ export const DatabaseProvider = ({ children }: { children: React.ReactNode }) =>
 
   useEffect(() => {
     initDatabase();
-    // console.log('Tem ', beatsList.length, 'arquivos de audio na pasta!');
  
-  }, []);
+  }, [initialized]);
   
   return (
       <DatabaseContext.Provider

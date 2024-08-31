@@ -115,7 +115,7 @@ export const Player = () => {
 			}
 
 			<Animated.View style={[styles.auxiliaryControls, { height: heightAnim }]}>
-				{isExpanded && (
+				{beat && isExpanded && (
 					<View style={styles.innerAuxControls}>
 						<SliderControl
 							tag={'bpm'}

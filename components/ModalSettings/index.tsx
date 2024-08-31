@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View } from 'react-native';
+import { Text, ToastAndroid, View } from 'react-native';
 import { createStyles } from './styles';
 import { BasicModal } from '../BasicModal';
 import { SettingsSwitch } from '../SettingsSwitch';
@@ -26,6 +26,15 @@ export const ModalSettings = () => {
             toggleTheme(); 
         } catch (error) {
             console.error('Failed to save dark mode setting', error);
+        }
+    };
+
+    const handleResetDb = async () => {
+        try {
+            await clearDb();
+            ToastAndroid.show('DB reset! Restart the app, please!', ToastAndroid.LONG);
+        } catch (e) {
+            console.log('Error clearing the DB');
         }
     };
 
@@ -68,9 +77,9 @@ export const ModalSettings = () => {
                     onValueChange={setTrimEnd}
                 /> */}
 
-                 {/* <BasicButton
-                    title='Clear DB'
-                    onPress={clearDb} />  */}
+                 <BasicButton
+                    title='Reset DB'
+                    onPress={handleResetDb} /> 
                 </View>
       </BasicModal>
 
