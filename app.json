@@ -22,7 +22,7 @@
       },
       "package": "com.wierdest.beetz",
       "version": "1.0.0",
-      "versionCode": 10
+      "versionCode": 11
     },
     "web": {
       "bundler": "metro",

@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 interface ThemeContextProps {
+  initialized: boolean;
   isDarkMode: boolean;
   toggleTheme: () => void;
   globalColors: typeof defaultGlobalColors;
@@ -13,12 +14,22 @@ interface ThemeContextProps {
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
 
 export const ThemeProvider = ({ children } :  { children: React.ReactNode }) => {
+  const [initialized, setInitialized] = useState<boolean>(false);
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
   const [globalColorsInUse, setGlobalColorsInUse] = useState<typeof defaultGlobalColors>(defaultGlobalColors)
 
   const initializeTheme = async () => {
-    await loadTheme();
-    await loadCustomColors();
+    try {
+
+      await loadTheme();
+      await loadCustomColors();
+      setInitialized(true);
+
+
+    } catch (e) {
+      console.log('Falha ao carregar temas!', e)
+    }
+    
   };
 
   useEffect(() => {
@@ -83,7 +94,7 @@ export const ThemeProvider = ({ children } :  { children: React.ReactNode }) => 
   };
 
   return (
-    <ThemeContext.Provider value={{ isDarkMode, toggleTheme, globalColors: globalColorsInUse, setCustomColor, resetToFactoryDefaultColors }}>
+    <ThemeContext.Provider value={{ initialized, isDarkMode, toggleTheme, globalColors: globalColorsInUse, setCustomColor, resetToFactoryDefaultColors }}>
       {children}
     </ThemeContext.Provider>
   );

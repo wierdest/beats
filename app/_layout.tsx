@@ -13,7 +13,7 @@ import { View } from 'react-native';
 import { SettingsProvider } from '@/contexts/SettingsContext';
 
 const RootLayoutConst = () => {
-    const { isDarkMode, globalColors} = useTheme();
+    const { initialized, isDarkMode, globalColors} = useTheme();
 
     // const [isSplashVisible, setSplashVisible] = useState(true);
 
@@ -22,44 +22,51 @@ const RootLayoutConst = () => {
     // }
 
     return (
-        <GestureHandlerRootView style={{ flex: 1 }}>
-            {/* {isSplashVisible ? (
-                <SplashScreenComponent onFinish={handleFinishSplash} />
-            ) : ( */}
-
-            <ModalProvider>
-                <Drawer
-                    drawerContent={() => <FilterDrawerLayout />}
-                    screenOptions={{
-                        drawerStyle: {
-                            width: 380,
-                            borderRadius: 60,
-                           
-                        },
-                        headerStyle: {
-                            height: 100,
-                        },
-                        headerTintColor: 'white',
-                        headerBackground: () => (
-                            <View style={{ flex: 1, backgroundColor: isDarkMode ? '#1e1e1e' : 'transparent' }}>
-                                <View style={{ flex: 0.30, backgroundColor: globalColors.secondary }} />
-                                <View style={{ flex: 0.70, backgroundColor: globalColors.primary }} />
-                            </View>
-                        ),
-                    }}
-                >
-                    <Drawer.Screen
-                        name="index"
-                        options={{
-                            title: 'Beats',
-                            headerRight: () => <HeaderRight />,
-                            swipeEdgeWidth: 0,
+        <>
+            {
+                initialized &&
+                <GestureHandlerRootView style={{ flex: 1 }}>
+                {/* {isSplashVisible ? (
+                    <SplashScreenComponent onFinish={handleFinishSplash} />
+                ) : ( */}
+    
+                <ModalProvider>
+                    <Drawer
+                        drawerContent={() => <FilterDrawerLayout />}
+                        screenOptions={{
+                            drawerStyle: {
+                                width: 380,
+                                borderRadius: 60,
+                               
+                            },
+                            headerStyle: {
+                                height: 100,
+                            },
+                            headerTintColor: 'white',
+                            headerBackground: () => (
+                                <View style={{ flex: 1, backgroundColor: isDarkMode ? '#1e1e1e' : 'transparent' }}>
+                                    <View style={{ flex: 0.30, backgroundColor: globalColors.secondary }} />
+                                    <View style={{ flex: 0.70, backgroundColor: globalColors.primary }} />
+                                </View>
+                            ),
                         }}
-                    />
-                </Drawer>
-            </ModalProvider>
-            {/* )} */}
-        </GestureHandlerRootView>
+                    >
+                        <Drawer.Screen
+                            name="index"
+                            options={{
+                                title: 'Beats',
+                                headerRight: () => <HeaderRight />,
+                                swipeEdgeWidth: 0,
+                            }}
+                        />
+                    </Drawer>
+                </ModalProvider>
+                {/* )} */}
+            </GestureHandlerRootView>
+            }
+        
+        </>
+
     );
 }
 
@@ -70,6 +77,7 @@ const RootLayout = () => {
                 <BeatProvider>
                     <ThemeProvider>
                         <SettingsProvider>
+                            
                             <RootLayoutConst />
                         </SettingsProvider>
                     </ThemeProvider>
