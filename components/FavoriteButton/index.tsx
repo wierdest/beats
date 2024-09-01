@@ -3,6 +3,8 @@ import { TouchableOpacity, Animated, TouchableOpacityProps } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { styles } from './styles';
 import { useTheme } from '@/contexts/ThemeContext';
+import { defaultGlobalColors } from '@/app/colors';
+
 
 interface FavoriteButtonProps {
     animate?: boolean;
@@ -13,7 +15,7 @@ interface FavoriteButtonProps {
 };
 
 export const FavoriteButton = ({ animate, size, selected, onPress, heartBorderColor }: FavoriteButtonProps) => {
-    const { isDarkMode } = useTheme();
+    const {globalColors} = useTheme();
 
     const spinValue = useRef(new Animated.Value(0)).current;
 
@@ -47,7 +49,7 @@ export const FavoriteButton = ({ animate, size, selected, onPress, heartBorderCo
                 <MaterialCommunityIcons
                     name={selected ? "heart" : "heart-outline"}
                     size={size ?? 24}
-                    color={selected ? "red" : heartBorderColor }
+                    color={selected ? globalColors.accent : heartBorderColor }
                 />
             </Animated.View>
 		</TouchableOpacity>
