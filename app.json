@@ -6,12 +6,11 @@
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#000"
-    },
+          "image": "./assets/images/icon.png", 
+          "resizeMode": "", 
+          "backgroundColor": "#fff" 
+   },
     "ios": {
       "supportsTablet": true
     },

@@ -1,6 +1,6 @@
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Drawer } from 'expo-router/drawer';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FilterDrawerLayout } from '@/components/FilterDrawerLayout';
 import { HeaderRight } from '@/components/HeaderRight';
 import { ModalProvider } from '@/contexts/ModalContext';
@@ -11,21 +11,31 @@ import { BeatProvider } from '@/contexts/BeatContext';
 import { FilterProvider } from '@/contexts/FilterContext';
 import { View } from 'react-native';
 import { SettingsProvider } from '@/contexts/SettingsContext';
+import LottieView from 'lottie-react-native';
 
 const RootLayoutConst = () => {
-    const { isDarkMode, globalColors} = useTheme();
-
-    // const [isSplashVisible, setSplashVisible] = useState(true);
-
-    // const handleFinishSplash = () => {
-    //     setSplashVisible(false);
-    // }
+    const { isDarkMode, globalColors } = useTheme();
+    const [isLootieVisible, setIsLootieVisible] = useState(true)
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             {/* {isSplashVisible ? (
                 <SplashScreenComponent onFinish={handleFinishSplash} />
             ) : ( */}
+            {isLootieVisible ? (
+                <LottieView 
+                    source={require('../assets/images/teste.json')}
+                    autoPlay
+                    loop={false}
+                    onAnimationFinish={()=>setIsLootieVisible(false)}
+                    style={{
+                        flex: 1,                   
+                        justifyContent: 'center',  
+                        alignItems: 'center',      
+                        backgroundColor: '#eee',   
+                    }}
+                     />
+            ) : (
 
             <ModalProvider>
                 <Drawer
@@ -34,7 +44,7 @@ const RootLayoutConst = () => {
                         drawerStyle: {
                             width: 380,
                             borderRadius: 60,
-                           
+
                         },
                         headerStyle: {
                             height: 100,
@@ -42,8 +52,8 @@ const RootLayoutConst = () => {
                         headerTintColor: 'white',
                         headerBackground: () => (
                             <View style={{ flex: 1, backgroundColor: isDarkMode ? '#1e1e1e' : 'transparent' }}>
-                                <View style={{ flex: 0.30, backgroundColor: globalColors.secondary }} />
-                                <View style={{ flex: 0.70, backgroundColor: globalColors.primary }} />
+                                <View style={{ flex: 0.31, backgroundColor: globalColors.secondary }} />
+                                <View style={{ flex: 0.69, backgroundColor: globalColors.primary }} />
                             </View>
                         ),
                     }}
@@ -58,7 +68,7 @@ const RootLayoutConst = () => {
                     />
                 </Drawer>
             </ModalProvider>
-            {/* )} */}
+            )}
         </GestureHandlerRootView>
     );
 }

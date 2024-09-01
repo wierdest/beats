@@ -74,7 +74,7 @@ export const BeatList = ({ originalBeats, onPress }: BeatListProps) => {
   const [playingId, setPlayingId] = useState<number | null>(null);
   const { filters } = useFilter();
   const [isLoading, setIsLoading] = useState(true);
-  const { beat, play, stop, changeBpm, reloadedBeat, loopLimitRef, numberOfLoops } = useBeat();
+  const { beat , play, stop, changeBpm, reloadedBeat, loopLimitRef, numberOfLoops } = useBeat();
 
   const {globalColors} = useTheme();
   
