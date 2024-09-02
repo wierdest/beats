@@ -19,15 +19,14 @@ const RootLayoutConst = () => {
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
-            {/* {isSplashVisible ? (
-                <SplashScreenComponent onFinish={handleFinishSplash} />
-            ) : ( */}
-            {isLootieVisible ? (
+            {/* comentei pq demora muito a animação */}
+            
+            {/* {isLootieVisible ? (
                 <LottieView 
                     source={require('../assets/images/teste.json')}
                     autoPlay
                     loop={false}
-                    onAnimationFinish={()=>setIsLootieVisible(false)}
+                    onAnimationFinish={()=>setIsLootieVisible(false)}   
                     style={{
                         flex: 1,                   
                         justifyContent: 'center',  
@@ -35,7 +34,7 @@ const RootLayoutConst = () => {
                         backgroundColor: '#eee',   
                     }}
                      />
-            ) : (
+            ) : ( */}
 
             <ModalProvider>
                 <Drawer
@@ -68,7 +67,7 @@ const RootLayoutConst = () => {
                     />
                 </Drawer>
             </ModalProvider>
-            )}
+            {/* )} */}
         </GestureHandlerRootView>
     );
 }
