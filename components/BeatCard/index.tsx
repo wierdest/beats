@@ -24,7 +24,9 @@ export const BeatCard = ({ bpm, genre, tempo, title, onPress, playing, isFavorit
 	const styles = createStyles(isDarkMode);
 	const [favorite, setFavorite] = useState(isFavorite);
 
-	const { favoriteBeat } = useBeat();
+	const { beat, favoriteBeat } = useBeat();
+  	const isSelected = beat && beat.id === id;
+
 
 	const { globalColors } = useTheme();
 
@@ -41,7 +43,7 @@ export const BeatCard = ({ bpm, genre, tempo, title, onPress, playing, isFavorit
 				<Text style={styles.tempoText}>{tempo}</Text>
 				<FavoriteButton heartBorderColor={isDarkMode ? darkTheme.accent : lightTheme.accent} animate selected={favorite} onPress={handleFavorite}/>
 			</View>
-			<Text style={[styles.title, { color: playing ? globalColors.accent : 
+			<Text style={[styles.title, { color: isSelected ? globalColors.accent : 
 				isDarkMode ? darkTheme.accent: lightTheme.accent  }]}>{title}</Text>
 		</TouchableOpacity>
 	  );

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, Text, View } from 'react-native';
 import { styles } from './styles';
 import { BeatCard } from '../BeatCard';
 import { FlatList } from 'react-native-gesture-handler';
@@ -8,6 +8,7 @@ import { useFilter } from '@/contexts/FilterContext';
 import { Loadingindicator } from '../LoadingIndicator';
 import { useBeat } from '@/contexts/BeatContext';
 import { useTheme } from '@/contexts/ThemeContext';
+import { AntDesign } from '@expo/vector-icons';
 
 export interface Beat {
 	id: number;
@@ -74,8 +75,7 @@ export const BeatList = ({ originalBeats, onPress }: BeatListProps) => {
   const [playingId, setPlayingId] = useState<number | null>(null);
   const { filters } = useFilter();
   const [isLoading, setIsLoading] = useState(true);
-  const { beat, play, stop, changeBpm, reloadedBeat, loopLimitRef, numberOfLoops } = useBeat();
-
+  const { beat , play, stop, changeBpm, reloadedBeat, loopLimitRef, numberOfLoops } = useBeat();
   const {globalColors} = useTheme();
   
 
@@ -175,15 +175,22 @@ export const BeatList = ({ originalBeats, onPress }: BeatListProps) => {
 
   return (
     <View style={styles.container}>
-      {!beat || isLoading ? (
-        <Loadingindicator size="large" color={globalColors.accent} />
+      {Array.isArray(beatList) && beatList.length === 0 ? (
+        <View style={styles.noContent}>
+          <AntDesign name="frowno" size={40} color={globalColors.accent} />
+          <Text style={[styles.text, { color: globalColors.accent }]}>No content</Text>
+        </View>
       ) : (
-        <FlatList
-          data={beatList}
-          renderItem={renderItem}
-          keyExtractor={(item) => extractKey(item)}
-          contentContainerStyle={styles.contentContainer}
-        />
+        isLoading ? (
+          <Loadingindicator size="large" color={globalColors.accent} />
+        ) : (
+          <FlatList
+            data={beatList}
+            renderItem={renderItem}
+            keyExtractor={(item) => extractKey(item)}
+            contentContainerStyle={styles.contentContainer}
+          />
+        )
       )}
     </View>
   );

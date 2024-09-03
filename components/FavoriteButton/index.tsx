@@ -3,6 +3,8 @@ import { TouchableOpacity, Animated, TouchableOpacityProps } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { styles } from './styles';
 import { useTheme } from '@/contexts/ThemeContext';
+import { defaultGlobalColors } from '@/app/colors';
+
 
 interface FavoriteButtonProps {
     animate?: boolean;
