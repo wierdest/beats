@@ -7,12 +7,12 @@ import { RangeSliderToggle } from '../RangeSliderToggle';
 
 interface RangeSliderProps {
     minValue: number;
-	maxValue: number;
+    maxValue: number;
     onValueChangeMin: (value: number) => void;
-	onValueChangeMax: (value: number) => void;
+    onValueChangeMax: (value: number) => void;
 }
 
-export const RangeSlider = ({minValue, maxValue, onValueChangeMin, onValueChangeMax }: RangeSliderProps) => {
+export const RangeSlider = ({ minValue, maxValue, onValueChangeMin, onValueChangeMax }: RangeSliderProps) => {
     const [containerWidth, setContainerWidth] = useState<number>(0);
     const initialPosA = useRef<number>(0);
     const initialPosB = useRef<number>(0);
@@ -23,46 +23,41 @@ export const RangeSlider = ({minValue, maxValue, onValueChangeMin, onValueChange
             initialPosB.current = containerWidth - 16;
             setLoaded(true)
         }
-    },[containerWidth])
+    }, [containerWidth])
 
     const handleLayout = (event: LayoutChangeEvent) => {
         setContainerWidth(event.nativeEvent.layout.width);
-        
+
     };
 
     return (
         <View style={styles.slider} onLayout={handleLayout} >
 
             {loaded &&
-            <>
-            <RangeSliderToggle
-                    kind={'min'}
-                    value={minValue}
-                    initialPos={initialPosA.current}
-                    minValue={minValue}
-                    maxValue={maxValue}
-                    onValueChange={onValueChangeMin}
-                    containerWidth={containerWidth}
-                />
+                <>
+                    <RangeSliderToggle
+                        kind={'min'}
+                        value={minValue}
+                        initialPos={initialPosA.current}
+                        minValue={minValue}
+                        maxValue={maxValue}
+                        onValueChange={onValueChangeMin}
+                        containerWidth={containerWidth}
+                    />
 
-                <RangeSliderToggle
-                    kind={'max'}
-                    value={maxValue}
-                    initialPos={initialPosB.current}
-                    minValue={minValue}
-                    maxValue={maxValue}
-                    onValueChange={onValueChangeMax}
-                    containerWidth={containerWidth}
-                />
+                    <RangeSliderToggle
+                        kind={'max'}
+                        value={maxValue}
+                        initialPos={initialPosB.current}
+                        minValue={minValue}
+                        maxValue={maxValue}
+                        onValueChange={onValueChangeMax}
+                        containerWidth={containerWidth}
+                    />
 
-            </>
-            
+                </>
+
             }
-            
         </View>
-
-
-  
-        
     );
 };

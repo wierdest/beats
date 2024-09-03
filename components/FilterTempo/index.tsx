@@ -9,9 +9,9 @@ import { useTheme } from '@/contexts/ThemeContext';
 export type FilterTempoProps = {
 	selectedTempo: string;
 	onChange: (tempo: string) => void;
-  };
+};
 
-  export const FilterTempo = ({ selectedTempo, onChange } : FilterTempoProps)  => {
+export const FilterTempo = ({ selectedTempo, onChange }: FilterTempoProps) => {
 	const [min, setMin] = useState<number>(50);
 	const [max, setMax] = useState<number>(280);
 
@@ -20,40 +20,40 @@ export type FilterTempoProps = {
 
 	const { isDarkMode } = useTheme();
 	const styles = createStyles(isDarkMode);
-  
+
 	useEffect(() => {
-	  if (!isNaN(minTempo) && !isNaN(maxTempo)) {
-		setMin(minTempo);
-		setMax(maxTempo);
-	  }
+		if (!isNaN(minTempo) && !isNaN(maxTempo)) {
+			setMin(minTempo);
+			setMax(maxTempo);
+		}
 	}, [selectedTempo]);
-  
+
 	useEffect(() => {
 		// usei isso pra demorar um cado pra filtragem rolar e otimizar o código
 		if (timeoutRef.current) {
-		  clearTimeout(timeoutRef.current);
+			clearTimeout(timeoutRef.current);
 		}
 		timeoutRef.current = setTimeout(() => {
-		  onChange(`${min}-${max}`);
-		}, 300); 
-	  }, [min, max, onChange]);
-  
+			onChange(`${min}-${max}`);
+		}, 300);
+	}, [min, max, onChange]);
+
 	return (
-	  <View style={styles.container}>
-		<Text style={styles.label}>TEMPO</Text>
-		<View style={styles.textContainer}>
-		  <Text style={styles.label}>{min}</Text>
-		  <Text>-</Text>
-		  <Text style={styles.label}>{max}</Text>
+		<View style={styles.container}>
+			<Text style={styles.label}>TEMPO</Text>
+			<View style={styles.textContainer}>
+				<Text style={styles.label}>{min}</Text>
+				<Text>-</Text>
+				<Text style={styles.label}>{max}</Text>
+			</View>
+			<View>
+				<RangeSlider
+					minValue={min}
+					maxValue={max}
+					onValueChangeMin={setMin}
+					onValueChangeMax={setMax}
+				/>
+			</View>
 		</View>
-		<View>
-		  <RangeSlider
-			minValue={min}
-			maxValue={max}
-			onValueChangeMin={setMin}
-			onValueChangeMax={setMax}
-		  />
-		</View>
-	  </View>
 	);
-  };
+};

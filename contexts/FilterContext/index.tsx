@@ -19,7 +19,7 @@ const FilterContext = createContext<FilterContextType | undefined>(undefined);
 
 export const FilterProvider = ({ children }: { children: React.ReactNode }) => {
   const [filters, setFilters] = useState<FilterState>({
-    tempo: 'ALL',
+    tempo: '50-280',
     genre: 'ALL',
     signature: 'ALL',
     favorite: false,
