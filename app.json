@@ -7,17 +7,16 @@
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "splash": {
-          "image": "./assets/images/icon.png", 
-          "resizeMode": "", 
-          "backgroundColor": "#fff" 
-   },
+      "backgroundColor": "#6a00af",
+      "image": "./assets/images/splash.png"
+    },
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundImage": "./assets/images/monochrome-image.png"
       },
       "package": "com.wierdest.beetz",
       "version": "1.0.0",

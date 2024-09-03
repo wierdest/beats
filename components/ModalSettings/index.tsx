@@ -4,10 +4,8 @@ import { createStyles } from './styles';
 import { BasicModal } from '../BasicModal';
 import { SettingsSwitch } from '../SettingsSwitch';
 import { useTheme } from '@/contexts/ThemeContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BasicButton } from '../BasicButton';
 import { useDatabase } from '@/contexts/DatabaseContext';
-import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake';
 import { useModal } from '@/contexts/ModalContext';
 import { useSettings } from '@/contexts/SettingsContext';
 

@@ -8,7 +8,11 @@ interface ThemeContextProps {
   toggleTheme: () => void;
   globalColors: typeof defaultGlobalColors;
   setCustomColor: (colorKey: keyof typeof defaultGlobalColors, colorValue: string) => void;
+  saveColorsToStorage: () => Promise<void>;
+  resetToUserDefaultColors: () => Promise<void>;
   resetToFactoryDefaultColors: () => void;
+  areColorsInSyncWithStorage: () => Promise<boolean>;
+
 }
 
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
@@ -24,7 +28,6 @@ export const ThemeProvider = ({ children } :  { children: React.ReactNode }) => 
       await loadTheme();
       await loadCustomColors();
       setInitialized(true);
-
 
     } catch (e) {
       console.log('Falha ao carregar temas!', e)
@@ -62,15 +65,54 @@ export const ThemeProvider = ({ children } :  { children: React.ReactNode }) => 
     }
   };
 
-  const setCustomColor = async (colorKey: keyof typeof defaultGlobalColors, colorValue: string) => {
+  const setCustomColor = (colorKey: keyof typeof defaultGlobalColors, colorValue: string) => {
+    setGlobalColorsInUse((prevColors) => ({
+      ...prevColors,
+      [colorKey]: colorValue,
+    }));
+  };
+
+  const saveColorsToStorage = async () => {
     try {
-      await AsyncStorage.setItem(colorKey, colorValue);
-      setGlobalColorsInUse((prevColors) => ({
-        ...prevColors,
-        [colorKey]: colorValue,
-      }));
+      await AsyncStorage.multiSet(
+        Object.entries(globalColorsInUse).map(([key, value]) => [key, value])
+      );
     } catch (error) {
-      console.error('Failed to save custom color', error);
+      console.error('Failed to save colors to storage', error);
+    }
+  };
+
+  const areColorsInSyncWithStorage = async (): Promise<boolean> => {
+    try {
+      const storedColors = { ...defaultGlobalColors };
+      
+      for (const key of Object.keys(defaultGlobalColors) as Array<keyof typeof defaultGlobalColors>) {
+        const storedColor = await AsyncStorage.getItem(key);
+        if (storedColor) {
+          storedColors[key] = storedColor;
+        }
+      }
+  
+      // Compare stored colors with the currently in-use colors
+      for (const key of Object.keys(storedColors) as Array<keyof typeof defaultGlobalColors>) {
+        if (storedColors[key] !== globalColorsInUse[key]) {
+          return false; // Mismatch found
+        }
+      }
+  
+      return true; 
+    } catch (error) {
+      console.error('Failed to compare colors with storage', error);
+      return false;
+    }
+  };
+
+  const resetToUserDefaultColors = async () => {
+    try {
+      await loadCustomColors();
+      // console.log('Colors reset to user default values.');
+    } catch (error) {
+      console.error('Failed to reset colors to user default', error);
     }
   };
 
@@ -94,7 +136,18 @@ export const ThemeProvider = ({ children } :  { children: React.ReactNode }) => 
   };
 
   return (
-    <ThemeContext.Provider value={{ initialized, isDarkMode, toggleTheme, globalColors: globalColorsInUse, setCustomColor, resetToFactoryDefaultColors }}>
+    <ThemeContext.Provider value={{ 
+      initialized, 
+      isDarkMode, 
+      toggleTheme, 
+      globalColors: globalColorsInUse, 
+      setCustomColor,  
+      saveColorsToStorage,
+      resetToUserDefaultColors,
+      resetToFactoryDefaultColors,
+      areColorsInSyncWithStorage
+      
+      }}>
       {children}
     </ThemeContext.Provider>
   );

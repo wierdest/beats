@@ -77,9 +77,6 @@ export const BeatList = ({ originalBeats, onPress }: BeatListProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const { beat , play, stop, changeBpm, reloadedBeat, loopLimitRef, numberOfLoops } = useBeat();
   const {globalColors} = useTheme();
-  
-
-
   // INICIO DOS FILTROS
   const beatList = [...originalBeats, ...samples].filter(item => {
     // Filtro pelo tempo
@@ -130,7 +127,7 @@ export const BeatList = ({ originalBeats, onPress }: BeatListProps) => {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-    }, 1000); 
+    }, 400); 
   };
 
   useEffect(() => {

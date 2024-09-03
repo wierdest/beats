@@ -5,7 +5,6 @@ import { FilterDrawerLayout } from '@/components/FilterDrawerLayout';
 import { HeaderRight } from '@/components/HeaderRight';
 import { ModalProvider } from '@/contexts/ModalContext';
 import { ThemeProvider, useTheme } from '@/contexts/ThemeContext';
-// import { SplashScreenComponent } from '@/components/SplashScreen';
 import { DatabaseProvider } from '@/contexts/DatabaseContext';
 import { BeatProvider } from '@/contexts/BeatContext';
 import { FilterProvider } from '@/contexts/FilterContext';
@@ -18,65 +17,58 @@ const RootLayoutConst = () => {
     const [isLootieVisible, setIsLootieVisible] = useState(true)
 
     return (
-        <>
-            {/* comentei pq demora muito a animação */}
-            
-            {/* {isLootieVisible ? (
+        <>  
+            {isLootieVisible ? (
                 <LottieView 
                     source={require('../assets/images/teste.json')}
                     autoPlay
                     loop={false}
-                    onAnimationFinish={()=>setIsLootieVisible(false)}   
+                    onAnimationFinish={() => setIsLootieVisible(false)}   
                     style={{
                         flex: 1,                   
                         justifyContent: 'center',  
                         alignItems: 'center',      
-                        backgroundColor: '#eee',   
+                        backgroundColor: '#6a00af',
+                        height: '100%'
                     }}
-                     />
-            ) : ( */}
-
-            {
-                initialized &&
-                <GestureHandlerRootView style={{ flex: 1 }}>
-                <ModalProvider>
-                    <Drawer
-                        drawerContent={() => <FilterDrawerLayout />}
-                        screenOptions={{
-                            drawerStyle: {
-                                width: 380,
-                                borderRadius: 60,
-                               
-                            },
-                            headerStyle: {
-                                height: 100,
-                            },
-                            headerTintColor: 'white',
-                            headerBackground: () => (
-                                <View style={{ flex: 1, backgroundColor: isDarkMode ? '#1e1e1e' : 'transparent' }}>
-                                    <View style={{ flex: 0.30, backgroundColor: globalColors.secondary }} />
-                                    <View style={{ flex: 0.70, backgroundColor: globalColors.primary }} />
-                                </View>
-                            ),
-                        }}
-                    >
-                        <Drawer.Screen
-                            name="index"
-                            options={{
-                                title: 'Beats',
-                                headerRight: () => <HeaderRight />,
-                                swipeEdgeWidth: 0,
-                            }}
-                        />
-                    </Drawer>
-                </ModalProvider>
-                {/* )} */}
-            </GestureHandlerRootView>
-            }
-        
+                />
+            ) : (
+                initialized && (
+                    <GestureHandlerRootView style={{ flex: 1 }}>
+                        <ModalProvider>
+                            <Drawer
+                                drawerContent={() => <FilterDrawerLayout />}
+                                screenOptions={{
+                                    drawerStyle: {
+                                        width: 380,
+                                        borderRadius: 60,
+                                    },
+                                    headerStyle: {
+                                        height: 100,
+                                    },
+                                    headerTintColor: 'white',
+                                    headerBackground: () => (
+                                        <View style={{ flex: 1, backgroundColor: isDarkMode ? '#1e1e1e' : 'transparent' }}>
+                                            <View style={{ flex: 0.30, backgroundColor: globalColors.secondary }} />
+                                            <View style={{ flex: 0.70, backgroundColor: globalColors.primary }} />
+                                        </View>
+                                    ),
+                                }}
+                            >
+                                <Drawer.Screen
+                                    name="index"
+                                    options={{
+                                        title: 'Beats',
+                                        headerRight: () => <HeaderRight />,
+                                        swipeEdgeWidth: 0,
+                                    }}
+                                />
+                            </Drawer>
+                        </ModalProvider>
+                    </GestureHandlerRootView>
+                )
+            )}
         </>
-
-       
     );
 }
 
@@ -87,7 +79,6 @@ const RootLayout = () => {
                 <BeatProvider>
                     <ThemeProvider>
                         <SettingsProvider>
-                            
                             <RootLayoutConst />
                         </SettingsProvider>
                     </ThemeProvider>

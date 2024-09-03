@@ -70,9 +70,14 @@ const dbConnector = new Sqlite3Connector('beats.db');
 
 export const createBeatsTable = async () => {
     try {
+
+        const db = await dbConnector.configureConnection();
+
+        // Set PRAGMA outside of a transaction
+        await db.execAsync(`PRAGMA journal_mode = WAL;`)
+
         await dbConnector.withTransactionAsync(async (db) => {
             await db.execAsync(`
-                PRAGMA journal_mode = WAL;
                 CREATE TABLE IF NOT EXISTS beats (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     bpm INTEGER NOT NULL,
