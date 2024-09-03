@@ -15,7 +15,7 @@ interface FavoriteButtonProps {
 };
 
 export const FavoriteButton = ({ animate, size, selected, onPress, heartBorderColor }: FavoriteButtonProps) => {
-    const {globalColors} = useTheme();
+    const { isDarkMode, globalColors } = useTheme();
 
     const spinValue = useRef(new Animated.Value(0)).current;
 

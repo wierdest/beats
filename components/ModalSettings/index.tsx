@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View } from 'react-native';
+import { Text, ToastAndroid, View } from 'react-native';
 import { createStyles } from './styles';
 import { BasicModal } from '../BasicModal';
 import { SettingsSwitch } from '../SettingsSwitch';
@@ -9,16 +9,18 @@ import { BasicButton } from '../BasicButton';
 import { useDatabase } from '@/contexts/DatabaseContext';
 import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake';
 import { useModal } from '@/contexts/ModalContext';
+import { useSettings } from '@/contexts/SettingsContext';
 
 
 export const ModalSettings = () => {
-    const [keepScreenOn, setKeepScreenOn] = useState(false);
     const [trimEnd, setTrimEnd] = useState(false);
 
     const { isDarkMode, toggleTheme   } = useTheme();
     const [isDark, setIsDark] = useState<boolean>(isDarkMode);
     const styles = createStyles(isDarkMode);
     const { toggleModal } = useModal();
+    const { isScreenOn, toggleScreenOn } = useSettings();
+    const [keepScreenOn, setKeepScreenOn] = useState(isScreenOn);
 
     const handleDarkModeToggle = async () => {
         try {
@@ -29,20 +31,20 @@ export const ModalSettings = () => {
         }
     };
 
+    const handleResetDb = async () => {
+        try {
+            await clearDb();
+            ToastAndroid.show('DB reset! Restart the app, please!', ToastAndroid.LONG);
+        } catch (e) {
+            console.log('Error clearing the DB');
+        }
+    };
+
     const { clearDb } = useDatabase();
 
     const handleKeepScreenOnToggle = (newValue: boolean) => {
         setKeepScreenOn(newValue);
-        if(newValue) {
-            try {
-                activateKeepAwakeAsync();
-            } catch(e) {
-                console.log('Erro trying to activate the screen')
-                setKeepScreenOn(false);
-            }
-        } else {
-            deactivateKeepAwake();
-        }
+        toggleScreenOn(newValue);
     };
 
 	return (
@@ -68,9 +70,9 @@ export const ModalSettings = () => {
                     onValueChange={setTrimEnd}
                 /> */}
 
-                 {/* <BasicButton
-                    title='Clear DB'
-                    onPress={clearDb} />  */}
+                 <BasicButton
+                    title='Reset DB'
+                    onPress={handleResetDb} /> 
                 </View>
       </BasicModal>
 

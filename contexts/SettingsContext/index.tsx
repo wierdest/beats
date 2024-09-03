@@ -1,9 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake';
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 interface SettingsContextProps {
   isScreenOn: boolean;
-  toggleScreenOn: () => void;
+  toggleScreenOn: (newValue: boolean) => void;
 }
 
 const SettingsContext = createContext<SettingsContextProps | undefined>(undefined);
@@ -15,9 +16,7 @@ export const SettingsProvider = ({ children } :  { children: React.ReactNode }) 
   const loadScreenOn = async () => {
     try {
       const savedScreenOn = await AsyncStorage.getItem('screenOn');
-      if (savedScreenOn) {
-        setIsScreenOn(savedScreenOn === 'true');
-      }
+      toggleScreenOn(savedScreenOn === 'true');
     } catch (error) {
       console.error('Failed to load theme', error);
     }
@@ -27,14 +26,26 @@ export const SettingsProvider = ({ children } :  { children: React.ReactNode }) 
     loadScreenOn();
   }, []);
 
-  const toggleScreenOn = async () => {
+  const toggleScreenOn = async (newValue: boolean) => {
     try {
-      const newValue = !isScreenOn ? 'true' : 'false';
-      await AsyncStorage.setItem('screenOn', newValue);
-      setIsScreenOn(!isScreenOn);
+      const screenOnString = newValue ? 'true' : 'false';
+      await AsyncStorage.setItem('screenOn', screenOnString);
+      if(newValue) {
+        try {
+            activateKeepAwakeAsync();
+            setIsScreenOn(true);
+            return;
+        } catch(e) {
+            console.log('Erro trying to activate the screen')
+        }
+    } else {
+        deactivateKeepAwake();
+    }
     } catch (error) {
       console.error('Failed to save screen on value', error);
     }
+    setIsScreenOn(false)
+
   };
 
   return (

@@ -57,20 +57,21 @@ const RootLayoutConst = () => {
                         ),
                     }}
                 >
-                    <Drawer.Screen
-                        name="index"
-                        options={{
-                            title: 'Beats',
-                            headerRight: () => <HeaderRight />,
-                            swipeEdgeWidth: 0,
-                        }}
-                    />
-                </Drawer>
-            </ModalProvider>
-            {/* )} */}
-        </GestureHandlerRootView>
+                        <Drawer.Screen
+                            name="index"
+                            options={{
+                                title: 'Beats',
+                                headerRight: () => <HeaderRight />,
+                                swipeEdgeWidth: 0,
+                            }}
+                        />
+                    </Drawer>
+                </ModalProvider>
+                {/* )} */}
+            </GestureHandlerRootView>
     );
 }
+
 
 const RootLayout = () => {
     return (
@@ -79,6 +80,7 @@ const RootLayout = () => {
                 <BeatProvider>
                     <ThemeProvider>
                         <SettingsProvider>
+                            
                             <RootLayoutConst />
                         </SettingsProvider>
                     </ThemeProvider>

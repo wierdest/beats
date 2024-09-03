@@ -5,11 +5,13 @@ import ColorPicker from 'react-native-wheel-color-picker'
 import { useTheme } from '@/contexts/ThemeContext';
 import { BasicButton } from '../BasicButton';
 import { BasicModal } from '../BasicModal';
-import { styles } from './styles';
+import { createStyles } from './styles';
 import { GlobalColorType } from '@/app/colors';
 
 export const ModalColor = () => {
-  const { setCustomColor, globalColors, resetToFactoryDefaultColors } = useTheme();
+  const { setCustomColor, globalColors, resetToFactoryDefaultColors, isDarkMode } = useTheme();
+  const styles = createStyles(isDarkMode);
+
   const [color, setColor] = useState<string | undefined>(undefined); // Default to white
   const pickerRef = useRef<ColorPicker>(null);
   const [pickingType, setPickingType] = useState<GlobalColorType | undefined>(undefined);
@@ -92,9 +94,6 @@ export const ModalColor = () => {
           <BasicButton title='Reset Color Scheme' onPress={resetToFactoryDefaultColors} />
 
         }
-
-      
-
       </View>
     </BasicModal>
 

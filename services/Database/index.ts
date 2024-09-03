@@ -68,7 +68,6 @@ class Sqlite3Connector {
 
 const dbConnector = new Sqlite3Connector('beats.db');
 
-
 export const createBeatsTable = async () => {
     try {
         await dbConnector.withTransactionAsync(async (db) => {
@@ -87,24 +86,36 @@ export const createBeatsTable = async () => {
                     favorite INTEGER NOT NULL
                 );
             `);
-
-            const existingRows = await db.getAllAsync<Beat>('SELECT * FROM beats;');
-
-            if (existingRows.length < beatsList.length) {
-                const existingIds = existingRows.map(row => row.id);
-                const beatsParaAdcionarAoDB = beatsList.filter(beat => !existingIds.includes(beat.id)).map(b => b.title);
-
-                for (const beatTitle of beatsParaAdcionarAoDB) {
-                    await insertBeat(BeatFilenameService.extractInfo(beatTitle));
-                }
-            } else {
-                console.log('Beats table contains', existingRows.length, 'beats.');
-            }
+            console.log('Beats table created or already exists.');
         });
     } catch (e) {
         console.error('Error creating the database table:', e);
     }
 };
+
+export const populateBeatsTable = async () => {
+    try {
+        const existingRows = await dbConnector.queryGet<Beat>('SELECT * FROM beats;');
+
+        if (existingRows.length < beatsList.length) {
+            const existingIds = existingRows.map(row => row.id);
+            const beatsToInsert = beatsList.filter(beat => !existingIds.includes(beat.id)).map(b => b.title);
+
+            for (const beatTitle of beatsToInsert) {
+                try {
+                    await insertBeat(BeatFilenameService.extractInfo(beatTitle));
+                } catch (insertError) {
+                    console.error('Error inserting beat:', beatTitle, insertError);
+                }
+            }
+        } else {
+            console.log('Beats table already populated with', existingRows.length, 'beats.');
+        }
+    } catch (e) {
+        console.error('Error populating beats table:', e);
+    }
+};
+
 
 // Get All Beats
 export const getBeats = async (): Promise<Beat[]> => {
