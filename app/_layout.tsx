@@ -20,16 +20,15 @@ const RootLayoutConst = () => {
         <>  
             {isLootieVisible ? (
                 <LottieView 
-                    source={require('../assets/images/teste.json')}
+                    source={require('../assets/images/simple-loading.json')}
                     autoPlay
                     loop={false}
                     onAnimationFinish={() => setIsLootieVisible(false)}   
                     style={{
-                        flex: 1,                   
+                        flex: 1,          
                         justifyContent: 'center',  
                         alignItems: 'center',      
                         backgroundColor: '#6a00af',
-                        height: '100%'
                     }}
                 />
             ) : (
