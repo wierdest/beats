@@ -7,7 +7,7 @@
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "splash": {
-      "backgroundColor": "#6a00af",
+      "backgroundColor": "#2d003d",
       "image": "./assets/images/splash.png"
     },
     "ios": {

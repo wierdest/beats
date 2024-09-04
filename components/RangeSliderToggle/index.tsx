@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { TouchableOpacity, Animated, PanResponder, LayoutChangeEvent } from 'react-native';
+import { TouchableOpacity, Animated, PanResponder, LayoutChangeEvent, ImageBackground, ImageStyle } from 'react-native';
 import { styles } from './styles';
 import { SliderButtonProps } from '../SliderButton';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -10,6 +10,9 @@ type RangeSliderToggle = 'min' | 'max'
 interface RangeSliderToggleProps extends SliderButtonProps {
     kind: RangeSliderToggle
 }
+
+const BEET = require('@/assets/images/button-image.png')
+
 
 export const RangeSliderToggle = ({ kind, initialPos, value, minValue, maxValue, containerWidth, onValueChange }: RangeSliderToggleProps) => {
     // hardcoded the buttonWidth, I know...
@@ -78,8 +81,6 @@ export const RangeSliderToggle = ({ kind, initialPos, value, minValue, maxValue,
                 }
                 pan.setValue(newX);
                 onValueChange(newValue);
-
-
             },
             onPanResponderEnd(e, gestureState) {
 
@@ -95,14 +96,24 @@ export const RangeSliderToggle = ({ kind, initialPos, value, minValue, maxValue,
         })
     ).current;
 
-
-
+    const imageStyle : ImageStyle = {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        transform: kind === 'min' ? [{ scaleX: -1 }] : [],
+    };
 
     return (
         <Animated.View
-            style={[styles.button, { backgroundColor: globalColors.accent, }, { transform: [{ translateX: pan }, { scale: buttonScale }] }]}
+            style={[styles.button, { transform: [{ translateX: pan }, { scale: buttonScale }] }]}
             {...panResponder.panHandlers}
         >
+              <ImageBackground
+                source={BEET}
+                style={imageStyle}
+            >
+            </ImageBackground>
+
         </Animated.View>
     );
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TouchableOpacity, View, StyleSheet, Animated } from 'react-native';
+import { TouchableOpacity, View, StyleSheet, Animated, ImageBackground } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { styles } from './styles';
 import { useBeat } from '@/contexts/BeatContext';
@@ -9,6 +9,8 @@ interface PlayButtonProps {
     onPlay: () => void;
 	onStop: () => void;
 }
+
+const BEET = require('@/assets/images/button-image.png')
 
 export const PlayButton = ({onPlay, onStop} : PlayButtonProps) => {
 
@@ -49,13 +51,16 @@ export const PlayButton = ({onPlay, onStop} : PlayButtonProps) => {
     }, [playing])
 
     return (
-        <TouchableOpacity style={[styles.button, { backgroundColor: globalColors.accent}]} onPress={togglePlay}>
+        <TouchableOpacity onPress={togglePlay}>
             <Animated.View style={{ transform: [{ rotate: spin }] }}>
-                <MaterialCommunityIcons
-                    name={playing ? 'stop' : 'play'}
-                    size={60}
-                    color="white"
-                />
+                <ImageBackground source={BEET} style={[styles.button, { transform: [{ scaleX: playing ? -1 : 1 }] }]}>
+                    <MaterialCommunityIcons
+                        name={playing ? 'stop' : 'play'}
+                        size={32}
+                        style={{transform: [{translateX: -6}, {translateY: 6}]}}
+                        color='white'
+                    />
+                </ImageBackground>
             </Animated.View>
         </TouchableOpacity>
     );

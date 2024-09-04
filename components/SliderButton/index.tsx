@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, TouchableOpacity, Animated, PanResponder } from 'react-native';
+import { View, Text, TouchableOpacity, Animated, PanResponder, ImageBackground } from 'react-native';
 import { styles } from './styles';
 import { SliderControlProps } from '../SliderControl';
 import { VolumeManager } from 'react-native-volume-manager';
@@ -10,9 +10,12 @@ export interface SliderButtonProps extends SliderControlProps {
 	initialPos: number;
 }
 
+const BEET = require('@/assets/images/button-image-reversed.png')
+
+
 export const SliderButton = ({ value, initialPos, minValue, maxValue, tag, containerWidth, onValueChange, volume }: SliderButtonProps) => {
 	// hardcoded the buttonWidth, I know...
-	const buttonWidth = 32;
+	const buttonWidth = 80;
 	const pan = useRef(new Animated.Value(initialPos)).current;
 	const initialPosRef = useRef(initialPos);
 
@@ -71,7 +74,7 @@ export const SliderButton = ({ value, initialPos, minValue, maxValue, tag, conta
 
 	return (
 		<Animated.View
-			style={[styles.button, {backgroundColor: globalColors.accent}, { transform: [{ translateX: pan }] }]}
+			style={[styles.button, { transform: [{ translateX: pan }] }]}
 			{...panResponder.panHandlers}
 		>
 
@@ -80,10 +83,15 @@ export const SliderButton = ({ value, initialPos, minValue, maxValue, tag, conta
 				<View style={styles.tail} />
 			</Animated.View>
 
-			<TouchableOpacity >
-				<Text style={styles.value}>{value}</Text>
-				{tag && <Text style={styles.tag}>{tag}</Text>}
-			</TouchableOpacity>
+			<ImageBackground
+				source={BEET}
+				style={{ width: 80, height: 80, }}
+			>
+				<TouchableOpacity style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+					<Text style={[styles.value, {transform: [{translateX: 6}, {translateY: 6}]}]}>{value}</Text>
+					{tag && <Text style={[styles.tag, {transform: [{translateX: 6}, { translateY: 3}]}]}>{tag}</Text>}
+				</TouchableOpacity>
+			</ImageBackground>
 		</Animated.View>
 	);
 };

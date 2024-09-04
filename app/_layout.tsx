@@ -28,7 +28,7 @@ const RootLayoutConst = () => {
                         flex: 1,          
                         justifyContent: 'center',  
                         alignItems: 'center',      
-                        backgroundColor: '#6a00af',
+                        backgroundColor: '#2d003d',
                     }}
                 />
             ) : (

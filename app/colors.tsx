@@ -1,9 +1,9 @@
 // isso aqui tem que eventualmente ser um type
 // a ideia é deixar em aberto por causa do material 3 com cores dinâmicas, que é a implementação ideal do feature
 export const defaultGlobalColors = {
-  primary: '#6c1f7a',
-  secondary: '#571363',
-  accent: '#5a8d2e',
+  primary: '#2d003d',
+  secondary: '#230230',
+  accent: '#9f3e62',
 };
 
 export type GlobalColorType = 'primary' | 'secondary' | 'accent'

@@ -8,7 +8,7 @@ export const Slider = ({ value, minValue, maxValue, defaultValue, tag, onValueCh
     const [containerWidth, setContainerWidth] = useState<number>(0);
     const [loaded, setLoaded] = useState(false);
     const calculateInitialPos = (value: number) => {
-        return ((value - minValue) / (maxValue - minValue)) * (containerWidth - 32);
+        return ((value - minValue) / (maxValue - minValue)) * (containerWidth - 40);
 
     }
     const initialPos = useRef<number>(0);
