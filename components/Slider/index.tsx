@@ -18,7 +18,6 @@ export const Slider = ({ value, minValue, maxValue, defaultValue, tag, onValueCh
     };
 
      useEffect(() => {
-       
         if (containerWidth > 0) {
             initialPos.current = calculateInitialPos(volume ? value : defaultValue!);
             setLoaded(true)

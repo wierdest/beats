@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, ToastAndroid, View } from 'react-native';
+import { ToastAndroid, View } from 'react-native';
 import { createStyles } from './styles';
 import { BasicModal } from '../BasicModal';
 import { SettingsSwitch } from '../SettingsSwitch';
