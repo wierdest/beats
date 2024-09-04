@@ -127,7 +127,7 @@ export const BeatList = ({ originalBeats, onPress }: BeatListProps) => {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-    }, 400); 
+    }, 250); 
   };
 
   useEffect(() => {

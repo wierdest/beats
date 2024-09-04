@@ -10,7 +10,7 @@ export const FilterChipList = () => {
 
 	const handleFilterClick = (filter: string, type: 'genre' | 'signature') => {
 		setFilters(prevFilters => {
-			const currentValues = prevFilters[type].split(',').filter(value => value );
+			const currentValues = prevFilters[type].split(',').filter(value => value);
 			const newValues = currentValues.includes(filter)
 				? currentValues.filter(value => value !== filter)
 				: [...currentValues, filter];
@@ -24,13 +24,25 @@ export const FilterChipList = () => {
 
 	const handleChipClear = (item: string) => {
 		const isGenre = filters.genre.split(',').includes(item);
-		handleFilterClick(item, isGenre ? 'genre' : 'signature');
+		const isSignature = filters.signature.split(',').includes(item);
+		if (isGenre) {
+			handleFilterClick(item, 'genre');
+		} else if (isSignature) {
+			handleFilterClick(item, 'signature');
+		} else if (item === filters.tempo) {
+			// Resetar o filtro de tempo para o valor padrão '50-280'
+			setFilters(prevFilters => ({
+			  ...prevFilters,
+			  tempo: '50-280',
+			}));
+		  }
 	};
 
 	const selectedGenres = filters.genre.split(',').filter(g => g && g !== 'ALL');
 	const selectedSignatures = filters.signature.split(',').filter(s => s && s !== 'ALL');
+	const selectedTempo = filters.tempo !== '50-280' ? [filters.tempo] : [];
 
-	const selectedFilters = [...selectedGenres, ...selectedSignatures];
+	const selectedFilters = [...selectedGenres, ...selectedSignatures, ...selectedTempo];
 
 	const renderItem = ({ item }: { item: string }) => (
 		<FilterChip
