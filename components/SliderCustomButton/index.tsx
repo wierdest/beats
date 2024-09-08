@@ -14,7 +14,7 @@ export const SliderCustomButton = ({ iconName, ...props }: SliderCustomButton) =
 		<TouchableOpacity {...props }style={styles.button}>
 			<MaterialCommunityIcons 
 			name={iconName}
-			size={32} color="black" />
+			size={32} color="white" />
 		</TouchableOpacity>
 	);
 };

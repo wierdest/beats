@@ -1,11 +1,26 @@
+import { darkTheme, lightTheme } from "@/app/colors";
+
 import { StyleSheet } from 'react-native';
 
-export const styles = StyleSheet.create({
+export const createStyles = (isDarkMode: boolean) => {
+    return StyleSheet.create({
+    outerContainer: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        height: 'auto'
+      
+    },
     container: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-evenly',
         width: '100%',
     },
-        
-});
+    label: {
+        color: '#f5f5f5',
+        fontSize: 16    ,
+        minWidth: 50,
+        textAlign: 'center'
+      },
+    });
+}

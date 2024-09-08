@@ -11,10 +11,10 @@ interface SliderChevronButtonProps extends TouchableOpacityProps {
 
 export const SliderChevronButton = ({ direction, ...props }: SliderChevronButtonProps) => {
 	return (
-		<TouchableOpacity {...props }style={styles.chevronButton}>
+		<TouchableOpacity {...props } style={styles.chevronButton}>
 			<MaterialCommunityIcons 
 			name={direction === 'left' ? "chevron-left" : "chevron-right"}
-			size={32} color="black" />
+			size={32} color="white" />
 		</TouchableOpacity>
 	);
 };

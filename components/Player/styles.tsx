@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 export const createStyles = (isDarkMode: boolean) => { 
     return StyleSheet.create({
         container: {
-            padding: 16,
+            padding: 6,
             borderTopStartRadius: 30,
             borderTopEndRadius: 30
         },
@@ -23,11 +23,11 @@ export const createStyles = (isDarkMode: boolean) => {
         },
         auxiliaryControls: {
             flexDirection: 'column',
-            marginTop: 24,
+            marginTop: 2
 
         },
         innerAuxControls: {
-            gap: 12
+            
         },
    
     });

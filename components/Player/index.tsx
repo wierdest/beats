@@ -35,7 +35,7 @@ export const Player = () => {
 
 	useEffect(() => {
 		Animated.timing(heightAnim, {
-			toValue: isExpanded ? 140 : 0,
+			toValue: isExpanded ? 160 : 0,
 			duration: 80,
 			useNativeDriver: false,
 		}).start();
@@ -58,6 +58,10 @@ export const Player = () => {
 			}
 		};
 		fetchVolume();
+
+		//
+
+
 	}, []);
 
 	const adjustVolume = (volumeLevel: number) => {
@@ -125,9 +129,7 @@ export const Player = () => {
 							defaultValue={beat.midBPM!}
 							onValueChange={changeBpm}
 							customButton={<SliderCustomButton iconName='map-clock' onPress={handleModalTimerButton} />}
-							volume={false}
 						/>
-						<Divider />
 						<SliderControl
 							tag={'dB'}
 							value={volume}

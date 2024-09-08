@@ -16,7 +16,7 @@ export const PlayerExpandButton = ({ isExpanded, ...props } : PlayerExpandButton
             <MaterialCommunityIcons
                 name={isExpanded ? 'chevron-down' : 'chevron-up'}
                 size={48}
-                color="black"
+                color="white"
             />
           
         </TouchableOpacity>

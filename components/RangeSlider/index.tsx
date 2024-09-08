@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { View, LayoutChangeEvent, Text } from 'react-native';
 import { styles } from './styles';
 import { SliderControlProps } from '../SliderControl';
-import { RangeSliderToggle } from '../RangeSliderToggle';
+import { RangeSliderButton } from '../RangeSliderButton';
 
 
 interface RangeSliderProps {
@@ -35,7 +35,7 @@ export const RangeSlider = ({ minValue, maxValue, onValueChangeMin, onValueChang
 
             {loaded &&
                 <>
-                    <RangeSliderToggle
+                    <RangeSliderButton
                         kind={'min'}
                         value={minValue}
                         initialPos={initialPosA.current}
@@ -45,7 +45,7 @@ export const RangeSlider = ({ minValue, maxValue, onValueChangeMin, onValueChang
                         containerWidth={containerWidth}
                     />
 
-                    <RangeSliderToggle
+                    <RangeSliderButton
                         kind={'max'}
                         value={maxValue}
                         initialPos={initialPosB.current}

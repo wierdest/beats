@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         height: 3,
         position: 'relative',
-        backgroundColor: 'black',
+        backgroundColor: 'white',
         width: '100%'
         
     },
@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         height: 12,
         position: 'relative',
-        backgroundColor: 'black',
+        backgroundColor: 'white',
         width: 2,
     },
 });

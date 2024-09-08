@@ -5,7 +5,6 @@ import { BeatCard } from '../BeatCard';
 import { FlatList } from 'react-native-gesture-handler';
 import { BannerCard } from '../BannerCard';
 import { useFilter } from '@/contexts/FilterContext';
-import { Loadingindicator } from '../LoadingIndicator';
 import { useBeat } from '@/contexts/BeatContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { AntDesign } from '@expo/vector-icons';
@@ -179,7 +178,7 @@ export const BeatList = ({ originalBeats, onPress }: BeatListProps) => {
         </View>
       ) : (
         isLoading ? (
-          <Loadingindicator size="large" color={globalColors.accent} />
+          <ActivityIndicator size="large" color={globalColors.accent} />
         ) : (
           <FlatList
             data={beatList}

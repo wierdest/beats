@@ -5,16 +5,16 @@ import { SliderButtonProps } from '../SliderButton';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useFilter } from '@/contexts/FilterContext';
 
-type RangeSliderToggle = 'min' | 'max'
+type RangeSliderButton = 'min' | 'max'
 
-interface RangeSliderToggleProps extends SliderButtonProps {
-    kind: RangeSliderToggle
+interface RangeSliderButtonProps extends SliderButtonProps {
+    kind: RangeSliderButton
 }
 
 const BEET = require('@/assets/images/button-image.png')
 
 
-export const RangeSliderToggle = ({ kind, initialPos, value, minValue, maxValue, containerWidth, onValueChange }: RangeSliderToggleProps) => {
+export const RangeSliderButton = ({ kind, initialPos, value, minValue, maxValue, containerWidth, onValueChange }: RangeSliderButtonProps) => {
     // hardcoded the buttonWidth, I know...
     const buttonWidth = 32;
     const pan = useRef(new Animated.Value(initialPos)).current;
