@@ -59,7 +59,15 @@ export const Player = () => {
 		};
 		fetchVolume();
 
-		//
+		const volumeListener = VolumeManager.addVolumeListener(({ volume }) => {
+			const volumePercent = Math.round(volume * 100);
+			setVolume(volumePercent);
+			setIsVolumeMuted(volumePercent === 0);
+		});
+
+		return () => {
+			volumeListener.remove(); // Cleanup listener on component unmount
+		};
 
 
 	}, []);
