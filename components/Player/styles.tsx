@@ -23,7 +23,6 @@ export const createStyles = (isDarkMode: boolean) => {
         },
         auxiliaryControls: {
             flexDirection: 'column',
-            marginTop: 2
 
         },
         innerAuxControls: {
