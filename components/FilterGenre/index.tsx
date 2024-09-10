@@ -4,7 +4,7 @@ import { createStyles } from './styles';
 import { TextButtonGridList } from '../TextButtonGridList';
 import { useTheme } from '@/contexts/ThemeContext';
 
-const data: string[] = ['ALL', 'ROCK', 'POP', 'HIP HOP', 'JAZZ', 'BLUES', 'FUNK', 'FOLK', 'EDM', 'Other'];
+const data: string[] = ['ALL', 'ROCK', 'HIP HOP', 'JAZZ', 'EDM', 'Other'];
 
 interface FilterGenreProps {
     selectedGenres: string[],
