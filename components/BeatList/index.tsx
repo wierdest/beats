@@ -76,7 +76,7 @@ export const BeatList = ({ originalBeats, onPress }: BeatListProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const { beat, play, stop, changeBpm, reloadedBeat, loopLimitRef, numberOfLoops } = useBeat();
   const { globalColors } = useTheme();
-  const BEET = require('@/assets/images/button-image.png')
+  const BEET = require('@/assets/images/adaptive-icon.png')
   // INICIO DOS FILTROS
   const beatList = [...originalBeats, ...samples].filter(item => {
     // Filtro pelo tempo
@@ -171,8 +171,8 @@ export const BeatList = ({ originalBeats, onPress }: BeatListProps) => {
   }
 
   const imageStyle: ImageStyle = {
-    width: 50,
-    height: 50
+    width: 80,
+    height:80
   };
 
   return (
