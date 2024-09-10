@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Text, View } from 'react-native';
+import { ActivityIndicator, ImageBackground, ImageStyle, Text, View } from 'react-native';
 import { styles } from './styles';
 import { BeatCard } from '../BeatCard';
 import { FlatList } from 'react-native-gesture-handler';
@@ -10,11 +10,11 @@ import { useTheme } from '@/contexts/ThemeContext';
 import { AntDesign } from '@expo/vector-icons';
 
 export interface Beat {
-	id: number;
-	bpm: number;
-	minBPM: number;
+  id: number;
+  bpm: number;
+  minBPM: number;
   midBPM?: number;
-	maxBPM: number;
+  maxBPM: number;
   bars: number;
   genre: string;
   signature: string;
@@ -74,8 +74,9 @@ export const BeatList = ({ originalBeats, onPress }: BeatListProps) => {
   const [playingId, setPlayingId] = useState<number | null>(null);
   const { filters } = useFilter();
   const [isLoading, setIsLoading] = useState(true);
-  const { beat , play, stop, changeBpm, reloadedBeat, loopLimitRef, numberOfLoops } = useBeat();
-  const {globalColors} = useTheme();
+  const { beat, play, stop, changeBpm, reloadedBeat, loopLimitRef, numberOfLoops } = useBeat();
+  const { globalColors } = useTheme();
+  const BEET = require('@/assets/images/adaptive-icon.png')
   // INICIO DOS FILTROS
   const beatList = [...originalBeats, ...samples].filter(item => {
     // Filtro pelo tempo
@@ -113,7 +114,7 @@ export const BeatList = ({ originalBeats, onPress }: BeatListProps) => {
       }
     }
 
-    if(filters.favorite === true && isBeat(item)) {
+    if (filters.favorite === true && isBeat(item)) {
       return item.favorite != 0;
     }
 
@@ -126,19 +127,19 @@ export const BeatList = ({ originalBeats, onPress }: BeatListProps) => {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-    }, 250); 
+    }, 250);
   };
 
   useEffect(() => {
     loadData();
   }, []);
 
-	const handlePress = (id: number) => {
-		// console.log('pressed to sleect beat ', id)
+  const handlePress = (id: number) => {
+    // console.log('pressed to sleect beat ', id)
     onPress(id);
     setPlayingId(id);
 
-	};
+  };
 
   const renderItem = ({ item }: { item: BeatListItem }) => {
     if (isBeat(item)) {
@@ -169,12 +170,21 @@ export const BeatList = ({ originalBeats, onPress }: BeatListProps) => {
     return isBeat(item) ? item.id.toString() : `sample_${item.id}`
   }
 
+  const imageStyle: ImageStyle = {
+    width: 80,
+    height:80
+  };
+
   return (
     <View style={styles.container}>
       {Array.isArray(beatList) && beatList.length === 0 ? (
         <View style={styles.noContent}>
-          <AntDesign name="frowno" size={40} color={globalColors.accent} />
-          <Text style={[styles.text, { color: globalColors.accent }]}>No content</Text>
+          {/* <AntDesign name="frowno" size={40} color={globalColors.accent} /> */}
+          <ImageBackground
+            source={BEET}
+            style={imageStyle}
+          ></ImageBackground>
+          {/* <Text style={[styles.text, { color: globalColors.accent }]}>No content</Text> */}
         </View>
       ) : (
         isLoading ? (

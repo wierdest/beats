@@ -86,14 +86,15 @@ export const Player = () => {
 		} else if (volume === 0 && originalVolume !== null) {
 			console.log(originalVolume, isVolumeMuted, volume, "Restaurando volume");
 			setIsVolumeMuted(false);
-			setVolume(originalVolume); 
+			setVolume(originalVolume);
 			adjustVolume(originalVolume);
 		}
 	};
 
-	useEffect(() => {
-		adjustVolume(volume);
-	}, [volume]);
+	// nao é necessário 
+	// useEffect(() => {
+	// 	adjustVolume(volume);
+	// }, [volume]);
 
 	useEffect(() => {
 		if (!isVolumeMuted) {
@@ -111,7 +112,7 @@ export const Player = () => {
 	};
 
 	return (
-		<View style={[styles.container, {backgroundColor: globalColors.primary,}]}>
+		<View style={[styles.container, { backgroundColor: globalColors.primary, }]}>
 			<View style={styles.mainControls}>
 				<View style={styles.topRow}>
 					<PlayButton onPlay={play} onStop={stop} />
