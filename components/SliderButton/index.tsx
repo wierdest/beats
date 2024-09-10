@@ -41,7 +41,7 @@ export const SliderButton = ({ value, initialPos, minValue, maxValue, containerW
 
 				const newX = Math.min(Math.max(initialPosRef.current + gestureState.dx, 0), containerWidth - buttonWidth);
 				const percentage = (newX / (containerWidth - buttonWidth)) * 100;
-				const newValue = Math.round((percentage / 100) * (maxValue - minValue) + minValue);
+				const newValue = Math.min(maxValue, Math.max(minValue, Math.round((percentage / 100) * (maxValue - minValue) + minValue)));
 				setPanValue(newValue);
 				pan.setValue(newX);
 				onValueChange(newValue);
@@ -63,8 +63,8 @@ export const SliderButton = ({ value, initialPos, minValue, maxValue, containerW
 
 	useEffect(() => {
 		if (!dragging) {
-			const newX = ((value - minValue) / (maxValue - minValue)) * (containerWidth - buttonWidth);
-			initialPosRef.current = newX
+			console.log('SLIDER BUTTON MOVED WITHOUT DRAG THIS IS VALUE: ', value)
+			const newX = Math.round(((value - minValue) / (maxValue - minValue)) * (containerWidth - buttonWidth));			initialPosRef.current = newX
 			pan.setValue(newX)
 			setPanValue(newX)
 		}

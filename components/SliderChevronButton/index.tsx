@@ -14,7 +14,7 @@ export const SliderChevronButton = ({ direction, ...props }: SliderChevronButton
 		<TouchableOpacity {...props } style={styles.chevronButton}>
 			<MaterialCommunityIcons 
 			name={direction === 'left' ? "chevron-left" : "chevron-right"}
-			size={32} color="white" />
+			size={32} color="black" />
 		</TouchableOpacity>
 	);
 };

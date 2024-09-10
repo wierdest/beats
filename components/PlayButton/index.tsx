@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { TouchableOpacity, View, StyleSheet, Animated, ImageBackground } from 'react-native';
+import { TouchableOpacity, View, StyleSheet, Animated, ImageBackground, ViewProps } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { styles } from './styles';
 import { useBeat } from '@/contexts/BeatContext';
 import { useTheme } from '@/contexts/ThemeContext';
 
-interface PlayButtonProps {
+interface PlayButtonProps extends ViewProps {
     onPlay: () => void;
 	onStop: () => void;
 }
 
 const BEET = require('@/assets/images/button-image.png')
 
-export const PlayButton = ({onPlay, onStop} : PlayButtonProps) => {
+export const PlayButton = ({onPlay, onStop, ...props} : PlayButtonProps) => {
 
     const {playing} = useBeat();
     const [spinValue] = useState(new Animated.Value(0));
@@ -51,13 +51,13 @@ export const PlayButton = ({onPlay, onStop} : PlayButtonProps) => {
     }, [playing])
 
     return (
-        <TouchableOpacity onPress={togglePlay}>
+        <TouchableOpacity onPress={togglePlay} {...props}>
             <Animated.View style={{ transform: [{ rotate: spin }] }}>
                 <ImageBackground source={BEET} style={[styles.button, { transform: [{ scaleX: playing ? -1 : 1 }] }]}>
                     <MaterialCommunityIcons
                         name={playing ? 'stop' : 'play'}
                         size={32}
-                        style={{transform: [{translateX: -6}, {translateY: 6}]}}
+                        style={{transform: [{translateX: -10}, {translateY: 9}]}}
                         color='white'
                     />
                 </ImageBackground>

@@ -17,33 +17,34 @@ export const Slider = ({ value, minValue, maxValue, defaultValue, tag, onValueCh
         setContainerWidth(event.nativeEvent.layout.width);
     };
 
-    //  useEffect(() => {
-    //     if (containerWidth > 0) {
-    //         initialPos.current = calculateInitialPos(volume ? value : defaultValue!);
-    //         setLoaded(true)
-    //     }
-    // },[containerWidth])
+     useEffect(() => {
+        if (containerWidth > 0) {
+            initialPos.current = calculateInitialPos(volume ? value : defaultValue!);
+            setLoaded(true)
+        }
+    },[containerWidth])
 
-    // useEffect(() => {
-    //     if(!volume) {
-    //         if (containerWidth > 0) {
-    //             initialPos.current = calculateInitialPos(volume ? value : defaultValue!);
-    //         }
-    //     }
+    useEffect(() => {
+        if(!volume) {
+            if (containerWidth > 0) {
+                initialPos.current = calculateInitialPos(volume ? value : defaultValue!);
+            }
+        }
+        console.log('SLIDER DEFAULT VALUE CHANGED: ', defaultValue)
        
-    // },[defaultValue])
+    },[defaultValue])
 
     // otimização sliders
-    useEffect(() => {
-        if (containerWidth > 0) {
-            if (volume) {
-                initialPos.current = calculateInitialPos(value);
-            } else {
-                initialPos.current = calculateInitialPos(defaultValue!);
-            }
-            setLoaded(true);
-        }
-    }, [containerWidth, volume, value, defaultValue]);
+    // useEffect(() => {
+    //     if (containerWidth > 0) {
+    //         if (volume) {
+    //             initialPos.current = calculateInitialPos(value);
+    //         } else {
+    //             initialPos.current = calculateInitialPos(defaultValue!);
+    //         }
+    //         setLoaded(true);
+    //     }
+    // }, [containerWidth, volume, value, defaultValue]);
 
     return (
         <View style={styles.slider} onLayout={handleLayout}>

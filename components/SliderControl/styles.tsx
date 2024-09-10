@@ -17,7 +17,7 @@ export const createStyles = (isDarkMode: boolean) => {
         width: '100%',
     },
     label: {
-        color: '#f5f5f5',
+        color: isDarkMode ? '#fff' : '#000',
         fontSize: 16    ,
         minWidth: 50,
         textAlign: 'center'

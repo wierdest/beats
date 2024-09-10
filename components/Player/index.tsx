@@ -11,6 +11,7 @@ import { useModal } from '@/contexts/ModalContext';
 import { VolumeManager } from 'react-native-volume-manager';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useBeat } from '@/contexts/BeatContext';
+import { debounce } from '@/utils';
 
 export const Player = () => {
 	const { isDarkMode } = useTheme();
@@ -45,6 +46,11 @@ export const Player = () => {
 		setIsExpanded(false);
 	}, [reloadedBeat]);
 
+	const debounceSetVolume = debounce((volumePercent: number) => {
+		setVolume(volumePercent);
+		setIsVolumeMuted(volumePercent === 0);
+	}, 200);
+
 	// Fetch volume & Setup volume listener (not using the listener because it breaks on samsung devices)
 	useEffect(() => {
 		const fetchVolume = async () => {
@@ -61,6 +67,7 @@ export const Player = () => {
 
 		const volumeListener = VolumeManager.addVolumeListener(({ volume }) => {
 			const volumePercent = Math.round(volume * 100);
+			console.log('PRESSED THE VOLUME SYSTEM BUTTON')
 			setVolume(volumePercent);
 			setIsVolumeMuted(volumePercent === 0);
 		});
@@ -71,6 +78,8 @@ export const Player = () => {
 
 
 	}, []);
+
+
 
 	const adjustVolume = (volumeLevel: number) => {
 		VolumeManager.setVolume(volumeLevel / 100);
@@ -111,11 +120,13 @@ export const Player = () => {
 		toggleModal('timer');
 	};
 
+
+
 	return (
-		<View style={[styles.container, { backgroundColor: globalColors.primary, }]}>
-			<View style={styles.mainControls}>
+		<View style={styles.container}>
+			<View style={[styles.mainControls, { backgroundColor: globalColors.primary, }]}>
 				<View style={styles.topRow}>
-					<PlayButton onPlay={play} onStop={stop} />
+					<PlayButton onPlay={play} onStop={stop} style={[{ transform: [{ translateY: -16 }] }]} />
 					<Text style={styles.beatName}>{beat ? beat.title : 'No beat selected'}</Text>
 					<PlayerExpandButton isExpanded={isExpanded} onPress={handleExpandPress} />
 				</View>
@@ -131,7 +142,7 @@ export const Player = () => {
 				{beat && isExpanded && (
 					<View style={styles.innerAuxControls}>
 						<SliderControl
-							tag={'bpm'}
+							tag={' BPM'}
 							value={beat.bpm}
 							minValue={beat.minBPM}
 							maxValue={beat.maxBPM}
@@ -140,7 +151,7 @@ export const Player = () => {
 							customButton={<SliderCustomButton iconName='map-clock' onPress={handleModalTimerButton} />}
 						/>
 						<SliderControl
-							tag={'dB'}
+							tag={' DB'}
 							value={volume}
 							minValue={0}
 							maxValue={100}
