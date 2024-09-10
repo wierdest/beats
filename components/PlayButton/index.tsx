@@ -57,7 +57,7 @@ export const PlayButton = ({onPlay, onStop, ...props} : PlayButtonProps) => {
                     <MaterialCommunityIcons
                         name={playing ? 'stop' : 'play'}
                         size={32}
-                        style={{transform: [{translateX: -10}, {translateY: 9}]}}
+                        style={{transform: [{translateX: -8}, {translateY: 8}]}}
                         color='white'
                     />
                 </ImageBackground>
