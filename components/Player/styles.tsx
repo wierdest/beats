@@ -8,7 +8,7 @@ export const createStyles = (isDarkMode: boolean) => {
         topRow: {
             flexDirection: 'row',
             alignItems: 'center',
-            justifyContent: 'space-between',
+            justifyContent: 'space-around',
         },
         beatName: {
             fontSize: 24,
